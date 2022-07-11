@@ -14,8 +14,8 @@ const Setting = {
 root.render(
   <React.StrictMode>
     <App
-      cardNumber={Setting.CARDS_NUMBER}
-      foundPlaces={Setting.FOUND_PLACES}
+      // cardNumber={Setting.CARDS_NUMBER}
+      // foundPlaces={Setting.FOUND_PLACES}
     />
   </React.StrictMode>,
 );
