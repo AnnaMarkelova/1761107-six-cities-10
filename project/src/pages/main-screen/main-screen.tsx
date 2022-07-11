@@ -106,6 +106,5 @@ export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): 
         </div>
       </main>
     </div>
-
   );
 }
