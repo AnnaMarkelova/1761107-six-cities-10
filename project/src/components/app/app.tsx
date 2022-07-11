@@ -19,7 +19,7 @@ type MainScreenProps = {
 function App(): JSX.Element {
 
   return (
-    < LoginScreen />
+    < FavoritesScreen />
   );
 }
 
