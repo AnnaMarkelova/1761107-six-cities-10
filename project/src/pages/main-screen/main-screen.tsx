@@ -1,11 +1,15 @@
 import PlaceCard from '../../components/place-card/place-card';
+import Location from '../../components/location/location';
+import { Hotel } from '../../types/hotel';
+import { cities, sortType } from '../../const/const';
 
 type MainScreenProps = {
-  cardNumber: number;
-  foundPlaces: number;
+  currentCity: string;
+  currentSort: string;
+  hotels: Hotel[];
 }
 
-export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): JSX.Element {
+export default function MainScreen({ currentCity, currentSort, hotels }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -23,7 +27,7 @@ export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): 
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{hotels.filter((item) => item.isFavorite).length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -42,36 +46,14 @@ export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): 
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {cities.map((item) => (
+                <li className="locations__item" key={item}>
+                  <Location
+                    city={item}
+                    currentCity={currentCity}
+                  />
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -79,7 +61,7 @@ export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): 
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{foundPlaces} places to stay in Amsterdam</b>
+              <b className="places__found">{hotels.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -89,14 +71,17 @@ export default function MainScreen({cardNumber, foundPlaces}: MainScreenProps): 
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0} >Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
+                  {Object.keys(sortType).map((item) =>
+                    (<li className={`places__option ${currentSort === sortType[item] ? 'places__option--active' : ''}`} tabIndex={0} key={item}>{sortType[item]}</li>)
+                  )}
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(cardNumber).fill(<PlaceCard />)}
+                {hotels.map((item) => (
+                  <PlaceCard
+                    key={item.id}
+                    hotel={item}
+                  />))}
               </div>
             </section>
             <div className="cities__right-section">

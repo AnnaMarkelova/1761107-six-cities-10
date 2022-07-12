@@ -252,7 +252,7 @@ const hotels: Hotel[] =
       'https://10.react.pages.academy/static/hotel/6.jpg'
     ],
     title: 'Penthouse, 4-5 rooms + 5 balconies',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 3.7,
     type: 'room',
@@ -5587,6 +5587,10 @@ const hotels: Hotel[] =
     },
     id: 99
   }
-]
+];
 
 export const getHotels = () => hotels;
+
+export const garHotelsByCity = (city: string): Hotel[] => hotels.filter((item: Hotel) => item.city.name === city);
+
+export const garHotelById = (id: number) => hotels.find((item: Hotel) => item.id === id);

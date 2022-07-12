@@ -1,16 +1,19 @@
 import MainScreen from '../../pages/main-screen/main-screen';
+import { Hotel } from '../../types/hotel';
 
 type MainScreenProps = {
-  cardNumber: number;
-  foundPlaces: number;
+  currentCity: string;
+  currentSort: string;
+  hotels: Hotel[];
 }
 
-function App({ cardNumber, foundPlaces }: MainScreenProps): JSX.Element {
+function App({ currentCity, currentSort, hotels }: MainScreenProps): JSX.Element {
 
   return (
     < MainScreen
-      cardNumber={cardNumber}
-      foundPlaces={foundPlaces}
+      currentCity={currentCity}
+      currentSort={currentSort}
+      hotels={hotels}
     />
   );
 }
