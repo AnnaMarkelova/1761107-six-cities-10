@@ -5,15 +5,17 @@ type MainScreenProps = {
   currentCity: string;
   currentSort: string;
   hotels: Hotel[];
+  favoritesHotelsCount: number;
 }
 
-function App({ currentCity, currentSort, hotels }: MainScreenProps): JSX.Element {
+function App({ currentCity, currentSort, hotels, favoritesHotelsCount }: MainScreenProps): JSX.Element {
 
   return (
     < MainScreen
       currentCity={currentCity}
       currentSort={currentSort}
       hotels={hotels}
+      favoritesHotelsCount={favoritesHotelsCount}
     />
   );
 }

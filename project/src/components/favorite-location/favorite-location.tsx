@@ -18,6 +18,5 @@ export default function FavoriteLocation({cardNumber}: FavoritesLocationProps): 
         {new Array(cardNumber).fill(<FavoritePlaceCard />)}
       </div>
     </li>
-
   );
 }
