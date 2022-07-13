@@ -1,13 +1,14 @@
 import React from 'react';
+import { User } from '../../types/user';
 
 type HeaderProps = {
   favoriteHotelsCount: number,
-  userName: string,
+  user?: User,
   hasLoginBlock?: boolean,
   hasAuthorization?: boolean,
 }
 
-export default function Header({ favoriteHotelsCount, userName, hasLoginBlock = false, hasAuthorization = false }: HeaderProps): JSX.Element {
+export default function Header({ favoriteHotelsCount, user, hasLoginBlock = false, hasAuthorization = false }: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -28,7 +29,7 @@ export default function Header({ favoriteHotelsCount, userName, hasLoginBlock = 
                       {hasAuthorization &&
                         (
                           <React.StrictMode>
-                            <span className="header__user-name user__name">{userName}</span>
+                            <span className="header__user-name user__name">{user?.email}</span>
                             <span className="header__favorite-count">{favoriteHotelsCount}</span>
                           </React.StrictMode>
                         )}

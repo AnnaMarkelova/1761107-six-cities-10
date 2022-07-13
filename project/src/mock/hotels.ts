@@ -5591,6 +5591,6 @@ const hotels: Hotel[] =
 
 export const getHotels = () => hotels;
 
-export const garHotelsByCity = (city: string): Hotel[] => hotels.filter((item: Hotel) => item.city.name === city);
+export const getHotelsByCity = (city: string): Hotel[] => hotels.filter((item: Hotel) => item.city.name === city);
 
-export const garHotelById = (id: number) => hotels.find((item: Hotel) => item.id === id);
+export const getHotelById = (id: number) => hotels.find((item: Hotel) => item.id === id);
