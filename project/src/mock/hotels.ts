@@ -29,7 +29,7 @@ const hotels: Hotel[] =
       'https://10.react.pages.academy/static/hotel/19.jpg'
     ],
     title: 'Penthouse, 4-5 rooms + 5 balconies',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4.1,
     type: 'hotel',
@@ -364,7 +364,7 @@ const hotels: Hotel[] =
       'https://10.react.pages.academy/static/hotel/8.jpg'
     ],
     title: 'Wood and stone place',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4.6,
     type: 'room',
@@ -1112,8 +1112,8 @@ const hotels: Hotel[] =
       'https://10.react.pages.academy/static/hotel/16.jpg'
     ],
     title: 'Loft Studio in the Central Area',
-    isFavorite: false,
-    isPremium: false,
+    isFavorite: true,
+    isPremium: true,
     rating: 4.5,
     type: 'hotel',
     bedrooms: 5,
@@ -5594,3 +5594,5 @@ export const getHotels = () => hotels;
 export const getHotelsByCity = (city: string): Hotel[] => hotels.filter((item: Hotel) => item.city.name === city);
 
 export const getHotelById = (id: number) => hotels.find((item: Hotel) => item.id === id);
+
+export const getFavoriteHotels = (): Hotel[] => hotels.filter((item: Hotel) => item.isFavorite);

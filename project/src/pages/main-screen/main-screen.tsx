@@ -18,7 +18,7 @@ export default function MainScreen({ currentCity, currentSort, hotels, favorites
   return (
     <div className="page page--gray page--main">
       <Header
-        favoriteHotelsCount={favoritesHotelsCount}
+        favoritesHotelsCount={favoritesHotelsCount}
         user={user}
         hasLoginBlock
         hasAuthorization

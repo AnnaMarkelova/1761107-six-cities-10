@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { sortType } from './const/const';
-import { getHotelsByCity, getHotels } from './mock/hotels';
+import { getHotelsByCity, getFavoriteHotels } from './mock/hotels';
 import { getUser } from './mock/user';
 
 const root = ReactDOM.createRoot(
@@ -15,7 +15,7 @@ const Setting = {
   CURRENT_CITY: 'Amsterdam',
   CURRENT_SORT: sortType.POPULAR,
   hotels: getHotelsByCity(CURRENT_CITY),
-  favoritesHotelsCount: getHotels().filter((item) => item.isFavorite).length,
+  favoritesHotels: getFavoriteHotels(),
   user: getUser()
 };
 
@@ -25,8 +25,9 @@ root.render(
       currentCity={Setting.CURRENT_CITY}
       currentSort={Setting.CURRENT_SORT}
       hotels={Setting.hotels}
-      favoritesHotelsCount={Setting.favoritesHotelsCount}
+      favoritesHotels={Setting.favoritesHotels}
       user={Setting.user}
     />
   </React.StrictMode>,
 );
+

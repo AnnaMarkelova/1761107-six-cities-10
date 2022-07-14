@@ -1,4 +1,4 @@
-import { sortType } from '../../const/const';
+import { cityCardType, sortType } from '../../const/const';
 import { Hotel } from '../../types/hotel';
 import PlaceCard from '../place-card/place-card';
 
@@ -32,6 +32,7 @@ export default function CitiesPlaces({ currentSort, hotels }: CitiesPlacesProps)
             <PlaceCard
               key={item.id}
               hotel={item}
+              cardType={cityCardType.CITIES_CARD}
             />))}
         </div>
       </section>

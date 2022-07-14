@@ -1,21 +1,30 @@
-import FavoritePlaceCard from '../favorite-place-card/favorite-place-card';
+import { Hotel } from '../../types/hotel';
+import PlaceCard from '../place-card/place-card';
+import { cityCardType } from '../../const/const';
 
 type FavoritesLocationProps = {
-  cardNumber: number
+  city: string
+  hotels: Hotel[]
 }
 
-export default function FavoriteLocation({cardNumber}: FavoritesLocationProps): JSX.Element {
+export default function FavoriteLocation({ city, hotels }: FavoritesLocationProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>Amsterdam</span>
+            <span>{city}</span>
           </a>
         </div>
       </div>
       <div className="favorites__places">
-        {new Array(cardNumber).fill(<FavoritePlaceCard />)}
+        {hotels.map((item) => (
+          <PlaceCard
+            key={item.id}
+            hotel={item}
+            cardType={cityCardType.FAVORITES_CARD}
+          />
+        ))}
       </div>
     </li>
   );
