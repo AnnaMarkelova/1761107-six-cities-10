@@ -7,8 +7,9 @@ import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import { AppRoute } from '../../const/const';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
+import { PrivateRoute } from '../private-route/pravate-route';
 
 type MainScreenProps = {
   currentCity: string;
@@ -34,17 +35,21 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         }
       />
       <Route
-        path = {AppRoute.Favorites}
-        element = {
-          < FavoritesScreen
-            favoritesHotels={favoritesHotels}
-            user={user}
-          />
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute
+            authorizationStatus={AuthorizationStatus.Auth}
+          >
+            < FavoritesScreen
+              favoritesHotels={favoritesHotels}
+              user={user}
+            />
+          </PrivateRoute>
         }
       />
       <Route
-        path = {AppRoute.Room}
-        element = {
+        path={`${AppRoute.Room}/:id`}
+        element={
           < PropertyScreen
             hotel={hotels[0]}
             user={user}
@@ -55,8 +60,8 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         }
       />
       <Route
-        path = {AppRoute.Login}
-        element = {
+        path={AppRoute.Login}
+        element={
           < LoginScreen
             favoritesHotelsCount={favoritesHotels.length}
           />
