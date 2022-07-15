@@ -1,8 +1,9 @@
 //import LoginScreen from '../../pages/login-screen/login-screen';
-import MainScreen from '../../pages/main-screen/main-screen';
+import React from 'react';
+import { MainScreen } from '../../pages/main-screen/main-screen';
 //import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 //import { getComments } from '../../mock/comments';
-//import PropertyScreen from '../../pages/property-screen/property-screen';
+//import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
 
@@ -14,18 +15,15 @@ type MainScreenProps = {
   user: User;
 }
 
-function App({ currentCity, currentSort, hotels, favoritesHotels, user }: MainScreenProps): JSX.Element {
-
-  return (
-    < MainScreen
-      currentCity={currentCity}
-      currentSort={currentSort}
-      hotels={hotels}
-      favoritesHotelsCount={favoritesHotels.length}
-      user={user}
-    />
-  );
-}
+const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSort, hotels, favoritesHotels, user }) => (
+  < MainScreen
+    currentCity={currentCity}
+    currentSort={currentSort}
+    hotels={hotels}
+    favoritesHotelsCount={favoritesHotels.length}
+    user={user}
+  />
+);
 
 
 // page LoginScreen
@@ -65,7 +63,7 @@ function App({ currentCity, currentSort, hotels, favoritesHotels, user }: MainSc
 //   );
 // }
 
-// page FavoritesScreen
+//page PropertyScreen
 // type ScreenProps = {
 //   currentCity: string;
 //   currentSort: string;

@@ -1,20 +1,24 @@
-import Header from '../../components/header/header';
+import React from 'react';
+import { Header } from '../../components/header/header';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import FavoriteLocation from '../../components/favorite-location/favorite-location';
-import Footer from '../../components/footer/footer';
+import { FavoriteLocation } from '../../components/favorite-location/favorite-location';
+import { Footer } from '../../components/footer/footer';
 
 type FavoritesScreenProps = {
   favoritesHotels: Hotel[]
   user: User
 }
 
-export default function FavoritesScreen({ favoritesHotels, user }: FavoritesScreenProps): JSX.Element {
+export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({ favoritesHotels, user }) => {
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
   return (
-    <div className={`page ${favoritesHotels.length ? '' : 'page--favorites-empty'}`}>
+    <div className={`page ${favoritesHotels.length
+      ? ''
+      : 'page--favorites-empty'}`}
+    >
       <Header
         favoritesHotelsCount={favoritesHotels.length}
         user={user}
@@ -55,4 +59,4 @@ export default function FavoritesScreen({ favoritesHotels, user }: FavoritesScre
       < Footer />
     </div>
   );
-}
+};

@@ -1,13 +1,14 @@
+import React from 'react';
 import { cityCardType, sortType } from '../../const/const';
 import { Hotel } from '../../types/hotel';
-import PlaceCard from '../place-card/place-card';
+import { PlaceCard } from '../place-card/place-card';
 
 type CitiesPlacesProps = {
   currentSort: string;
   hotels: Hotel[];
 }
 
-export default function CitiesPlaces({ currentSort, hotels }: CitiesPlacesProps): JSX.Element {
+export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ currentSort, hotels }) => {
   if (hotels.length) {
     return (
       <section className="cities__places places">
@@ -22,8 +23,13 @@ export default function CitiesPlaces({ currentSort, hotels }: CitiesPlacesProps)
             </svg>
           </span>
           <ul className="places__options places__options--custom places__options--opened">
-            {Object.keys(sortType).map((item) =>
-              (<li className={`places__option ${currentSort === sortType[item] ? 'places__option--active' : ''}`} tabIndex={0} key={item}>{sortType[item]}</li>)
+            {Object.keys(sortType).map((item) => (
+              <li className={`places__option ${currentSort === sortType[item]
+                ? 'places__option--active'
+                : ''
+              }`} tabIndex={0} key={item}
+              > {sortType[item]}
+              </li>)
             )}
           </ul>
         </form>
@@ -38,7 +44,6 @@ export default function CitiesPlaces({ currentSort, hotels }: CitiesPlacesProps)
       </section>
     );
   }
-
   return (
     <section className="cities__no-places">
       <div className="cities__status-wrapper tabs__content">
@@ -47,4 +52,4 @@ export default function CitiesPlaces({ currentSort, hotels }: CitiesPlacesProps)
       </div>
     </section>
   );
-}
+};

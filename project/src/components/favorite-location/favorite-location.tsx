@@ -1,5 +1,6 @@
+import React from 'react';
 import { Hotel } from '../../types/hotel';
-import PlaceCard from '../place-card/place-card';
+import { PlaceCard } from '../place-card/place-card';
 import { cityCardType } from '../../const/const';
 
 type FavoritesLocationProps = {
@@ -7,25 +8,23 @@ type FavoritesLocationProps = {
   hotels: Hotel[]
 }
 
-export default function FavoriteLocation({ city, hotels }: FavoritesLocationProps): JSX.Element {
-  return (
-    <li className="favorites__locations-items">
-      <div className="favorites__locations locations locations--current">
-        <div className="locations__item">
-          <a className="locations__item-link" href="#">
-            <span>{city}</span>
-          </a>
-        </div>
+export const FavoriteLocation: React.FunctionComponent<FavoritesLocationProps> = ({ city, hotels }) => (
+  <li className="favorites__locations-items">
+    <div className="favorites__locations locations locations--current">
+      <div className="locations__item">
+        <a className="locations__item-link" href="#">
+          <span>{city}</span>
+        </a>
       </div>
-      <div className="favorites__places">
-        {hotels.map((item) => (
-          <PlaceCard
-            key={item.id}
-            hotel={item}
-            cardType={cityCardType.FAVORITES_CARD}
-          />
-        ))}
-      </div>
-    </li>
-  );
-}
+    </div>
+    <div className="favorites__places">
+      {hotels.map((item) => (
+        <PlaceCard
+          key={item.id}
+          hotel={item}
+          cardType={cityCardType.FAVORITES_CARD}
+        />
+      ))}
+    </div>
+  </li>
+);
