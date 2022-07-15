@@ -18,6 +18,9 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
           <a href="#">
             <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
           </a>
+          {/* <Link to={`/${AppRoute.Room}/:id`}>
+            <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
+          </Link> */}
         </div>
       )}
     {cardType === cityCardType.FAVORITES_CARD &&

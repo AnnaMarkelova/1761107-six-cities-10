@@ -51,7 +51,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         path={`${AppRoute.Room}/:id`}
         element={
           < PropertyScreen
-            hotel={hotels[0]}
+            hotelId={1}
             user={user}
             comments={getComments()}
             favoritesHotelsCount={favoritesHotels.length}
