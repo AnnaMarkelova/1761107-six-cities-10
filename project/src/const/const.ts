@@ -18,3 +18,10 @@ export const hotelType: {[type: string]: string} = {
   house: 'House',
   hotel: 'Hotel',
 };
+
+export enum AppRoute {
+Main = '/',
+Login = '/login',
+Favorites = '/favorites',
+Room = '/offer'
+}

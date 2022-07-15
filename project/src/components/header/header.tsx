@@ -2,13 +2,13 @@ import React from 'react';
 import { User } from '../../types/user';
 
 type HeaderProps = {
-  favoritesHotelsCount: number,
+  favoritesHotelsCount?: number,
   user?: User,
   hasLoginBlock?: boolean,
   hasAuthorization?: boolean,
 }
 
-export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCount, user, hasLoginBlock = false, hasAuthorization = false }) => (
+export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCount = 0, user, hasLoginBlock = false, hasAuthorization = false }) => (
   <header className="header">
     <div className="container">
       <div className="header__wrapper">
