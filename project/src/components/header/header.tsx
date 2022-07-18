@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../consts/consts';
 import { User } from '../../types/user';
 
 type HeaderProps = {
@@ -23,7 +24,7 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCo
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     {hasAuthorization &&
@@ -33,14 +34,14 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCo
                           <span className="header__favorite-count">{favoritesHotelsCount}</span>
                         </React.Fragment>
                       )}
-                  </a>
+                  </Link>
                 </li>
                 {hasAuthorization &&
                   (
                     <li className="header__nav-item">
-                      <a className="header__nav-link" href="#">
+                      <Link className="header__nav-link" to={AppRoute.Main}>
                         <span className="header__signout">Sign out</span>
-                      </a>
+                      </Link>
                     </li>
                   )}
                 {!hasAuthorization && <span className="header__login">Sign in</span>}

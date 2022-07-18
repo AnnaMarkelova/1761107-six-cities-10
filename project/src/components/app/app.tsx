@@ -1,6 +1,6 @@
 import { LoginScreen } from '../../pages/login-screen/login-screen';
-import React from 'react';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, BrowserRouter, Routes, useLocation } from 'react-router-dom';
 import { MainScreen } from '../../pages/main-screen/main-screen';
 import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
 import { getComments } from '../../mock/comments';
@@ -19,8 +19,19 @@ type MainScreenProps = {
   user: User;
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSort, hotels, favoritesHotels, user }) => (
   <BrowserRouter>
+    <ScrollToTop />
     <Routes>
       <Route
         path={AppRoute.Main}
@@ -51,7 +62,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         path={`${AppRoute.Room}`}
         element={
           < PropertyScreen
-            hotelId={1}
             user={user}
             comments={getComments()}
             favoritesHotelsCount={favoritesHotels.length}

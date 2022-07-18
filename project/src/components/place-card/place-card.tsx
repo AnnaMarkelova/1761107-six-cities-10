@@ -1,6 +1,7 @@
 import React from 'react';
 import { Hotel } from '../../types/hotel';
-import { cityCardType, hotelType } from '../../consts/consts';
+import { AppRoute, cityCardType, hotelType } from '../../consts/consts';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProps = {
   hotel: Hotel;
@@ -14,20 +15,17 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
     {cardType === cityCardType.CITIES_CARD &&
       (
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
+          <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>
             <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
-          </a>
-          {/* <Link to={`/${AppRoute.Room}/:id`}>
-            <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
-          </Link> */}
+          </Link>
         </div>
       )}
     {cardType === cityCardType.FAVORITES_CARD &&
       (
         <div className="favorites__image-wrapper place-card__image-wrapper">
-          <a href="#">
+          <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>
             <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
-          </a>
+          </Link>
         </div>
       )}
     <div className={`place-card__info ${cardType === cityCardType.FAVORITES_CARD && 'favorites__card-info'}`}>
@@ -54,7 +52,8 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href="#">{hotel.title}</a>
+        <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>{hotel.title}
+        </Link>
       </h2>
       <p className="place-card__type">{hotelType[hotel.type]}</p>
     </div>

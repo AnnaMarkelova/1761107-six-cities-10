@@ -13,14 +13,13 @@ import { User } from '../../types/user';
 const COUNT_PICTURES = 6;
 
 interface PropertyScreenProps {
-  hotelId: number;
   user: User;
   comments: Comment[];
   favoritesHotelsCount: number;
   nearHotels: Hotel[];
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ hotelId, user, comments, favoritesHotelsCount, nearHotels}) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels}) => {
 
   const params = useParams();
 
