@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { sortType } from './const/const';
+import { sortType } from './consts/consts';
 import { getHotelsByCity, getFavoriteHotels } from './mock/hotels';
 import { getUser } from './mock/user';
 

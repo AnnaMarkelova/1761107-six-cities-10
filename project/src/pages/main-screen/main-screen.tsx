@@ -1,7 +1,7 @@
 import React from 'react';
 import { Location } from '../../components/location/location';
 import { Hotel } from '../../types/hotel';
-import { cities } from '../../const/const';
+import { cities } from '../../consts/consts';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { CitiesMap } from '../../components/cities-map/cities-map';

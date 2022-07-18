@@ -1,7 +1,8 @@
 import React from 'react';
 import { Hotel } from '../../types/hotel';
 import { PlaceCard } from '../place-card/place-card';
-import { cityCardType } from '../../const/const';
+import { AppRoute, cityCardType } from '../../consts/consts';
+import { Link } from 'react-router-dom';
 
 type FavoritesLocationProps = {
   city: string
@@ -12,9 +13,9 @@ export const FavoriteLocation: React.FunctionComponent<FavoritesLocationProps> =
   <li className="favorites__locations-items">
     <div className="favorites__locations locations locations--current">
       <div className="locations__item">
-        <a className="locations__item-link" href="#">
+        <Link className="locations__item-link" to={AppRoute.Main}>
           <span>{city}</span>
-        </a>
+        </Link>
       </div>
     </div>
     <div className="favorites__places">
