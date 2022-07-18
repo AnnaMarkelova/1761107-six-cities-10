@@ -5,10 +5,11 @@ import { cityCardType, hotelType } from '../../consts/consts';
 type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
+  onMouseOver?: () => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType }) => (
-  <article className={`${cardType} place-card`}>
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onMouseOver }) => (
+  <article className={`${cardType} place-card`} onMouseOver = {() => onMouseOver && onMouseOver()}>
     {hotel.isPremium && <div className="place-card__mark"> <span>Premium</span> </div>}
     {cardType === cityCardType.CITIES_CARD &&
       (

@@ -1,7 +1,7 @@
 import React from 'react';
-import { cityCardType, sortType } from '../../consts/consts';
+import { sortType } from '../../consts/consts';
 import { Hotel } from '../../types/hotel';
-import { PlaceCard } from '../place-card/place-card';
+import { PlacesList } from '../places-list/places-list';
 
 type CitiesPlacesProps = {
   currentSort: string;
@@ -33,14 +33,9 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ curre
             )}
           </ul>
         </form>
-        <div className="cities__places-list places__list tabs__content">
-          {hotels.map((item) => (
-            <PlaceCard
-              key={item.id}
-              hotel={item}
-              cardType={cityCardType.CITIES_CARD}
-            />))}
-        </div>
+        < PlacesList
+          hotels={hotels}
+        />
       </section>
     );
   }
