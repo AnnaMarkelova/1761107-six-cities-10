@@ -10,11 +10,24 @@ const stars = () => {
   return starsArray;
 };
 
-export const RatingForm: React.FunctionComponent = () => (
+interface RatingFormProps {
+  value: number;
+  onChange: (value: number) => void
+}
+
+export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, onChange }) => (
   <div className="reviews__rating-form form__rating">
     {stars().map((item) => (
       <React.Fragment key={item}>
-        <input className="form__rating-input visually-hidden" name="rating" value={item} id={`${item}-stars`} type="radio" />
+        <input
+          className="form__rating-input visually-hidden"
+          name="rating"
+          value={item}
+          id={`${item}-stars`}
+          type="radio"
+          checked={item === value}
+          onChange={() => onChange && onChange(item)}
+        />
         <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>

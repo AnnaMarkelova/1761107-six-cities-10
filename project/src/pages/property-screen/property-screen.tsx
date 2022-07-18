@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { CommentCardNew } from '../../components/comment-card-new/comment-card-new';
 import { CommentCard } from '../../components/comment-card/comment-card';
 import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
-import { RatingForm } from '../../components/rating-form/rating-form';
 import { cityCardType, hotelType } from '../../consts/consts';
 import { getHotelById } from '../../mock/hotels';
 import { Comment } from '../../types/comment';
@@ -139,17 +139,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ h
                     />
                   ))}
                 </ul>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <RatingForm />
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
+                <CommentCardNew />
               </section>
             </div>
           </div>
