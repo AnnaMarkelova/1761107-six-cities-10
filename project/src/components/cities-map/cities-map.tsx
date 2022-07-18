@@ -6,9 +6,7 @@ type CitiesMapProps = {
 
 export const CitiesMap: React.FunctionComponent<CitiesMapProps> = ({ hotelsCount }) => (
   <div className="cities__right-section">
-    {hotelsCount
-      ? <section className="cities__map map"></section>
-      : ''}
+    {hotelsCount && <section className="cities__map map"></section>}
   </div>
 );
 

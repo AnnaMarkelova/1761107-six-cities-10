@@ -4,7 +4,7 @@ import { CommentCard } from '../../components/comment-card/comment-card';
 import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { RatingForm } from '../../components/rating-form/rating-form';
-import { cityCardType, hotelType } from '../../const/const';
+import { cityCardType, hotelType } from '../../consts/consts';
 import { getHotelById } from '../../mock/hotels';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
@@ -134,7 +134,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ h
                 <ul className="reviews__list">
                   {comments.map((item) => (
                     <CommentCard
-                      key={item.id}
+                      key={`{item.id} - ${item.user.id}`}
                       comment={item}
                     />
                   ))}

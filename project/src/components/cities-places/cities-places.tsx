@@ -1,5 +1,5 @@
 import React from 'react';
-import { cityCardType, sortType } from '../../const/const';
+import { cityCardType, sortType } from '../../consts/consts';
 import { Hotel } from '../../types/hotel';
 import { PlaceCard } from '../place-card/place-card';
 

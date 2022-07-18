@@ -28,10 +28,10 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCo
                     </div>
                     {hasAuthorization &&
                       (
-                        <React.StrictMode>
+                        <React.Fragment>
                           <span className="header__user-name user__name">{user?.email}</span>
                           <span className="header__favorite-count">{favoritesHotelsCount}</span>
-                        </React.StrictMode>
+                        </React.Fragment>
                       )}
                   </a>
                 </li>

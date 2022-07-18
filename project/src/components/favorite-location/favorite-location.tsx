@@ -1,7 +1,7 @@
 import React from 'react';
 import { Hotel } from '../../types/hotel';
 import { PlaceCard } from '../place-card/place-card';
-import { cityCardType } from '../../const/const';
+import { cityCardType } from '../../consts/consts';
 
 type FavoritesLocationProps = {
   city: string
