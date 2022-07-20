@@ -7,9 +7,10 @@ import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import { AppRoute, AuthorizationStatus } from '../../consts/consts';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
+import { AppRoute } from '../../consts/app-route';
+import { AuthorizationStatus } from '../../consts/authorization-status';
 
 type MainScreenProps = {
   currentCity: string;
@@ -59,7 +60,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         }
       />
       <Route
-        path={`${AppRoute.Room}`}
+        path={`${AppRoute.Room}/:id`}
         element={
           < PropertyScreen
             user={user}

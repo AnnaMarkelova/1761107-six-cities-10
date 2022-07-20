@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { sortType } from './consts/consts';
-import { getHotelsByCity, getFavoriteHotels } from './mock/hotels';
+import { sortType } from './consts/sort-type';
 import { getUser } from './mock/user';
+import { getFavoriteHotels, getHotelsByCity } from './utils/hotel-utils';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

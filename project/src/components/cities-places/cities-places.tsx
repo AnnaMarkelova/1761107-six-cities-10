@@ -1,5 +1,5 @@
 import React from 'react';
-import { sortType } from '../../consts/consts';
+import { sortType } from '../../consts/sort-type';
 import { Hotel } from '../../types/hotel';
 import { PlacesList } from '../places-list/places-list';
 

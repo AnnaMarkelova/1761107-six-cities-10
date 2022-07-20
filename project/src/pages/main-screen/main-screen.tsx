@@ -1,11 +1,10 @@
 import React from 'react';
-import { Location } from '../../components/location/location';
 import { Hotel } from '../../types/hotel';
-import { cities } from '../../consts/consts';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { CitiesMap } from '../../components/cities-map/cities-map';
 import { User } from '../../types/user';
+import { cities } from '../../consts/cities';
 
 type MainScreenProps = {
   currentCity: string;
@@ -33,10 +32,13 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
           <ul className="locations__list tabs__list">
             {cities.map((item) => (
               <li className="locations__item" key={item}>
-                <Location
-                  city={item}
-                  currentCity={currentCity}
-                />
+                <a className={`locations__item-link tabs__item ${currentCity === item
+                  ? 'tabs__item--active'
+                  : ''}`}
+                href="#/"
+                >
+                  <span>{item}</span>
+                </a>
               </li>
             ))}
           </ul>

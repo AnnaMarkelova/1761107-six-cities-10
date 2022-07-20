@@ -4,14 +4,14 @@ import { CommentCardNew } from '../../components/comment-card-new/comment-card-n
 import { CommentCard } from '../../components/comment-card/comment-card';
 import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
-import { cityCardType, hotelType } from '../../consts/consts';
-import { getHotelById } from '../../mock/hotels';
+import { cityCardType } from '../../consts/city-card-type';
+import { hotelType } from '../../consts/hotel-type';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
+import { getHotelById } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
-
 interface PropertyScreenProps {
   user: User;
   comments: Comment[];

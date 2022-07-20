@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../consts/consts';
+import { AppRoute } from '../../consts/app-route';
 import { User } from '../../types/user';
 
 type HeaderProps = {
@@ -29,10 +29,10 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCo
                     </div>
                     {hasAuthorization &&
                       (
-                        <React.Fragment>
+                        <>
                           <span className="header__user-name user__name">{user?.email}</span>
                           <span className="header__favorite-count">{favoritesHotelsCount}</span>
-                        </React.Fragment>
+                        </>
                       )}
                   </Link>
                 </li>

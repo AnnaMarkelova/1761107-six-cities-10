@@ -18,6 +18,7 @@ export const CommentCardNew: React.FunctionComponent = () => {
         }}
       />
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
+        value={formData.comment}
         onChange={(evt) => {
           const { value } = evt.target;
           setFormData({ ...formData, comment: value });

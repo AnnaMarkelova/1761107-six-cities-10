@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { cityCardType } from '../../consts/consts';
+import { cityCardType } from '../../consts/city-card-type';
 import { Hotel } from '../../types/hotel';
 import { PlaceCard } from '../place-card/place-card';
 
@@ -17,7 +17,7 @@ export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ hotels })
           key={item.id}
           hotel={item}
           cardType={cityCardType.CITIES_CARD}
-          onMouseOver={() => (setActivePlace(item.id))}
+          onMouseOver={(id) => (setActivePlace(id))}
         />))}
     </div>
   );

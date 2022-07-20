@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../consts/consts';
+import { AppRoute } from '../../consts/app-route';
 
 export const Footer: React.FunctionComponent = () => (
   <footer className="footer container">
