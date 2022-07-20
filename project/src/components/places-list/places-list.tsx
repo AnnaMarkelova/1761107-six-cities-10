@@ -17,7 +17,7 @@ export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ hotels })
           key={item.id}
           hotel={item}
           cardType={cityCardType.CITIES_CARD}
-          onMouseOver={(id) => (setActivePlace(id))}
+          onMouseOver={setActivePlace}
         />))}
     </div>
   );

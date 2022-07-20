@@ -1,13 +1,13 @@
 import React from 'react';
-import { Hotel } from '../../types/hotel';
+import { City, Hotel } from '../../types/hotel';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
-import { CitiesMap } from '../../components/cities-map/cities-map';
 import { User } from '../../types/user';
 import { cities } from '../../consts/cities';
+import { Map } from '../../components/map/map';
 
 type MainScreenProps = {
-  currentCity: string;
+  currentCity: City;
   currentSort: string;
   hotels: Hotel[];
   favoritesHotelsCount: number;
@@ -31,13 +31,13 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
         <section className="locations container">
           <ul className="locations__list tabs__list">
             {cities.map((item) => (
-              <li className="locations__item" key={item}>
+              <li className="locations__item" key={item.name}>
                 <a className={`locations__item-link tabs__item ${currentCity === item
                   ? 'tabs__item--active'
                   : ''}`}
                 href="#/"
                 >
-                  <span>{item}</span>
+                  <span>{item.name}</span>
                 </a>
               </li>
             ))}
@@ -53,9 +53,12 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
             currentSort={currentSort}
             hotels={hotels}
           />
-          <CitiesMap
-            hotelsCount={hotels.length}
-          />
+          <div className="cities__right-section">
+            {/* {hotelsCount && <section className="cities__map map"></section>} */}
+            <Map
+              city={cities[0]}
+            />
+          </div>
         </div>
       </div>
     </main>

@@ -5,7 +5,7 @@ import { MainScreen } from '../../pages/main-screen/main-screen';
 import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
 import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
-import { Hotel } from '../../types/hotel';
+import { City, Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
@@ -13,7 +13,7 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 
 type MainScreenProps = {
-  currentCity: string;
+  currentCity: City;
   currentSort: string;
   hotels: Hotel[];
   favoritesHotels: Hotel[];

@@ -1,9 +1,9 @@
 import { getHotels } from '../mock/hotels';
-import { Hotel } from '../types/hotel';
+import { City, Hotel } from '../types/hotel';
 
 const hotels = getHotels();
 
-export const getHotelsByCity = (city: string) => hotels.filter((item: Hotel) => item.city.name === city);
+export const getHotelsByCity = (city: City) => hotels.filter((item: Hotel) => item.city.name === city.name);
 
 export const getHotelById = (id: number) => hotels.find((item: Hotel) => item.id === id);
 
