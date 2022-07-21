@@ -54,10 +54,12 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
             hotels={hotels}
           />
           <div className="cities__right-section">
-            {/* {hotelsCount && <section className="cities__map map"></section>} */}
-            <Map
-              city={cities[0]}
-            />
+            {hotels.length > 0 &&
+              <section className="cities__map map">
+                <Map
+                  city={cities[0]}
+                />
+              </section>}
           </div>
         </div>
       </div>

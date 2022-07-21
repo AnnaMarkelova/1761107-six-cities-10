@@ -58,13 +58,12 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                {/* Это свойство не работает, спросить у куратора property__bookmark-button--active */}
                 <button className={`property__bookmark-button button ${hotel.isFavorite
                   ? 'property__bookmark-button--active'
                   : ''
-                }`} type="button"
+                  }`} type="button"
                 >
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>

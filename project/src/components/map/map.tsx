@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef } from 'react';
-//import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/useMap';
 import { City } from '../../types/hotel';
 
 type MapProps = {
@@ -9,11 +9,11 @@ type MapProps = {
 
 export const Map: React.FunctionComponent<MapProps> = ({ city }) => {
   const mapRef = useRef(null);
-  //const map = useMap(mapRef, city);
+  const map = useMap(mapRef, city);
 
   return (
     <div
-      style={{height: '500px'}}
+      style={{height: '810px', width: '525px', marginLeft: 'inherit', marginRight: 'auto'} }
       ref={mapRef}
     >
     </div>
