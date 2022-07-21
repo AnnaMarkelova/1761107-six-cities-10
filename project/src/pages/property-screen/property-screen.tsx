@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { CommentCardNew } from '../../components/comment-card-new/comment-card-new';
-import { CommentCard } from '../../components/comment-card/comment-card';
+import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
@@ -19,7 +18,7 @@ interface PropertyScreenProps {
   nearHotels: Hotel[];
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels}) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels }) => {
 
   const params = useParams();
 
@@ -128,18 +127,9 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ul className="reviews__list">
-                  {comments.map((item) => (
-                    <CommentCard
-                      key={`{item.id} - ${item.user.id}`}
-                      comment={item}
-                    />
-                  ))}
-                </ul>
-                <CommentCardNew />
-              </section>
+              <CommentsList
+                comments={comments}
+              />
             </div>
           </div>
           <section className="property__map map"></section>
