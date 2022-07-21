@@ -6,9 +6,10 @@ import { PlacesList } from '../places-list/places-list';
 type CitiesPlacesProps = {
   currentSort: string;
   hotels: Hotel[];
+  onListItemHover: (id: number | undefined) => void;
 }
 
-export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ currentSort, hotels }) => {
+export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ currentSort, hotels, onListItemHover }) => {
   if (hotels.length) {
     return (
       <section className="cities__places places">
@@ -35,6 +36,7 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ curre
         </form>
         < PlacesList
           hotels={hotels}
+          onListItemHover={onListItemHover}
         />
       </section>
     );

@@ -9,13 +9,20 @@ type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
   onMouseOver?: (id:number) => void;
+  onListItemHover?: (id: number | undefined) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onMouseOver }) => (
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onMouseOver, onListItemHover }) => (
   <article
     className={`${cardType} place-card`}
-    onMouseEnter = {() => onMouseOver && onMouseOver(hotel.id)}
-    onMouseLeave = {() => onMouseOver && onMouseOver(0)}
+    onMouseEnter = {() => {
+      onMouseOver && onMouseOver(hotel.id);
+      onListItemHover && onListItemHover(hotel.id);
+    }}
+    onMouseLeave = {() => {
+      onMouseOver && onMouseOver(0);
+      onListItemHover && onListItemHover(undefined);
+    }}
   >
     {hotel.isPremium && <div className="place-card__mark"> <span>Premium</span> </div>}
     {cardType === cityCardType.CITIES_CARD &&

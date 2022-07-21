@@ -5,9 +5,10 @@ import { PlaceCard } from '../place-card/place-card';
 
 type PlacesListProps = {
   hotels: Hotel[];
+  onListItemHover: (id: number | undefined) => void;
 }
 
-export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ hotels }) => {
+export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ hotels, onListItemHover }) => {
   const [, setActivePlace] = useState<number>();
 
   return (
@@ -18,6 +19,7 @@ export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ hotels })
           hotel={item}
           cardType={cityCardType.CITIES_CARD}
           onMouseOver={setActivePlace}
+          onListItemHover={onListItemHover}
         />))}
     </div>
   );
