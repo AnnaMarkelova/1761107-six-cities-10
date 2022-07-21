@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { City, Hotel } from '../../types/hotel';
+import { Hotel } from '../../types/hotel';
+import { City } from '../../types/city';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { User } from '../../types/user';

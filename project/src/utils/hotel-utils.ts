@@ -1,5 +1,6 @@
 import { getHotels } from '../mock/hotels';
-import { City, Hotel } from '../types/hotel';
+import { Hotel } from '../types/hotel';
+import { City } from '../types/city';
 
 const hotels = getHotels();
 
