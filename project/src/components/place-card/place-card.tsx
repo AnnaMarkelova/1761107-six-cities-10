@@ -8,19 +8,16 @@ import { hotelType } from '../../consts/hotel-type';
 type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
-  onMouseOver?: (id:number) => void;
   onListItemHover?: (id: number | undefined) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onMouseOver, onListItemHover }) => (
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => (
   <article
     className={`${cardType} place-card`}
     onMouseEnter = {() => {
-      onMouseOver && onMouseOver(hotel.id);
       onListItemHover && onListItemHover(hotel.id);
     }}
     onMouseLeave = {() => {
-      onMouseOver && onMouseOver(0);
       onListItemHover && onListItemHover(undefined);
     }}
   >

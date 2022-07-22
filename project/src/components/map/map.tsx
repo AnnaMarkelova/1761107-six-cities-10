@@ -12,9 +12,12 @@ type MapProps = {
   city: City;
   hotels: Hotel[];
   selectedHotel: Hotel | undefined;
+  styleHeight: string;
+  styleWidth: string;
+  styleMargin?: string;
 }
 
-export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel }) => {
+export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel, styleHeight, styleWidth, styleMargin}) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -51,7 +54,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedH
 
   return (
     <div
-      style={{ height: '810px', width: '525px', marginLeft: 'inherit', marginRight: 'auto' }}
+      style={{ height: styleHeight, width: styleWidth, margin: styleMargin }}
       ref={mapRef}
     >
     </div>

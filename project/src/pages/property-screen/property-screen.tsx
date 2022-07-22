@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
+import { Map } from '../../components/map/map';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
@@ -21,8 +22,14 @@ interface PropertyScreenProps {
 export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels }) => {
 
   const params = useParams();
-
   const hotel = getHotelById(Number(params.id));
+
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
+
+  const onListItemHover = (listItemId:number | undefined) => {
+    const currentHotel = nearHotels.find((item) => item.id === listItemId);
+    setSelectedHotel(currentHotel ? currentHotel : undefined);
+  };
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
@@ -131,7 +138,16 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              city={hotel.city}
+              hotels={nearHotels}
+              selectedHotel={selectedHotel}
+              styleHeight='579px'
+              styleWidth='1146px'
+              styleMargin='0 auto'
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -142,6 +158,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   key={item.id}
                   hotel={item}
                   cardType={cityCardType.CITIES_CARD}
+                  onListItemHover={onListItemHover}
                 />))}
             </div>
           </section>

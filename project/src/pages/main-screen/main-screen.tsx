@@ -71,6 +71,8 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
                     city={currentCity}
                     hotels={hotels}
                     selectedHotel={selectedHotel}
+                    styleHeight='800px'
+                    styleWidth='512px'
                   />
                 </section>}
             </div>
