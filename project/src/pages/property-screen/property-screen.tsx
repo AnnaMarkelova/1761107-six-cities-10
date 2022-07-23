@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CommentCardNew } from '../../components/comment-card-new/comment-card-new';
-import { CommentCard } from '../../components/comment-card/comment-card';
+import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
+import { Map } from '../../components/map/map';
 import { PlaceCard } from '../../components/place-card/place-card';
-import { cityCardType, hotelType } from '../../consts/consts';
-import { getHotelById } from '../../mock/hotels';
+import { cityCardType } from '../../consts/city-card-type';
+import { hotelType } from '../../consts/hotel-type';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
+import { getHotelById } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
-
 interface PropertyScreenProps {
   user: User;
   comments: Comment[];
@@ -19,11 +19,17 @@ interface PropertyScreenProps {
   nearHotels: Hotel[];
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels}) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels }) => {
 
   const params = useParams();
-
   const hotel = getHotelById(Number(params.id));
+
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
+
+  const onListItemHover = (listItemId:number | undefined) => {
+    const currentHotel = nearHotels.find((item) => item.id === listItemId);
+    setSelectedHotel(currentHotel ? currentHotel : undefined);
+  };
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
@@ -59,13 +65,12 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                {/* Это свойство не работает, спросить у куратора property__bookmark-button--active */}
                 <button className={`property__bookmark-button button ${hotel.isFavorite
                   ? 'property__bookmark-button--active'
                   : ''
                 }`} type="button"
                 >
-                  <svg className="property__bookmark-icon" width="31" height="33">
+                  <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -128,21 +133,21 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ul className="reviews__list">
-                  {comments.map((item) => (
-                    <CommentCard
-                      key={`{item.id} - ${item.user.id}`}
-                      comment={item}
-                    />
-                  ))}
-                </ul>
-                <CommentCardNew />
-              </section>
+              <CommentsList
+                comments={comments}
+              />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map
+              city={hotel.city}
+              hotels={nearHotels}
+              selectedHotel={selectedHotel}
+              styleHeight='579px'
+              styleWidth='1146px'
+              styleMargin='0 auto'
+            />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -153,6 +158,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   key={item.id}
                   hotel={item}
                   cardType={cityCardType.CITIES_CARD}
+                  onListItemHover={onListItemHover}
                 />))}
             </div>
           </section>

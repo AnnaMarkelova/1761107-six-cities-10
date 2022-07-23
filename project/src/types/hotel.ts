@@ -1,20 +1,6 @@
-type Location = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-};
-
-type City = {
-  location: Location;
-  name: string;
-}
-
-type Host = {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
-}
+import { City } from './city';
+import { Host } from './host';
+import { Location } from './location';
 
 export interface Hotel {
   bedrooms: number;

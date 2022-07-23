@@ -1,21 +1,31 @@
 import React from 'react';
 import { Hotel } from '../../types/hotel';
-import { AppRoute, cityCardType, hotelType } from '../../consts/consts';
 import { Link } from 'react-router-dom';
+import { cityCardType } from '../../consts/city-card-type';
+import { AppRoute } from '../../consts/app-route';
+import { hotelType } from '../../consts/hotel-type';
 
 type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
-  onMouseOver?: () => void;
+  onListItemHover?: (id: number | undefined) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onMouseOver }) => (
-  <article className={`${cardType} place-card`} onMouseOver = {() => onMouseOver && onMouseOver()}>
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => (
+  <article
+    className={`${cardType} place-card`}
+    onMouseEnter = {() => {
+      onListItemHover && onListItemHover(hotel.id);
+    }}
+    onMouseLeave = {() => {
+      onListItemHover && onListItemHover(undefined);
+    }}
+  >
     {hotel.isPremium && <div className="place-card__mark"> <span>Premium</span> </div>}
     {cardType === cityCardType.CITIES_CARD &&
       (
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>
+          <Link to={{pathname: `${AppRoute.Room}/${hotel.id}`}}>
             <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
           </Link>
         </div>
@@ -23,8 +33,8 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
     {cardType === cityCardType.FAVORITES_CARD &&
       (
         <div className="favorites__image-wrapper place-card__image-wrapper">
-          <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>
-            <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110" alt="Place image" />
+          <Link to={{pathname: `${AppRoute.Room}/${hotel.id}`}}>
+            <img className="place-card__image" src={hotel.previewImage} width="150" height="110" alt="Place image" />
           </Link>
         </div>
       )}
