@@ -1,11 +1,10 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { City } from '../types/city';
+import { useAppSelector } from '.';
 
-export default function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  city: City
-): Map | null {
+export default function useMap( mapRef: MutableRefObject<HTMLElement | null> ): Map | null {
+
+  const city = useAppSelector((state) => state.city);
 
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
@@ -33,6 +32,9 @@ export default function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
+    // return () => {
+    //   isRenderedRef.current = false;
+    // };
   }, [mapRef, city]);
 
   return map;

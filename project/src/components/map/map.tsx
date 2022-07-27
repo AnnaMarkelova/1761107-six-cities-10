@@ -1,23 +1,29 @@
 import React, { AllHTMLAttributes, useEffect } from 'react';
 import { useRef } from 'react';
-import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/useMap';
 import { Hotel } from '../../types/hotel';
-import { City } from '../../types/city';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from './consts/markers';
+import { useAppSelector } from '../../hooks';
+import { Icon, Marker } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
+import { getHotelsByCity } from '../../utils/hotel-utils';
+
 
 type MapProps = {
-  city: City;
-  hotels: Hotel[];
   selectedHotel: Hotel | undefined;
-  style: AllHTMLAttributes< string >;
+  style: AllHTMLAttributes<string>;
+  isMainScreen?: boolean;
 }
 
-export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel, style}) => {
+export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, isMainScreen = true }) => {
+
+  const { city, hotels } = useAppSelector((state) => state);
+
+  const selectedHotels = isMainScreen ? hotels : [...getHotelsByCity(city).slice(0,3), selectedHotel];
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef);
 
   const defaultCustomIcon = new Icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -33,15 +39,15 @@ export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedH
 
   useEffect(() => {
     if (map) {
-      hotels.forEach((hotel) => {
+      selectedHotels.forEach((hotel) => {
         const marker = new Marker({
-          lat: hotel.location.latitude,
-          lng: hotel.location.longitude
+          lat: hotel ? hotel.location.latitude : 0,
+          lng: hotel ? hotel.location.longitude : 0
         });
 
         marker
           .setIcon(
-            selectedHotel !== undefined && hotel.id === selectedHotel.id
+            selectedHotel !== undefined && hotel?.id === selectedHotel.id
               ? currentCustomIcon
               : defaultCustomIcon
           )

@@ -6,7 +6,6 @@ import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
 import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { Hotel } from '../../types/hotel';
-import { City } from '../../types/city';
 import { User } from '../../types/user';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
@@ -14,9 +13,7 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 
 type MainScreenProps = {
-  currentCity: City;
   currentSort: string;
-  hotels: Hotel[];
   favoritesHotels: Hotel[];
   user: User;
 }
@@ -31,7 +28,7 @@ function ScrollToTop() {
   return null;
 }
 
-const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSort, hotels, favoritesHotels, user }) => (
+const App: React.FunctionComponent<MainScreenProps> = ({ currentSort, favoritesHotels, user }) => (
   <BrowserRouter>
     <ScrollToTop />
     <Routes>
@@ -39,9 +36,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
         path={AppRoute.Main}
         element={
           < MainScreen
-            currentCity={currentCity}
             currentSort={currentSort}
-            hotels={hotels}
             favoritesHotelsCount={favoritesHotels.length}
             user={user}
           />
@@ -67,7 +62,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentCity, currentSor
             user={user}
             comments={getComments()}
             favoritesHotelsCount={favoritesHotels.length}
-            nearHotels={[hotels[1], hotels[2], hotels[3]]}
           />
         }
       />

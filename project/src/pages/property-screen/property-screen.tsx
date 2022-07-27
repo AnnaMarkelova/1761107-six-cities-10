@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
@@ -8,29 +8,21 @@ import { PlaceCard } from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { Comment } from '../../types/comment';
-import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import { getHotelById } from '../../utils/hotel-utils';
+import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
 interface PropertyScreenProps {
   user: User;
   comments: Comment[];
   favoritesHotelsCount: number;
-  nearHotels: Hotel[];
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels }) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount }) => {
 
   const params = useParams();
   const hotel = getHotelById(Number(params.id));
-
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
-
-  const onListItemHover = (listItemId:number | undefined) => {
-    const currentHotel = nearHotels.find((item) => item.id === listItemId);
-    setSelectedHotel(currentHotel ? currentHotel : undefined);
-  };
+  const nearHotels = hotel ? getHotelsByCity(hotel.city).slice(0,3) : [];
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
@@ -145,13 +137,12 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
           </div>
           <section className="property__map map">
             <Map
-              city={hotel.city}
-              hotels={nearHotels}
-              selectedHotel={selectedHotel}
+              selectedHotel={hotel}
               style={{
                 height: '579px',
                 width: '1146px'
               }}
+              isMainScreen={false}
             />
           </section>
         </section>
@@ -164,7 +155,6 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   key={item.id}
                   hotel={item}
                   cardType={cityCardType.CITIES_CARD}
-                  onListItemHover={onListItemHover}
                 />))}
             </div>
           </section>

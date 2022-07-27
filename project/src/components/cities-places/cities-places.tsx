@@ -1,20 +1,22 @@
 import React from 'react';
 import { sortType } from '../../consts/sort-type';
-import { Hotel } from '../../types/hotel';
+import { useAppSelector } from '../../hooks';
 import { PlacesList } from '../places-list/places-list';
 
 type CitiesPlacesProps = {
   currentSort: string;
-  hotels: Hotel[];
   onListItemHover: (id: number | undefined) => void;
 }
 
-export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ currentSort, hotels, onListItemHover }) => {
+export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ currentSort, onListItemHover }) => {
+
+  const {city, hotels} = useAppSelector((state) => state);
+
   if (hotels.length) {
     return (
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{hotels.length} places to stay in Amsterdam</b>
+        <b className="places__found">{hotels.length} places to stay in {city.name}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -45,7 +47,7 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ curre
     <section className="cities__no-places">
       <div className="cities__status-wrapper tabs__content">
         <b className="cities__status">No places to stay available</b>
-        <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+        <p className="cities__status-description">We could not find any property available at the moment in {city.name}</p>
       </div>
     </section>
   );
