@@ -62,7 +62,7 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={{pathname: `${AppRoute.Room.replace(':id', `${hotel.id}`)}`}}>{hotel.title}
+        <Link to={{pathname: `${AppRoute.Room}/${hotel.id}`}}>{hotel.title}
         </Link>
       </h2>
       <p className="place-card__type">{hotelType[hotel.type]}</p>
