@@ -16,6 +16,18 @@ type MapProps = {
   isMainScreen?: boolean;
 }
 
+const defaultCustomIcon = new Icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, isMainScreen = true }) => {
 
   const { city, hotels } = useAppSelector((state) => state);
@@ -23,19 +35,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, i
   const selectedHotels = isMainScreen ? hotels : [...getHotelsByCity(city).slice(0,3), selectedHotel];
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef);
-
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
@@ -54,7 +54,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, i
           .addTo(map);
       });
     }
-  }, [map, selectedHotel]);
+  }, [map, selectedHotel, selectedHotels]);
 
   return (
     <div
