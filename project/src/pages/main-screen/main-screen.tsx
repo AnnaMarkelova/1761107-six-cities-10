@@ -6,6 +6,7 @@ import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { User } from '../../types/user';
 import { cities } from '../../consts/cities';
 import { Map } from '../../components/map/map';
+import classNames from 'classnames';
 
 type MainScreenProps = {
   currentCity: City;
@@ -24,6 +25,18 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
     setSelectedHotel(currentHotel ? currentHotel : undefined);
   };
 
+  const mainClass = classNames ({
+    'page__main': true,
+    'page__main--index': true,
+    'page__main--index-empty': !hotels.length
+  });
+
+  const placesContainerClass = classNames ({
+    'container': true,
+    'cities__places-container': true,
+    'cities__places-container--empty': !hotels.length
+  });
+
   return (
     <div className="page page--gray page--main">
       <Header
@@ -32,10 +45,7 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
         hasLoginBlock
         hasAuthorization
       />
-      <main className={`page__main page__main--index ${hotels.length
-        ? ''
-        : 'page__main--index-empty'}`}
-      >
+      <main className={mainClass}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -55,10 +65,7 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
           </section>
         </div>
         <div className="cities">
-          <div className={`cities__places-container container ${hotels.length
-            ? ''
-            : 'cities__places-container--empty'}`}
-          >
+          <div className={placesContainerClass}>
             <CitiesPlaces
               currentSort={currentSort}
               hotels={hotels}

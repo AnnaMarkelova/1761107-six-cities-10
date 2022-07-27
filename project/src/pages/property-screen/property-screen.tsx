@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
@@ -35,6 +36,18 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
     return <p> Page not found </p>;
   }
 
+  const btnClass = classNames ({
+    'button': true,
+    'property__bookmark-button': true,
+    'property__bookmark-button--active': hotel.isFavorite
+  });
+
+  const userAvatarClass = classNames ({
+    'property__avatar-wrapper': true,
+    'user__avatar-wrapper': true,
+    'property__avatar-wrapper--pro': hotel.host.isPro
+  });
+
   return (
     <div className="page">
       <Header
@@ -65,11 +78,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                <button className={`property__bookmark-button button ${hotel.isFavorite
-                  ? 'property__bookmark-button--active'
-                  : ''
-                }`} type="button"
-                >
+                <button className={btnClass} type="button">
                   <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -111,11 +120,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${hotel.host.isPro
-                    ? 'property__avatar-wrapper--pro'
-                    : ''
-                  }`}
-                  >
+                  <div className={userAvatarClass}>
                     <img className="property__avatar user__avatar" src={hotel.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
