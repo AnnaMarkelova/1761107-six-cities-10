@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { AllHTMLAttributes, useEffect } from 'react';
 import { useRef } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/useMap';
 import { Hotel } from '../../types/hotel';
 import { City } from '../../types/city';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../consts/markers';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from './consts/markers';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -12,12 +12,10 @@ type MapProps = {
   city: City;
   hotels: Hotel[];
   selectedHotel: Hotel | undefined;
-  styleHeight: string;
-  styleWidth: string;
-  styleMargin?: string;
+  style: AllHTMLAttributes< string >;
 }
 
-export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel, styleHeight, styleWidth, styleMargin}) => {
+export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel, style}) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -54,7 +52,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedH
 
   return (
     <div
-      style={{ height: styleHeight, width: styleWidth, margin: styleMargin }}
+      style={{ height: style.height, width: style.width, margin: '0 auto' }}
       ref={mapRef}
     >
     </div>

@@ -148,9 +148,10 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               city={hotel.city}
               hotels={nearHotels}
               selectedHotel={selectedHotel}
-              styleHeight='579px'
-              styleWidth='1146px'
-              styleMargin='0 auto'
+              style={{
+                height: '579px',
+                width: '1146px'
+              }}
             />
           </section>
         </section>

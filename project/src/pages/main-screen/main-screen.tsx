@@ -20,18 +20,18 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
 
-  const onListItemHover = (listItemId:number | undefined) => {
+  const onListItemHover = (listItemId: number | undefined) => {
     const currentHotel = hotels.find((item) => item.id === listItemId);
     setSelectedHotel(currentHotel ? currentHotel : undefined);
   };
 
-  const mainClass = classNames ({
+  const mainClass = classNames({
     'page__main': true,
     'page__main--index': true,
     'page__main--index-empty': !hotels.length
   });
 
-  const placesContainerClass = classNames ({
+  const placesContainerClass = classNames({
     'container': true,
     'cities__places-container': true,
     'cities__places-container--empty': !hotels.length
@@ -78,8 +78,10 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentCi
                     city={currentCity}
                     hotels={hotels}
                     selectedHotel={selectedHotel}
-                    styleHeight='100%'
-                    styleWidth='512px'
+                    style={{
+                      height: '100%',
+                      width: '512px'
+                    }}
                   />
                 </section>}
             </div>
