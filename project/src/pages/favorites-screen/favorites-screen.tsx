@@ -4,6 +4,7 @@ import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
 import { FavoriteLocation } from '../../components/favorite-location/favorite-location';
 import { Footer } from '../../components/footer/footer';
+import classNames from 'classnames';
 
 type FavoritesScreenProps = {
   favoritesHotels: Hotel[]
@@ -14,11 +15,13 @@ export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
+  const pageClass = classNames ({
+    'page': true,
+    'page--favorites-empty': !favoritesHotels.length
+  });
+
   return (
-    <div className={`page ${favoritesHotels.length
-      ? ''
-      : 'page--favorites-empty'}`}
-    >
+    <div className={pageClass}>
       <Header
         favoritesHotelsCount={favoritesHotels.length}
         user={user}

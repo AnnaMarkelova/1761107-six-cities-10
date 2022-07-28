@@ -1,60 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { AllHTMLAttributes, useEffect } from 'react';
 import { useRef } from 'react';
-import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/useMap';
 import { Hotel } from '../../types/hotel';
-import { City } from '../../types/city';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../consts/markers';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from './consts/markers';
+import { useAppSelector } from '../../hooks';
+import { Icon, Marker } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
+
 type MapProps = {
-  city: City;
-  hotels: Hotel[];
   selectedHotel: Hotel | undefined;
-  styleHeight: string;
-  styleWidth: string;
-  styleMargin?: string;
+  hotels: Hotel [];
+  style: AllHTMLAttributes<string>;
 }
 
-export const Map: React.FunctionComponent<MapProps> = ({ city, hotels, selectedHotel, styleHeight, styleWidth, styleMargin}) => {
+const defaultCustomIcon = new Icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, style}) => {
+
+  const { city } = useAppSelector((state) => state.reducerCity);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
 
   useEffect(() => {
     if (map) {
       hotels.forEach((hotel) => {
         const marker = new Marker({
-          lat: hotel.location.latitude,
-          lng: hotel.location.longitude
+          lat: hotel ? hotel.location.latitude : 0,
+          lng: hotel ? hotel.location.longitude : 0
         });
 
         marker
           .setIcon(
-            selectedHotel !== undefined && hotel.id === selectedHotel.id
+            selectedHotel !== undefined && hotel?.id === selectedHotel.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
           .addTo(map);
       });
     }
-  }, [map, selectedHotel]);
+  }, [map, selectedHotel, hotels]);
 
   return (
     <div
-      style={{ height: styleHeight, width: styleWidth, margin: styleMargin }}
+      style={{ height: style.height, width: style.width, margin: '0 auto' }}
       ref={mapRef}
     >
     </div>

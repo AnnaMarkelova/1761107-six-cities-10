@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import classNames from 'classnames';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
@@ -7,33 +8,37 @@ import { PlaceCard } from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { Comment } from '../../types/comment';
-import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import { getHotelById } from '../../utils/hotel-utils';
+import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
 interface PropertyScreenProps {
   user: User;
   comments: Comment[];
   favoritesHotelsCount: number;
-  nearHotels: Hotel[];
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount, nearHotels }) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount }) => {
 
   const params = useParams();
   const hotel = getHotelById(Number(params.id));
-
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
-
-  const onListItemHover = (listItemId:number | undefined) => {
-    const currentHotel = nearHotels.find((item) => item.id === listItemId);
-    setSelectedHotel(currentHotel ? currentHotel : undefined);
-  };
+  const nearHotels = hotel ? getHotelsByCity(hotel.city).slice(0,3) : [];
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
   }
+
+  const btnClass = classNames ({
+    'button': true,
+    'property__bookmark-button': true,
+    'property__bookmark-button--active': hotel.isFavorite
+  });
+
+  const userAvatarClass = classNames ({
+    'property__avatar-wrapper': true,
+    'user__avatar-wrapper': true,
+    'property__avatar-wrapper--pro': hotel.host.isPro
+  });
 
   return (
     <div className="page">
@@ -65,11 +70,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                <button className={`property__bookmark-button button ${hotel.isFavorite
-                  ? 'property__bookmark-button--active'
-                  : ''
-                }`} type="button"
-                >
+                <button className={btnClass} type="button">
                   <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -111,11 +112,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper user__avatar-wrapper ${hotel.host.isPro
-                    ? 'property__avatar-wrapper--pro'
-                    : ''
-                  }`}
-                  >
+                  <div className={userAvatarClass}>
                     <img className="property__avatar user__avatar" src={hotel.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
@@ -140,12 +137,12 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
           </div>
           <section className="property__map map">
             <Map
-              city={hotel.city}
-              hotels={nearHotels}
-              selectedHotel={selectedHotel}
-              styleHeight='579px'
-              styleWidth='1146px'
-              styleMargin='0 auto'
+              selectedHotel={hotel}
+              hotels={[...nearHotels, hotel]}
+              style={{
+                height: '579px',
+                width: '1146px'
+              }}
             />
           </section>
         </section>
@@ -158,7 +155,6 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
                   key={item.id}
                   hotel={item}
                   cardType={cityCardType.CITIES_CARD}
-                  onListItemHover={onListItemHover}
                 />))}
             </div>
           </section>

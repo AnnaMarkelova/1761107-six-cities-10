@@ -8,7 +8,6 @@ type PrivateRouteProps = {
   children: JSX.Element;
 }
 
-
 export const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({ authorizationStatus, children }) => (
   authorizationStatus === AuthorizationStatus.Auth
     ? children
