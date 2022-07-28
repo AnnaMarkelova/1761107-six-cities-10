@@ -13,7 +13,6 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 
 type MainScreenProps = {
-  currentSort: string;
   favoritesHotels: Hotel[];
   user: User;
 }
@@ -28,7 +27,7 @@ function ScrollToTop() {
   return null;
 }
 
-const App: React.FunctionComponent<MainScreenProps> = ({ currentSort, favoritesHotels, user }) => (
+const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }) => (
   <BrowserRouter>
     <ScrollToTop />
     <Routes>
@@ -36,7 +35,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ currentSort, favoritesH
         path={AppRoute.Main}
         element={
           < MainScreen
-            currentSort={currentSort}
             favoritesHotelsCount={favoritesHotels.length}
             user={user}
           />

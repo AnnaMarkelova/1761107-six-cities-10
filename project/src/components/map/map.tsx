@@ -30,7 +30,7 @@ const currentCustomIcon = new Icon({
 
 export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, isMainScreen = true }) => {
 
-  const { city, hotels } = useAppSelector((state) => state);
+  const { city, hotels } = useAppSelector((state) => state.reducerCity);
 
   const selectedHotels = isMainScreen ? hotels : [...getHotelsByCity(city).slice(0,3), selectedHotel];
 

@@ -9,14 +9,13 @@ import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
 
 type MainScreenProps = {
-  currentSort: string;
   favoritesHotelsCount: number;
   user: User;
 }
 
-export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentSort, favoritesHotelsCount, user }) => {
+export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount, user }) => {
 
-  const hotels = useAppSelector((state) => state.hotels);
+  const hotels = useAppSelector((state) => state.reducerCity.hotels);
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
 
@@ -53,7 +52,6 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ currentSo
         <div className="cities">
           <div className={placesContainerClass}>
             <CitiesPlaces
-              currentSort={currentSort}
               onListItemHover={onListItemHover}
             />
             <div className="cities__right-section">
