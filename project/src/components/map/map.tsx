@@ -7,13 +7,12 @@ import { useAppSelector } from '../../hooks';
 import { Icon, Marker } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import { getHotelsByCity } from '../../utils/hotel-utils';
 
 
 type MapProps = {
   selectedHotel: Hotel | undefined;
+  hotels: Hotel [];
   style: AllHTMLAttributes<string>;
-  isMainScreen?: boolean;
 }
 
 const defaultCustomIcon = new Icon({
@@ -28,18 +27,16 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, isMainScreen = true }) => {
+export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, style}) => {
 
-  const { city, hotels } = useAppSelector((state) => state.reducerCity);
-
-  const selectedHotels = isMainScreen ? hotels : [...getHotelsByCity(city).slice(0,3), selectedHotel];
+  const { city } = useAppSelector((state) => state.reducerCity);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      selectedHotels.forEach((hotel) => {
+      hotels.forEach((hotel) => {
         const marker = new Marker({
           lat: hotel ? hotel.location.latitude : 0,
           lng: hotel ? hotel.location.longitude : 0
@@ -54,7 +51,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, style, i
           .addTo(map);
       });
     }
-  }, [map, selectedHotel, selectedHotels]);
+  }, [map, selectedHotel, hotels]);
 
   return (
     <div

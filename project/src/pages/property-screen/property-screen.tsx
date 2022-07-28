@@ -138,11 +138,11 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
           <section className="property__map map">
             <Map
               selectedHotel={hotel}
+              hotels={[...nearHotels, hotel]}
               style={{
                 height: '579px',
                 width: '1146px'
               }}
-              isMainScreen={false}
             />
           </section>
         </section>

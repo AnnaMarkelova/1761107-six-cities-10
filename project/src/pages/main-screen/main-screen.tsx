@@ -59,6 +59,7 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favorites
                 <section className="cities__map map">
                   <Map
                     selectedHotel={selectedHotel}
+                    hotels={hotels}
                     style={{
                       height: '100%',
                       width: '512px'
