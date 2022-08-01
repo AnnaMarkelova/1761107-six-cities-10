@@ -5,7 +5,7 @@ import { sortType } from '../consts/sort-type';
 
 const hotelsMock = getHotels();
 
-export const getHotelsByCity = (city: City) => hotelsMock.filter((item: Hotel) => item.city.name === city.name);
+export const getHotelsByCity = (hotels: Hotel[], city: City) => hotels.filter((item: Hotel) => item.city.name === city.name);
 
 export const getHotelById = (id: number) => hotelsMock.find((item: Hotel) => item.id === id);
 

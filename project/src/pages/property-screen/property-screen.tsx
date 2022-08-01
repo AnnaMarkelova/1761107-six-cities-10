@@ -7,6 +7,7 @@ import { Map } from '../../components/map/map';
 import { PlaceCard } from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
+import { useAppSelector } from '../../hooks';
 import { Comment } from '../../types/comment';
 import { User } from '../../types/user';
 import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
@@ -22,7 +23,11 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
 
   const params = useParams();
   const hotel = getHotelById(Number(params.id));
-  const nearHotels = hotel ? getHotelsByCity(hotel.city).slice(0,3) : [];
+
+  const city = useAppSelector((state) => state.reducer.city);
+  const hotels = useAppSelector((state) => state.reducer.hotels);
+
+  const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0,3) : [];
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
@@ -141,7 +146,8 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               hotels={[...nearHotels, hotel]}
               style={{
                 height: '579px',
-                width: '1146px'
+                width: '1146px',
+                margin: '0 auto',
               }}
             />
           </section>

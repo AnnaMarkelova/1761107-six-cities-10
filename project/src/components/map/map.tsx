@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, useEffect } from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import { useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { Hotel } from '../../types/hotel';
@@ -12,7 +12,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   selectedHotel: Hotel | undefined;
   hotels: Hotel [];
-  style: AllHTMLAttributes<string>;
+  style: CSSProperties;
 }
 
 const defaultCustomIcon = new Icon({
@@ -29,7 +29,7 @@ const currentCustomIcon = new Icon({
 
 export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, style}) => {
 
-  const { city } = useAppSelector((state) => state.reducerCity);
+  const { city } = useAppSelector((state) => state.reducer);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -55,7 +55,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, 
 
   return (
     <div
-      style={{ height: style.height, width: style.width, margin: '0 auto' }}
+      style={{ height: style.height, width: style.width, margin: style.margin }}
       ref={mapRef}
     >
     </div>

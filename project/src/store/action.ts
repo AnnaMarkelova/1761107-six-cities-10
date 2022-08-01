@@ -11,11 +11,4 @@ export const setCity = createAction(
 
 export const setDefaultCity = createAction('mainPage/setDefaultCity');
 
-export const setSort = createAction(
-  'mainPage/setSort',
-  (value: string) => (
-    {
-      payload: value,
-    }
-  ));
 

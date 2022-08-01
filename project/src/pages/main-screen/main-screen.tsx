@@ -7,6 +7,7 @@ import { Map } from '../../components/map/map';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
+import { getHotelsByCity } from '../../utils/hotel-utils';
 
 type MainScreenProps = {
   favoritesHotelsCount: number;
@@ -15,25 +16,28 @@ type MainScreenProps = {
 
 export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount, user }) => {
 
-  const hotels = useAppSelector((state) => state.reducerCity.hotels);
+  const city = useAppSelector((state) => state.reducer.city);
+  const hotels = useAppSelector((state) => state.reducer.hotels);
+
+  const hotelsByCity = getHotelsByCity(hotels, city);
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
 
   const onListItemHover = (listItemId: number | undefined) => {
-    const currentHotel = hotels.find((item) => item.id === listItemId);
+    const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
     setSelectedHotel(currentHotel ? currentHotel : undefined);
   };
 
   const mainClass = classNames({
     'page__main': true,
     'page__main--index': true,
-    'page__main--index-empty': !hotels.length
+    'page__main--index-empty': !hotelsByCity.length
   });
 
   const placesContainerClass = classNames({
     'container': true,
     'cities__places-container': true,
-    'cities__places-container--empty': !hotels.length
+    'cities__places-container--empty': !hotelsByCity.length
   });
 
   return (
@@ -55,11 +59,11 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favorites
               onListItemHover={onListItemHover}
             />
             <div className="cities__right-section">
-              {hotels.length > 0 &&
+              {hotelsByCity.length > 0 &&
                 <section className="cities__map map">
                   <Map
                     selectedHotel={selectedHotel}
-                    hotels={hotels}
+                    hotels={hotelsByCity}
                     style={{
                       height: '100%',
                       width: '512px'
