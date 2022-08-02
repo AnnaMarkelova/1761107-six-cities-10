@@ -1,13 +1,26 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadHotels, requireAuthorization } from './action';
+import { loadHotels, requireAuthorization, setError } from './action';
 import { saveToken, dropToken } from '../services/token';
-import { AuthorizationStatus } from '../consts/authorization-status.js';
-import { APIRoute } from '../consts/api-route.js';
+import { AuthorizationStatus } from '../consts/authorization-status';
+import { APIRoute } from '../consts/api-route';
 import { AuthData } from '../types/auth-data';
 import { User } from '../types/user.js';
 import { Hotel } from '../types/hotel.js';
+import { store } from './index';
+
+const TIMEOUT_SHOW_ERROR = 5000;
+
+export const clearErrorAction = createAsyncThunk(
+  'clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
+  },
+);
 
 export const fetchQuestionAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,

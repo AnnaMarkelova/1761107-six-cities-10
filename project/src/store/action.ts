@@ -17,3 +17,4 @@ export const loadHotels = createAction<Hotel[]>('data/loadHotels');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
+export const setError = createAction<string | null>('setError');
