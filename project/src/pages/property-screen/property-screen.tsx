@@ -24,8 +24,8 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
   const params = useParams();
   const hotel = getHotelById(Number(params.id));
 
-  const city = useAppSelector((state) => state.reducer.city);
-  const hotels = useAppSelector((state) => state.reducer.hotels);
+  const city = useAppSelector((state) => state.city);
+  const hotels = useAppSelector((state) => state.hotels);
 
   const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0,3) : [];
 

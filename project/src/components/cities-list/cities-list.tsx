@@ -6,7 +6,7 @@ import { setCity } from '../../store/action';
 
 export const CitiesList: React.FunctionComponent = () => {
 
-  const city = useAppSelector((state) => state.reducer.city);
+  const city = useAppSelector((state) => state.city);
 
   const dispatch = useAppDispatch();
 

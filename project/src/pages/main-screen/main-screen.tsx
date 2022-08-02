@@ -16,8 +16,8 @@ type MainScreenProps = {
 
 export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount, user }) => {
 
-  const city = useAppSelector((state) => state.reducer.city);
-  const hotels = useAppSelector((state) => state.reducer.hotels);
+  const city = useAppSelector((state) => state.city);
+  const hotels = useAppSelector((state) => state.hotels);
 
   const hotelsByCity = getHotelsByCity(hotels, city);
 

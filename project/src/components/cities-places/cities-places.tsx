@@ -11,7 +11,7 @@ type CitiesPlacesProps = {
 
 export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
 
-  const {city, hotels} = useAppSelector((state) => state.reducer);
+  const {city, hotels} = useAppSelector((state) => state);
   const hotelsByCity = getHotelsByCity(hotels, city);
 
   const [sort, setSort] = React.useState(sortType.POPULAR);

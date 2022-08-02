@@ -29,7 +29,7 @@ const currentCustomIcon = new Icon({
 
 export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, style}) => {
 
-  const { city } = useAppSelector((state) => state.reducer);
+  const { city } = useAppSelector((state) => state);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
