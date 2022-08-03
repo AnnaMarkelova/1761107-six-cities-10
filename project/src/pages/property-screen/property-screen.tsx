@@ -49,9 +49,6 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
     <div className="page">
       <Header
         favoritesHotelsCount={favoritesHotelsCount}
-        user={user}
-        hasLoginBlock
-        hasAuthorization
       />
 
       <main className="page__main page__main--property">

@@ -49,7 +49,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
           element={
             < MainScreen
               favoritesHotelsCount={favoritesHotels.length}
-              user={user}
             />
           }
         />

@@ -24,9 +24,6 @@ export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({
     <div className={pageClass}>
       <Header
         favoritesHotelsCount={favoritesHotels.length}
-        user={user}
-        hasLoginBlock
-        hasAuthorization
       />
       {favoritesHotels.length && (
         <main className="page__main page__main--favorites">

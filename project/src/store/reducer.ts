@@ -3,12 +3,14 @@ import { AuthorizationStatus } from '../consts/authorization-status';
 import { cities } from '../consts/cities';
 import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
-import { loadHotels, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError } from './action';
+import { User } from '../types/user';
+import { loadHotels, loadUser, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError } from './action';
 
 type initialState = {
   city: City,
   hotels: Hotel[],
   authorizationStatus: AuthorizationStatus,
+  user: User
   error: string | null,
   isDataLoaded: boolean,
 };
@@ -17,6 +19,14 @@ const initialState: initialState = {
   city: cities[0],
   hotels: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  user: {
+    avatarUrl: '',
+    email: '',
+    id: 0,
+    isPro: false,
+    name: '',
+    token: '',
+  },
   error: null,
   isDataLoaded: false,
 };
@@ -35,6 +45,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadUser, (state, action) => {
+      state.user = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

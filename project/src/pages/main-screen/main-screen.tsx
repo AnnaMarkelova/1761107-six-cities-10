@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Hotel } from '../../types/hotel';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
-import { User } from '../../types/user';
 import { Map } from '../../components/map/map';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
@@ -11,13 +10,11 @@ import { getHotelsByCity } from '../../utils/hotel-utils';
 
 type MainScreenProps = {
   favoritesHotelsCount: number;
-  user: User;
 }
 
-export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount, user }) => {
+export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount }) => {
 
-  const city = useAppSelector((state) => state.city);
-  const hotels = useAppSelector((state) => state.hotels);
+  const { city, hotels} = useAppSelector((state) => state);
 
   const hotelsByCity = getHotelsByCity(hotels, city);
 
@@ -44,9 +41,6 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favorites
     <div className="page page--gray page--main">
       <Header
         favoritesHotelsCount={favoritesHotelsCount}
-        user={user}
-        hasLoginBlock
-        hasAuthorization
       />
       <main className={mainClass}>
         <h1 className="visually-hidden">Cities</h1>
