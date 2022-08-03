@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadHotels, requireAuthorization, setError } from './action';
+import { loadHotels, requireAuthorization, setDataLoadedStatus, setError } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { APIRoute } from '../consts/api-route';
@@ -30,7 +30,9 @@ export const fetchQuestionAction = createAsyncThunk<void, undefined, {
   'data/fetchHotels',
   async (_arg, { dispatch, extra: api }) => {
     const { data } = await api.get<Hotel[]>(APIRoute.Hotels);
+    dispatch(setDataLoadedStatus(true));
     dispatch(loadHotels(data));
+    dispatch(setDataLoadedStatus(false));
   },
 );
 

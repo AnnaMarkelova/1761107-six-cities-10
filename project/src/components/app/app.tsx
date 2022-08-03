@@ -11,6 +11,9 @@ import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
+import { useAppSelector } from '../../hooks';
+import { LoaderThreeDots } from '../loader/loader';
+import { isCheckedAuth } from '../../utils/hotel-utils';
 
 type MainScreenProps = {
   favoritesHotels: Hotel[];
@@ -27,59 +30,70 @@ function ScrollToTop() {
   return null;
 }
 
-const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }) => (
-  <BrowserRouter>
-    <ScrollToTop />
-    <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={
-          < MainScreen
-            favoritesHotelsCount={favoritesHotels.length}
-            user={user}
-          />
-        }
-      />
-      <Route
-        path={AppRoute.Favorites}
-        element={
-          <PrivateRoute
-            authorizationStatus={AuthorizationStatus.Auth}
-          >
-            < FavoritesScreen
-              favoritesHotels={favoritesHotels}
+const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }) => {
+
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <LoaderThreeDots />
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={
+            < MainScreen
+              favoritesHotelsCount={favoritesHotels.length}
               user={user}
             />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path={`${AppRoute.Room}/:id`}
-        element={
-          < PropertyScreen
-            user={user}
-            comments={getComments()}
-            favoritesHotelsCount={favoritesHotels.length}
-          />
-        }
-      />
-      <Route
-        path={AppRoute.Login}
-        element={
-          < LoginScreen
-            favoritesHotelsCount={favoritesHotels.length}
-          />
-        }
-      />
-      <Route
-        path="*"
-        element={
-          <NotFoundScreen />
-        }
-      />
-    </Routes>
-  </BrowserRouter>
+          }
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.Auth}
+            >
+              < FavoritesScreen
+                favoritesHotels={favoritesHotels}
+                user={user}
+              />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.Room}/:id`}
+          element={
+            < PropertyScreen
+              user={user}
+              comments={getComments()}
+              favoritesHotelsCount={favoritesHotels.length}
+            />
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={
+            < LoginScreen
+              favoritesHotelsCount={favoritesHotels.length}
+            />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <NotFoundScreen />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
 
-);
+  );
+};
 
 export default App;

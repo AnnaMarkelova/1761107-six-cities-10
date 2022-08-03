@@ -3,13 +3,14 @@ import { AuthorizationStatus } from '../consts/authorization-status';
 import { cities } from '../consts/cities';
 import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
-import { loadHotels, requireAuthorization, setCity, setDefaultCity, setError } from './action';
+import { loadHotels, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError } from './action';
 
 type initialState = {
   city: City,
   hotels: Hotel[],
   authorizationStatus: AuthorizationStatus,
   error: string | null,
+  isDataLoaded: boolean,
 };
 
 const initialState: initialState = {
@@ -17,6 +18,7 @@ const initialState: initialState = {
   hotels: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
+  isDataLoaded: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -36,6 +38,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
     });
 });
 

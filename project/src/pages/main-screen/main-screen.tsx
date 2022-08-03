@@ -51,7 +51,7 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favorites
       <main className={mainClass}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList/>
+          <CitiesList />
         </div>
         <div className="cities">
           <div className={placesContainerClass}>

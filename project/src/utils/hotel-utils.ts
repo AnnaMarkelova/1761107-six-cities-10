@@ -2,6 +2,7 @@ import { getHotels } from '../mock/hotels';
 import { Hotel } from '../types/hotel';
 import { City } from '../types/city';
 import { sortType } from '../consts/sort-type';
+import { AuthorizationStatus } from '../consts/authorization-status';
 
 const hotelsMock = getHotels();
 
@@ -29,3 +30,6 @@ export const sortHotels = [
     getSortHotels: (hotels: Hotel[]) => hotels.slice().sort((hotelA, hotelB) => hotelB.rating - hotelA.rating)
   },
 ];
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean => authorizationStatus === AuthorizationStatus.Unknown;
+
