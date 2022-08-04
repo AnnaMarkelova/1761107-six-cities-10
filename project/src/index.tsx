@@ -6,7 +6,7 @@ import { ErrorMessage } from './components/error-message/error-message';
 import { getUser } from './mock/user';
 import { store } from './store';
 import { getFavoriteHotels } from './utils/hotel-utils';
-import {checkAuthAction, fetchQuestionAction} from './store/api-actions';
+import { checkAuthAction, fetchQuestionAction } from './store/api-actions';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchQuestionAction());
@@ -31,4 +31,3 @@ root.render(
     </Provider>
   </React.StrictMode>,
 );
-

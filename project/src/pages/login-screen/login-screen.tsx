@@ -1,9 +1,6 @@
 import React, { FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
-import { AppRoute } from '../../consts/app-route';
-import { AuthorizationStatus } from '../../consts/authorization-status';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
@@ -16,10 +13,7 @@ export const LoginScreen: React.FunctionComponent<LoginScreenProps> = ({ favorit
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -36,9 +30,6 @@ export const LoginScreen: React.FunctionComponent<LoginScreenProps> = ({ favorit
     }
   };
 
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    navigate(AppRoute.Main);
-  }
   return (
     <div className="page page--gray page--login">
       <Header

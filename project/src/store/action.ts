@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AppRoute } from '../consts/app-route';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
@@ -23,3 +24,5 @@ export const loadUser = createAction<User>('data/loadUser');
 export const setError = createAction<string | null>('setError');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
+
+export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

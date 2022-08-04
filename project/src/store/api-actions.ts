@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadHotels, loadUser, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { APIRoute } from '../consts/api-route';
@@ -9,6 +9,7 @@ import { AuthData } from '../types/auth-data';
 import { User } from '../types/user.js';
 import { Hotel } from '../types/hotel.js';
 import { store } from './index';
+import { AppRoute } from '../consts/app-route';
 
 const TIMEOUT_SHOW_ERROR = 5000;
 
@@ -63,6 +64,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     saveToken(data.token);
     dispatch(loadUser(data));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   },
 );
 
@@ -76,5 +78,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute(AppRoute.Main));
   },
 );

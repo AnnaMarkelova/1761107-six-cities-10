@@ -1,6 +1,6 @@
 import { LoginScreen } from '../../pages/login-screen/login-screen';
 import React, { useEffect } from 'react';
-import { Route, BrowserRouter, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { MainScreen } from '../../pages/main-screen/main-screen';
 import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
 import { getComments } from '../../mock/comments';
@@ -14,6 +14,8 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
 import { isCheckedAuth } from '../../utils/hotel-utils';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type MainScreenProps = {
   favoritesHotels: Hotel[];
@@ -41,7 +43,9 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter
+      history={browserHistory}
+    >
       <ScrollToTop />
       <Routes>
         <Route
@@ -90,8 +94,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
           }
         />
       </Routes>
-    </BrowserRouter>
-
+    </HistoryRouter>
   );
 };
 
