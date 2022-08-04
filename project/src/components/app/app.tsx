@@ -13,7 +13,6 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
-import { isCheckedAuth } from '../../utils/hotel-utils';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
@@ -36,7 +35,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
 
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
     return (
       <LoaderThreeDots />
     );
@@ -64,7 +63,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
             >
               < FavoritesScreen
                 favoritesHotels={favoritesHotels}
-                user={user}
               />
             </PrivateRoute>
           }
@@ -73,7 +71,6 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }
           path={`${AppRoute.Room}/:id`}
           element={
             < PropertyScreen
-              user={user}
               comments={getComments()}
               favoritesHotelsCount={favoritesHotels.length}
             />

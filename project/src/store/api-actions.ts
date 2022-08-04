@@ -23,7 +23,7 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchQuestionAction = createAsyncThunk<void, undefined, {
+export const fetchHotelsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance

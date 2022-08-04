@@ -9,17 +9,16 @@ import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppSelector } from '../../hooks';
 import { Comment } from '../../types/comment';
-import { User } from '../../types/user';
 import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
+const COUNT_STARS = 5;
 interface PropertyScreenProps {
-  user: User;
   comments: Comment[];
   favoritesHotelsCount: number;
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ user, comments, favoritesHotelsCount }) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ comments, favoritesHotelsCount }) => {
 
   const params = useParams();
   const hotel = getHotelById(Number(params.id));
@@ -81,7 +80,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ u
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: hotel.rating * 10 }}></span>
+                  <span style={{width:`${ Math.round(hotel.rating) / COUNT_STARS * 100}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{hotel.rating}</span>

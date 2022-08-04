@@ -1,17 +1,15 @@
 import React from 'react';
 import { Header } from '../../components/header/header';
 import { Hotel } from '../../types/hotel';
-import { User } from '../../types/user';
 import { FavoriteLocation } from '../../components/favorite-location/favorite-location';
 import { Footer } from '../../components/footer/footer';
 import classNames from 'classnames';
 
 type FavoritesScreenProps = {
   favoritesHotels: Hotel[]
-  user: User
 }
 
-export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({ favoritesHotels, user }) => {
+export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({ favoritesHotels }) => {
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
