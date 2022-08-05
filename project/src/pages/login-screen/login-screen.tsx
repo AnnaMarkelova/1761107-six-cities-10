@@ -1,6 +1,9 @@
 import React, { FormEvent, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute } from '../../consts/app-route';
+import { AuthorizationStatus } from '../../consts/authorization-status';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
@@ -14,6 +17,13 @@ export const LoginScreen: React.FunctionComponent<LoginScreenProps> = ({ favorit
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const {authorizationStatus} = useAppSelector((state) => state);
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    navigate(AppRoute.Main);
+  }
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

@@ -1,13 +1,16 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
 import { Map } from '../../components/map/map';
 import { PlaceCard } from '../../components/place-card/place-card';
+import { AppRoute } from '../../consts/app-route';
+import { AuthorizationStatus } from '../../consts/authorization-status';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchHotelStatusAction } from '../../store/api-actions';
 import { Comment } from '../../types/comment';
 import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
 
@@ -21,24 +24,29 @@ interface PropertyScreenProps {
 export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ comments, favoritesHotelsCount }) => {
 
   const params = useParams();
-  const hotel = getHotelById(Number(params.id));
 
-  const city = useAppSelector((state) => state.city);
-  const hotels = useAppSelector((state) => state.hotels);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0,3) : [];
+  const { city, hotels, authorizationStatus, isHotelStatusLoaded } = useAppSelector((state) => state);
+
+  const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
+
+  const hotel = getHotelById(hotels, Number(params.id));
+
+  const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0, 3) : [];
 
   if (hotel === undefined) {
     return <p> Page not found </p>;
   }
 
-  const btnClass = classNames ({
+  const btnClass = classNames({
     'button': true,
     'property__bookmark-button': true,
-    'property__bookmark-button--active': hotel.isFavorite
+    'property__bookmark-button--active': hasAuthorization ? hotel.isFavorite : false,
   });
 
-  const userAvatarClass = classNames ({
+  const userAvatarClass = classNames({
     'property__avatar-wrapper': true,
     'user__avatar-wrapper': true,
     'property__avatar-wrapper--pro': hotel.host.isPro
@@ -71,7 +79,18 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ c
                 <h1 className="property__name">
                   {hotel.title}
                 </h1>
-                <button className={btnClass} type="button">
+                <button
+                  onClick={() => {
+                    if (!hasAuthorization) {
+                      navigate(AppRoute.Login);
+                      return;
+                    }
+                    dispatch(fetchHotelStatusAction({ hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1 }));
+                  }}
+                  className={btnClass}
+                  type="button"
+                  disabled={isHotelStatusLoaded}
+                >
                   <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -80,7 +99,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ c
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width:`${ Math.round(hotel.rating) / COUNT_STARS * 100}%`}}></span>
+                  <span style={{ width: `${Math.round(hotel.rating) / COUNT_STARS * 100}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{hotel.rating}</span>
@@ -162,6 +181,6 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ c
           </section>
         </div>
       </main>
-    </div>
+    </div >
   );
 };

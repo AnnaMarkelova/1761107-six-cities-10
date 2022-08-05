@@ -6,7 +6,6 @@ import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
 import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { Hotel } from '../../types/hotel';
-import { User } from '../../types/user';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
 import { AppRoute } from '../../consts/app-route';
@@ -18,7 +17,6 @@ import browserHistory from '../../browser-history';
 
 type MainScreenProps = {
   favoritesHotels: Hotel[];
-  user: User;
 }
 
 function ScrollToTop() {
@@ -31,7 +29,7 @@ function ScrollToTop() {
   return null;
 }
 
-const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels, user }) => {
+const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels }) => {
 
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
 

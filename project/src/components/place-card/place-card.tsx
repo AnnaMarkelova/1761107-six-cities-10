@@ -5,8 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { cityCardType } from '../../consts/city-card-type';
 import { AppRoute } from '../../consts/app-route';
 import { hotelType } from '../../consts/hotel-type';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
+import { fetchHotelStatusAction } from '../../store/api-actions';
 
 const COUNT_STARS = 5;
 
@@ -18,10 +19,11 @@ type PlaceCardProps = {
 
 export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus, isHotelStatusLoaded } = useAppSelector((state) => state);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const btnClass = classNames ({
     'button': true,
@@ -68,13 +70,16 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={btnClass}
-            type="button"
             onClick={() => {
               if (!hasAuthorization) {
                 navigate(AppRoute.Login);
+                return;
               }
+              dispatch(fetchHotelStatusAction({hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1}));
             }}
+            className={btnClass}
+            type="button"
+            disabled={isHotelStatusLoaded}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

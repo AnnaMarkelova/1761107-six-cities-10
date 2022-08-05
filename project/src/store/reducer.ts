@@ -4,7 +4,7 @@ import { cities } from '../consts/cities';
 import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
 import { User } from '../types/user';
-import { loadHotels, loadUser, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError } from './action';
+import { loadHotels, loadUser, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError, setHotelStatusLoaded } from './action';
 
 type initialState = {
   city: City,
@@ -13,6 +13,7 @@ type initialState = {
   user: User
   error: string | null,
   isDataLoaded: boolean,
+  isHotelStatusLoaded: boolean,
 };
 
 const initialState: initialState = {
@@ -29,6 +30,7 @@ const initialState: initialState = {
   },
   error: null,
   isDataLoaded: false,
+  isHotelStatusLoaded: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -54,6 +56,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(setHotelStatusLoaded, (state, action) => {
+      state.isHotelStatusLoaded = action.payload;
     });
 });
 

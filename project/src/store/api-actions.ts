@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError } from './action';
+import { loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError, setHotelStatusLoaded } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { APIRoute } from '../consts/api-route';
@@ -30,10 +30,24 @@ export const fetchHotelsAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchHotels',
   async (_arg, { dispatch, extra: api }) => {
-    const { data } = await api.get<Hotel[]>(APIRoute.Hotels);
     dispatch(setDataLoadedStatus(true));
+    const { data } = await api.get<Hotel[]>(APIRoute.Hotels);
     dispatch(loadHotels(data));
     dispatch(setDataLoadedStatus(false));
+  },
+);
+
+export const fetchHotelStatusAction = createAsyncThunk<void, { hotelId: number, status: number }, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchHotelStatus',
+  async ({ hotelId, status }, { dispatch, extra: api }) => {
+    dispatch(setHotelStatusLoaded(true));
+    await api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
+    dispatch(fetchHotelsAction());
+    dispatch(setHotelStatusLoaded(false));
   },
 );
 
@@ -45,8 +59,9 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     try {
-      await api.get(APIRoute.Login);
+      const { data } = await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(loadUser(data));
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
@@ -60,7 +75,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data} = await api.post<User>(APIRoute.Login, { email, password });
+    const { data } = await api.post<User>(APIRoute.Login, { email, password });
     saveToken(data.token);
     dispatch(loadUser(data));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));

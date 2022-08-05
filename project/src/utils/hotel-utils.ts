@@ -7,7 +7,7 @@ const hotelsMock = getHotels();
 
 export const getHotelsByCity = (hotels: Hotel[], city: City) => hotels.filter((item: Hotel) => item.city.name === city.name);
 
-export const getHotelById = (id: number) => hotelsMock.find((item: Hotel) => item.id === id);
+export const getHotelById = (hotels: Hotel[], id: number) => hotels.find((item: Hotel) => item.id === id);
 
 export const getFavoriteHotels = () => hotelsMock.filter((item: Hotel) => item.isFavorite);
 

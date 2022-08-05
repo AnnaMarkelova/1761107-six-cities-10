@@ -25,4 +25,6 @@ export const setError = createAction<string | null>('setError');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
+export const setHotelStatusLoaded = createAction<boolean>('data/setHotelStatusLoaded');
+
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
