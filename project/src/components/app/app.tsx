@@ -57,7 +57,7 @@ const App: React.FunctionComponent<MainScreenProps> = ({ favoritesHotels }) => {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               < FavoritesScreen
                 favoritesHotels={favoritesHotels}
