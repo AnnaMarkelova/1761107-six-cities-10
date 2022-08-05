@@ -5,11 +5,9 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 
-type HeaderProps = {
-  favoritesHotelsCount?: number,
-}
+export const Header: React.FunctionComponent = () => {
 
-export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCount = 0 }) => {
+  const {favoritesHotels} = useAppSelector((state) => state);
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +35,7 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCo
                         </div>
                         <>
                           <span className="header__user-name user__name">{user.email}</span>
-                          <span className="header__favorite-count">{favoritesHotelsCount}</span>
+                          <span className="header__favorite-count">{favoritesHotels.length}</span>
                         </>
                       </Link>
                     </li>

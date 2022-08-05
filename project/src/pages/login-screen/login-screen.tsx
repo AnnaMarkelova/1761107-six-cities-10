@@ -7,11 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
-type LoginScreenProps = {
-  favoritesHotelsCount: number;
-}
-
-export const LoginScreen: React.FunctionComponent<LoginScreenProps> = ({ favoritesHotelsCount }) => {
+export const LoginScreen: React.FunctionComponent = () => {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -42,9 +38,7 @@ export const LoginScreen: React.FunctionComponent<LoginScreenProps> = ({ favorit
 
   return (
     <div className="page page--gray page--login">
-      <Header
-        favoritesHotelsCount={favoritesHotelsCount}
-      />
+      <Header />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">

@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError, setHotelStatusLoaded } from './action';
+import { loadFavoritesHotels, loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError, setHotelStatusLoaded } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { APIRoute } from '../consts/api-route';
@@ -37,6 +37,20 @@ export const fetchHotelsAction = createAsyncThunk<void, undefined, {
   },
 );
 
+export const fetchFavoritesHotelsAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavoritesHotels',
+  async (_arg, { dispatch, extra: api }) => {
+    dispatch(setDataLoadedStatus(true));
+    const { data } = await api.get<Hotel[]>(APIRoute.Favorite);
+    dispatch(loadFavoritesHotels(data));
+    dispatch(setDataLoadedStatus(false));
+  },
+);
+
 export const fetchHotelStatusAction = createAsyncThunk<void, { hotelId: number, status: number }, {
   dispatch: AppDispatch,
   state: State,
@@ -47,6 +61,7 @@ export const fetchHotelStatusAction = createAsyncThunk<void, { hotelId: number, 
     dispatch(setHotelStatusLoaded(true));
     await api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
     dispatch(fetchHotelsAction());
+    dispatch(fetchFavoritesHotelsAction());
     dispatch(setHotelStatusLoaded(false));
   },
 );

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Header } from '../../components/header/header';
-import { Hotel } from '../../types/hotel';
 import { FavoriteLocation } from '../../components/favorite-location/favorite-location';
 import { Footer } from '../../components/footer/footer';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks';
+import { LoaderThreeDots } from '../../components/loader/loader';
 
-type FavoritesScreenProps = {
-  favoritesHotels: Hotel[]
-}
+export const FavoritesScreen: React.FunctionComponent = () => {
 
-export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({ favoritesHotels }) => {
+  const {favoritesHotels, isDataLoaded} = useAppSelector((state) => state);
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
@@ -18,12 +17,16 @@ export const FavoritesScreen: React.FunctionComponent<FavoritesScreenProps> = ({
     'page--favorites-empty': !favoritesHotels.length
   });
 
+  if ( isDataLoaded) {
+    return (
+      <LoaderThreeDots />
+    );
+  }
+
   return (
     <div className={pageClass}>
-      <Header
-        favoritesHotelsCount={favoritesHotels.length}
-      />
-      {favoritesHotels.length && (
+      <Header />
+      {favoritesHotels.length > 0 && (
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">

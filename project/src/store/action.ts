@@ -17,6 +17,8 @@ export const setDefaultCity = createAction('mainPage/setDefaultCity');
 
 export const loadHotels = createAction<Hotel[]>('data/loadHotels');
 
+export const loadFavoritesHotels = createAction<Hotel[]>('data/loadFavoritesHotels');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const loadUser = createAction<User>('data/loadUser');

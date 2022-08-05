@@ -18,10 +18,9 @@ const COUNT_PICTURES = 6;
 const COUNT_STARS = 5;
 interface PropertyScreenProps {
   comments: Comment[];
-  favoritesHotelsCount: number;
 }
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ comments, favoritesHotelsCount }) => {
+export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ comments }) => {
 
   const params = useParams();
 
@@ -54,10 +53,7 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ c
 
   return (
     <div className="page">
-      <Header
-        favoritesHotelsCount={favoritesHotelsCount}
-      />
-
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">

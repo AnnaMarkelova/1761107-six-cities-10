@@ -8,11 +8,7 @@ import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
 import { getHotelsByCity } from '../../utils/hotel-utils';
 
-type MainScreenProps = {
-  favoritesHotelsCount: number;
-}
-
-export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favoritesHotelsCount }) => {
+export const MainScreen: React.FunctionComponent = () => {
 
   const { city, hotels} = useAppSelector((state) => state);
 
@@ -39,9 +35,7 @@ export const MainScreen: React.FunctionComponent<MainScreenProps> = ({ favorites
 
   return (
     <div className="page page--gray page--main">
-      <Header
-        favoritesHotelsCount={favoritesHotelsCount}
-      />
+      <Header />
       <main className={mainClass}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
