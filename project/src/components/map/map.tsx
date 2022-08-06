@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 
 
 type MapProps = {
-  selectedHotel: Hotel | undefined;
+  selectedHotel: Hotel | null;
   hotels: Hotel [];
   style: CSSProperties;
 }
@@ -44,7 +44,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, 
 
         marker
           .setIcon(
-            selectedHotel !== undefined && hotel?.id === selectedHotel.id
+            selectedHotel !== null && hotel?.id === selectedHotel.id
               ? currentCustomIcon
               : defaultCustomIcon
           )

@@ -18,6 +18,8 @@ export const setDefaultCity = createAction('mainPage/setDefaultCity');
 
 export const loadHotels = createAction<Hotel[]>('data/loadHotels');
 
+export const loadHotel = createAction<Hotel>('data/loadHotel');
+
 export const loadFavoritesHotels = createAction<Hotel[]>('data/loadFavoritesHotels');
 
 export const loadComments = createAction<Comment[]>('data/loadComments');

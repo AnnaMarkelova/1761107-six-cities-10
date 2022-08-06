@@ -14,11 +14,11 @@ export const MainScreen: React.FunctionComponent = () => {
 
   const hotelsByCity = getHotelsByCity(hotels, city);
 
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
 
   const onListItemHover = (listItemId: number | undefined) => {
     const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
-    setSelectedHotel(currentHotel ? currentHotel : undefined);
+    setSelectedHotel(currentHotel ? currentHotel : null);
   };
 
   const mainClass = classNames({
