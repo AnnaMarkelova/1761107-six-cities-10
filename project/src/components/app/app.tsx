@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { MainScreen } from '../../pages/main-screen/main-screen';
 import { FavoritesScreen } from '../../pages/favorites-screen/favorites-screen';
-import { getComments } from '../../mock/comments';
 import { PropertyScreen } from '../../pages/property-screen/property-screen';
 import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
@@ -26,58 +25,59 @@ function ScrollToTop() {
 
 const App: React.FunctionComponent = () => {
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (
       <LoaderThreeDots />
     );
   }
 
   return (
-    <HistoryRouter
-      history={browserHistory}
-    >
-      <ScrollToTop />
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={
-            < MainScreen />
-          }
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              < FavoritesScreen />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.Room}/:id`}
-          element={
-            < PropertyScreen
-              comments={getComments()}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={
-            < LoginScreen/>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <NotFoundScreen />
-          }
-        />
-      </Routes>
-    </HistoryRouter>
+    <>
+      <LoaderThreeDots isLoading={isDataLoading}/>
+      <HistoryRouter
+        history={browserHistory}
+      >
+        <ScrollToTop />
+        <Routes>
+          <Route
+            path={AppRoute.Main}
+            element={
+              < MainScreen />
+            }
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                < FavoritesScreen />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={`${AppRoute.Room}/:id`}
+            element={
+              < PropertyScreen />
+            }
+          />
+          <Route
+            path={AppRoute.Login}
+            element={
+              < LoginScreen/>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <NotFoundScreen />
+            }
+          />
+        </Routes>
+      </HistoryRouter>
+    </>
   );
 };
 

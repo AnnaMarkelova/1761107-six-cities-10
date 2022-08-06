@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AppRoute } from '../consts/app-route';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { City } from '../types/city';
+import { Comment } from '../types/comment';
 import { Hotel } from '../types/hotel';
 import { User } from '../types/user';
 
@@ -18,6 +19,8 @@ export const setDefaultCity = createAction('mainPage/setDefaultCity');
 export const loadHotels = createAction<Hotel[]>('data/loadHotels');
 
 export const loadFavoritesHotels = createAction<Hotel[]>('data/loadFavoritesHotels');
+
+export const loadComments = createAction<Comment[]>('data/loadComments');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 

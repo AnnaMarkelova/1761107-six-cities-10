@@ -31,7 +31,14 @@ export const Header: React.FunctionComponent = () => {
                     <li className="header__nav-item user">
                       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
-                          <img src={`${user.avatarUrl}`} width="20" height="20"/>
+                          <img
+                            src={`${user.avatarUrl}`}
+                            width="20"
+                            height="20"
+                            style={{
+                              borderRadius: '50%',
+                            }}
+                          />
                         </div>
                         <>
                           <span className="header__user-name user__name">{user.email}</span>

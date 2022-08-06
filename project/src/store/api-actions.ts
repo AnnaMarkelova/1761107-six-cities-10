@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { loadFavoritesHotels, loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError, setHotelStatusLoaded } from './action';
+import { loadComments, loadFavoritesHotels, loadHotels, loadUser, redirectToRoute, requireAuthorization, setDataLoadedStatus, setError, setHotelStatusLoaded } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { APIRoute } from '../consts/api-route';
@@ -10,6 +10,7 @@ import { User } from '../types/user.js';
 import { Hotel } from '../types/hotel.js';
 import { store } from './index';
 import { AppRoute } from '../consts/app-route';
+import { Comment } from '../types/comment.js';
 
 const TIMEOUT_SHOW_ERROR = 5000;
 
@@ -47,6 +48,20 @@ export const fetchFavoritesHotelsAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadedStatus(true));
     const { data } = await api.get<Hotel[]>(APIRoute.Favorite);
     dispatch(loadFavoritesHotels(data));
+    dispatch(setDataLoadedStatus(false));
+  },
+);
+
+export const fetchCommentsAction = createAsyncThunk<void, { hotelId: number }, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchHotels',
+  async ({ hotelId }, { dispatch, extra: api }) => {
+    dispatch(setDataLoadedStatus(true));
+    const { data } = await api.get<Comment[]>(`${APIRoute.Comments}/${hotelId}`);
+    dispatch(loadComments(data));
     dispatch(setDataLoadedStatus(false));
   },
 );

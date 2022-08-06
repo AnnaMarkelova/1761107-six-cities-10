@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
@@ -10,28 +10,29 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchHotelStatusAction } from '../../store/api-actions';
-import { Comment } from '../../types/comment';
+import { fetchCommentsAction, fetchHotelStatusAction } from '../../store/api-actions';
 import { getHotelById, getHotelsByCity } from '../../utils/hotel-utils';
 
 const COUNT_PICTURES = 6;
 const COUNT_STARS = 5;
-interface PropertyScreenProps {
-  comments: Comment[];
-}
 
-export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ comments }) => {
-
-  const params = useParams();
+export const PropertyScreen: React.FunctionComponent = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const params = useParams();
+
+  const hotelId = Number(params.id);
 
   const { city, hotels, authorizationStatus, isHotelStatusLoaded } = useAppSelector((state) => state);
 
+  useEffect(() => {
+    dispatch(fetchCommentsAction({hotelId}));
+  }, [hotelId, dispatch]);
+
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
-  const hotel = getHotelById(hotels, Number(params.id));
+  const hotel = getHotelById(hotels, hotelId);
 
   const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0, 3) : [];
 
@@ -140,15 +141,12 @@ export const PropertyScreen: React.FunctionComponent<PropertyScreenProps> = ({ c
                     </span>)}
                 </div>
                 <div className="property__description">
-                  {/* каждое предложение в отдельном параграфе! */}
                   <p className="property__text">
                     {hotel.description}
                   </p>
                 </div>
               </div>
-              <CommentsList
-                comments={comments}
-              />
+              <CommentsList />
             </div>
           </div>
           <section className="property__map map">

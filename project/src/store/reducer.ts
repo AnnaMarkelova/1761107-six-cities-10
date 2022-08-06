@@ -2,18 +2,20 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../consts/authorization-status';
 import { cities } from '../consts/cities';
 import { City } from '../types/city';
+import { Comment } from '../types/comment';
 import { Hotel } from '../types/hotel';
 import { User } from '../types/user';
-import { loadFavoritesHotels, loadHotels, loadUser, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError, setHotelStatusLoaded } from './action';
+import { loadComments, loadFavoritesHotels, loadHotels, loadUser, requireAuthorization, setCity, setDataLoadedStatus, setDefaultCity, setError, setHotelStatusLoaded } from './action';
 
 type initialState = {
   city: City,
   hotels: Hotel[],
   favoritesHotels: Hotel[],
+  comments: Comment[],
   authorizationStatus: AuthorizationStatus,
   user: User
   error: string | null,
-  isDataLoaded: boolean,
+  isDataLoading: boolean,
   isHotelStatusLoaded: boolean,
 };
 
@@ -21,6 +23,7 @@ const initialState: initialState = {
   city: cities[0],
   hotels: [],
   favoritesHotels: [],
+  comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   user: {
     avatarUrl: '',
@@ -31,7 +34,7 @@ const initialState: initialState = {
     token: '',
   },
   error: null,
-  isDataLoaded: false,
+  isDataLoading: false,
   isHotelStatusLoaded: false,
 };
 
@@ -50,6 +53,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFavoritesHotels, (state, action) => {
       state.favoritesHotels = action.payload;
     })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
@@ -60,7 +66,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
+      state.isDataLoading = action.payload;
     })
     .addCase(setHotelStatusLoaded, (state, action) => {
       state.isHotelStatusLoaded = action.payload;

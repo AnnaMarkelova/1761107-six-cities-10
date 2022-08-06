@@ -8,7 +8,7 @@ import { LoaderThreeDots } from '../../components/loader/loader';
 
 export const FavoritesScreen: React.FunctionComponent = () => {
 
-  const {favoritesHotels, isDataLoaded} = useAppSelector((state) => state);
+  const {favoritesHotels, isDataLoading} = useAppSelector((state) => state);
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
@@ -17,7 +17,7 @@ export const FavoritesScreen: React.FunctionComponent = () => {
     'page--favorites-empty': !favoritesHotels.length
   });
 
-  if ( isDataLoaded) {
+  if ( isDataLoading) {
     return (
       <LoaderThreeDots />
     );
