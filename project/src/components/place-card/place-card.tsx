@@ -7,7 +7,7 @@ import { AppRoute } from '../../consts/app-route';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { fetchHotelStatusAction } from '../../store/api-actions';
+import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
 
 const COUNT_STARS = 5;
 
@@ -15,11 +15,13 @@ type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
   onListItemHover?: (id: number | undefined) => void;
+  isNearbyCard?: boolean;
+  setNearHotelUpdated?:(value: boolean) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover, isNearbyCard = false, setNearHotelUpdated }) => {
 
-  const { authorizationStatus, isHotelStatusLoaded } = useAppSelector((state) => state);
+  const { authorizationStatus, isHotelStatusFavoriteLoading } = useAppSelector((state) => state);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const navigate = useNavigate();
@@ -75,11 +77,15 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
                 navigate(AppRoute.Login);
                 return;
               }
-              dispatch(fetchHotelStatusAction({hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1}));
+              dispatch(fetchHotelStatusFavoriteAction({hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1}));
+              if (isNearbyCard) {
+                fetchNearbyHotelsAction({hotelId: hotel.id});
+                setNearHotelUpdated && setNearHotelUpdated(true);
+              }
             }}
             className={btnClass}
             type="button"
-            disabled={isHotelStatusLoaded}
+            disabled={isHotelStatusFavoriteLoading}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

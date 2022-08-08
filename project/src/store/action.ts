@@ -18,9 +18,11 @@ export const setDefaultCity = createAction('mainPage/setDefaultCity');
 
 export const loadHotels = createAction<Hotel[]>('data/loadHotels');
 
-export const loadHotel = createAction<Hotel>('data/loadHotel');
+export const setCurrentHotel = createAction<Hotel>('propertyScreen/setCurrentHotel');
 
 export const loadFavoritesHotels = createAction<Hotel[]>('data/loadFavoritesHotels');
+
+export const loadNearbyHotels = createAction<Hotel[]>('data/loadNearbyHotels');
 
 export const loadComments = createAction<Comment[]>('data/loadComments');
 
@@ -32,6 +34,6 @@ export const setError = createAction<string | null>('setError');
 
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 
-export const setHotelStatusLoaded = createAction<boolean>('data/setHotelStatusLoaded');
+export const setHotelStatusFavoriteLoading = createAction<boolean>('data/setHotelStatusFavoriteLoading');
 
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

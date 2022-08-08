@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
@@ -10,8 +10,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusAction } from '../../store/api-actions';
-import { getHotelsByCity } from '../../utils/hotel-utils';
+import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
 
 const COUNT_PICTURES = 6;
 const COUNT_STARS = 5;
@@ -24,16 +23,26 @@ export const PropertyScreen: React.FunctionComponent = () => {
 
   const hotelId = Number(params.id);
 
-  const { city, hotels, currentHotel: hotel, authorizationStatus, isHotelStatusLoaded } = useAppSelector((state) => state);
+  const { currentHotel: hotel, authorizationStatus, isHotelStatusFavoriteLoading, nearbyHotels } = useAppSelector((state) => state);
+  const [nearHotelUpdated, setNearHotelUpdated] = useState(true);
+  const [hotelUpdated, setHotelUpdated] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchCommentsAction({hotelId}));
-    dispatch(fetchHotelAction({hotelId}));
-  }, [hotelId, dispatch]);
+    if (hotelUpdated && !isHotelStatusFavoriteLoading) {
+      dispatch(fetchHotelAction({hotelId}));
+      dispatch(fetchCommentsAction({hotelId}));
+      setHotelUpdated(false);
+    }
+  }, [hotelUpdated, hotelId, dispatch, isHotelStatusFavoriteLoading]);
+
+  useEffect(() => {
+    if (nearHotelUpdated && !isHotelStatusFavoriteLoading) {
+      dispatch(fetchNearbyHotelsAction({hotelId}));
+      setNearHotelUpdated(false);
+    }
+  }, [nearHotelUpdated, hotelId, dispatch, isHotelStatusFavoriteLoading]);
 
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
-
-  const nearHotels = hotel ? getHotelsByCity(hotels, city).slice(0, 3) : [];
 
   if (hotel === null) {
     return <p> Page not found </p>;
@@ -81,11 +90,12 @@ export const PropertyScreen: React.FunctionComponent = () => {
                       navigate(AppRoute.Login);
                       return;
                     }
-                    dispatch(fetchHotelStatusAction({ hotelId: hotel ? hotel.id : 0, status: hotel?.isFavorite ? 0 : 1 }));
+                    dispatch(fetchHotelStatusFavoriteAction({ hotelId: hotel ? hotel.id : 0, status: hotel?.isFavorite ? 0 : 1 }));
+                    setHotelUpdated(true);
                   }}
                   className={btnClass}
                   type="button"
-                  disabled={isHotelStatusLoaded}
+                  disabled={isHotelStatusFavoriteLoading}
                 >
                   <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -151,7 +161,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
           <section className="property__map map">
             <Map
               selectedHotel={hotel}
-              hotels={[...nearHotels]}
+              hotels={[...nearbyHotels, hotel].filter(Boolean)}
               style={{
                 height: '579px',
                 width: '1146px',
@@ -164,11 +174,13 @@ export const PropertyScreen: React.FunctionComponent = () => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {nearHotels.map((item) => (
+              {nearbyHotels.map((item) => (
                 <PlaceCard
                   key={item.id}
                   hotel={item}
                   cardType={cityCardType.CITIES_CARD}
+                  isNearbyCard
+                  setNearHotelUpdated={setNearHotelUpdated}
                 />))}
             </div>
           </section>

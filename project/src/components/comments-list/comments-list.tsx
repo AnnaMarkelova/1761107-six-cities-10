@@ -16,7 +16,7 @@ export const CommentsList: React.FunctionComponent = () => {
       <ul className="reviews__list">
         {comments.map((item) => (
           <CommentCard
-            key={`{item.id} - ${item.user.id}`}
+            key={`${item.id} - ${item.user.id}`}
             comment={item}
           />
         ))}
