@@ -26,13 +26,17 @@ export const loadNearbyHotels = createAction<Hotel[]>('data/loadNearbyHotels');
 
 export const loadComments = createAction<Comment[]>('data/loadComments');
 
+export const postComment = createAction<Comment>('data/postComments');
+
+export const setCommentLoading = createAction<boolean>('data/setCommentLoading');
+
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
 export const loadUser = createAction<User>('data/loadUser');
 
 export const setError = createAction<string | null>('setError');
 
-export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
+export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');
 
 export const setHotelStatusFavoriteLoading = createAction<boolean>('data/setHotelStatusFavoriteLoading');
 

@@ -5,7 +5,7 @@ import { City } from '../types/city';
 import { Comment } from '../types/comment';
 import { Hotel } from '../types/hotel';
 import { User } from '../types/user';
-import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, requireAuthorization, setCity, setCurrentHotel, setDataLoadedStatus, setDefaultCity, setError, setHotelStatusFavoriteLoading } from './action';
+import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, postComment, requireAuthorization, setCity, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setDefaultCity, setError, setHotelStatusFavoriteLoading } from './action';
 
 type initialState = {
   city: City,
@@ -14,11 +14,13 @@ type initialState = {
   favoritesHotels: Hotel[],
   nearbyHotels: Hotel[],
   comments: Comment[],
+  newComment: Comment | null,
   authorizationStatus: AuthorizationStatus,
   user: User | null,
   error: string | null,
   isDataLoading: boolean,
   isHotelStatusFavoriteLoading: boolean,
+  isCommentLoading: boolean,
 };
 
 const initialState: initialState = {
@@ -28,11 +30,13 @@ const initialState: initialState = {
   favoritesHotels: [],
   nearbyHotels: [],
   comments: [],
+  newComment: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
   error: null,
   isDataLoading: false,
   isHotelStatusFavoriteLoading: false,
+  isCommentLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -59,6 +63,12 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadComments, (state, action) => {
       state.comments = action.payload;
     })
+    .addCase(postComment, (state, action) => {
+      state.newComment = action.payload;
+    })
+    .addCase(setCommentLoading, (state, action) => {
+      state.isCommentLoading = action.payload;
+    })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
@@ -68,7 +78,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
-    .addCase(setDataLoadedStatus, (state, action) => {
+    .addCase(setDataLoadingStatus, (state, action) => {
       state.isDataLoading = action.payload;
     })
     .addCase(setHotelStatusFavoriteLoading, (state, action) => {

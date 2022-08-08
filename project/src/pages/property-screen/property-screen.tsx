@@ -11,6 +11,7 @@ import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
+import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
 const COUNT_PICTURES = 6;
 const COUNT_STARS = 5;
@@ -28,15 +29,18 @@ export const PropertyScreen: React.FunctionComponent = () => {
   const [hotelUpdated, setHotelUpdated] = useState(true);
 
   useEffect(() => {
-    if (hotelUpdated && !isHotelStatusFavoriteLoading) {
+    if (hotelUpdated || !isHotelStatusFavoriteLoading) {
       dispatch(fetchHotelAction({hotelId}));
-      dispatch(fetchCommentsAction({hotelId}));
       setHotelUpdated(false);
     }
   }, [hotelUpdated, hotelId, dispatch, isHotelStatusFavoriteLoading]);
 
   useEffect(() => {
-    if (nearHotelUpdated && !isHotelStatusFavoriteLoading) {
+    dispatch(fetchCommentsAction({hotelId}));
+  }, [hotelId, dispatch]);
+
+  useEffect(() => {
+    if (nearHotelUpdated || !isHotelStatusFavoriteLoading) {
       dispatch(fetchNearbyHotelsAction({hotelId}));
       setNearHotelUpdated(false);
     }
@@ -45,7 +49,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   if (hotel === null) {
-    return <p> Page not found </p>;
+    return <NotFoundScreen></NotFoundScreen>;
   }
 
   const btnClass = classNames({
