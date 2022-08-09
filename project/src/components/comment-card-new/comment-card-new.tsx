@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNewCommentAction } from '../../store/api-actions';
 import { RatingForm } from '../rating-form/rating-form';
@@ -13,8 +13,17 @@ export const CommentCardNew: React.FunctionComponent = () => {
     comment: '',
   });
 
-  const { currentHotel, isCommentLoading} = useAppSelector((state) => state);
+  const { currentHotel, isCommentLoading } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isCommentLoading) {
+      setFormData({
+        rating: 0,
+        comment: ''
+      });
+    }
+  }, [isCommentLoading]);
 
   const btnDisable = (formData.rating === 0 || formData.comment.length <= MIN_LENGTH_COMMENT) || isCommentLoading;
 
