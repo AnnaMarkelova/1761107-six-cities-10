@@ -35,6 +35,7 @@ export const Header: React.FunctionComponent = () => {
                             src={`${user?.avatarUrl}`}
                             width="20"
                             height="20"
+                            alt={user?.name}
                             style={{
                               borderRadius: '50%',
                             }}

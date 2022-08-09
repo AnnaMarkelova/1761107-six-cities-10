@@ -7,7 +7,7 @@ import { Hotel } from '../types/hotel';
 import { User } from '../types/user';
 import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, postComment, requireAuthorization, setCity, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setDefaultCity, setError, setHotelStatusFavoriteLoading } from './action';
 
-type initialState = {
+type initialStateType = {
   city: City,
   hotels: Hotel[],
   currentHotel: Hotel | null,
@@ -23,7 +23,7 @@ type initialState = {
   isCommentLoading: boolean,
 };
 
-const initialState: initialState = {
+const initialState: initialStateType = {
   city: cities[0],
   hotels: [],
   currentHotel: null,
