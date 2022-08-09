@@ -1,5 +1,8 @@
 import React from 'react';
 import { Comment } from '../../types/comment';
+import { humanizeDate } from '../../utils/utills';
+
+const COUNT_STARS = 5;
 
 type CommentCardProps = {
   comment: Comment;
@@ -18,14 +21,14 @@ export const CommentCard: React.FunctionComponent<CommentCardProps> = ({ comment
     <div className="reviews__info">
       <div className="reviews__rating rating">
         <div className="reviews__stars rating__stars">
-          <span style={{ width: comment.rating * 10 }}></span>
+          <span style={{ width: `${Math.round(comment.rating) / COUNT_STARS * 100}%` }}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
       <p className="reviews__text">
         {comment.comment}
       </p>
-      <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+      <time className="reviews__time" dateTime="2019-04-24">{humanizeDate(comment.date)}</time>
     </div>
   </li>
 );

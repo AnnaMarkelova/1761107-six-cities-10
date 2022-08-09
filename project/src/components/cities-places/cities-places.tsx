@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import { sortType } from '../../consts/sort-type';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSort } from '../../store/action';
+import { useAppSelector } from '../../hooks';
+import { getHotelsByCity } from '../../utils/hotel-utils';
 import { PlacesList } from '../places-list/places-list';
 
 type CitiesPlacesProps = {
@@ -11,11 +11,10 @@ type CitiesPlacesProps = {
 
 export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
 
-  const dispatch = useAppDispatch();
+  const {city, hotels} = useAppSelector((state) => state);
+  const hotelsByCity = getHotelsByCity(hotels, city);
 
-  const sort = useAppSelector((state) => state.reducerSort.sort);
-  const {city, hotels} = useAppSelector((state) => state.reducerCity);
-
+  const [sort, setSort] = React.useState(sortType.POPULAR);
   const [isVisibleSortList, setVisibleSortList] = React.useState(false);
 
   const placesList = classNames ({
@@ -24,11 +23,11 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
     'places__options--opened': isVisibleSortList,
   });
 
-  if (hotels.length) {
+  if (hotelsByCity.length) {
     return (
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{hotels.length} places to stay in {city.name}</b>
+        <b className="places__found">{hotelsByCity.length} places to stay in {city.name}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span
@@ -52,7 +51,7 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
                 key={item}
                 onClick={()=> {
                   if (sort !== sortType[item]) {
-                    dispatch((setSort(sortType[item])));
+                    (setSort(sortType[item]));
                   }
                   setVisibleSortList(!isVisibleSortList);
                 }}
@@ -62,8 +61,8 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
           </ul>
         </form>
         < PlacesList
-          hotels={hotels}
           onListItemHover={onListItemHover}
+          sort={sort}
         />
       </section>
     );

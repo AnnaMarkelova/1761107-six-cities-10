@@ -2,26 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { getUser } from './mock/user';
+import { ErrorMessage } from './components/error-message/error-message';
 import { store } from './store';
-import { getFavoriteHotels } from './utils/hotel-utils';
+import { checkAuthAction, fetchFavoritesHotelsAction, fetchHotelsAction } from './store/api-actions';
+
+store.dispatch(checkAuthAction());
+store.dispatch(fetchHotelsAction());
+store.dispatch(fetchFavoritesHotelsAction());
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const Setting = {
-  favoritesHotels: getFavoriteHotels(),
-  user: getUser()
-};
-
 root.render(
   <React.StrictMode>
-    <Provider store = {store}>
-      <App
-        favoritesHotels={Setting.favoritesHotels}
-        user={Setting.user}
-      />
+    <Provider store={store}>
+      <ErrorMessage />
+      <App />
     </Provider>
   </React.StrictMode>,
 );
-

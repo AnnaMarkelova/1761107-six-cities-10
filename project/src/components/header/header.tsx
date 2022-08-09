@@ -1,53 +1,81 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
-import { User } from '../../types/user';
+import { AuthorizationStatus } from '../../consts/authorization-status';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/api-actions';
 
-type HeaderProps = {
-  favoritesHotelsCount?: number,
-  user?: User,
-  hasLoginBlock?: boolean,
-  hasAuthorization?: boolean,
-}
+export const Header: React.FunctionComponent = () => {
 
-export const Header: React.FunctionComponent<HeaderProps> = ({ favoritesHotelsCount = 0, user, hasLoginBlock = false, hasAuthorization = false }) => (
-  <header className="header">
-    <div className="container">
-      <div className="header__wrapper">
-        <div className="header__left">
-          <Link className="header__logo-link header__logo-link--active" to="/">
-            <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-          </Link>
-        </div>
-        {hasLoginBlock &&
-          (
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    {hasAuthorization &&
-                      (
+  const {favoritesHotels} = useAppSelector((state) => state);
+
+  const dispatch = useAppDispatch();
+
+  const { authorizationStatus, user } = useAppSelector((state) => state);
+  const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
+
+  return (
+    <header className="header">
+      <div className="container">
+        <div className="header__wrapper">
+          <div className="header__left">
+            <Link className="header__logo-link header__logo-link--active" to="/">
+              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+            </Link>
+          </div>
+          <nav className="header__nav">
+            <ul className="header__nav-list">
+              {hasAuthorization &&
+                (
+                  <>
+                    <li className="header__nav-item user">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                          <img
+                            src={`${user?.avatarUrl}`}
+                            width="20"
+                            height="20"
+                            style={{
+                              borderRadius: '50%',
+                            }}
+                          />
+                        </div>
                         <>
                           <span className="header__user-name user__name">{user?.email}</span>
-                          <span className="header__favorite-count">{favoritesHotelsCount}</span>
+                          <span className="header__favorite-count">{favoritesHotels.length}</span>
                         </>
-                      )}
-                  </Link>
-                </li>
-                {hasAuthorization &&
-                  (
+                      </Link>
+                    </li>
                     <li className="header__nav-item">
-                      <Link className="header__nav-link" to={AppRoute.Main}>
+                      <Link
+                        className="header__nav-link"
+                        to={AppRoute.Main}
+                        onClick={(evt) => {
+                          evt.preventDefault();
+                          dispatch(logoutAction());
+                        }}
+                      >
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li>
-                  )}
-                {!hasAuthorization && <span className="header__login">Sign in</span>}
-              </ul>
-            </nav>)}
+                  </>
+                )}
+              {!hasAuthorization && (
+                <li className="header__nav-item user">
+                  <Link
+                    className="header__nav-link header__nav-link--profile"
+                    to={AppRoute.Login}
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__login">Sign in</span>
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
       </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
