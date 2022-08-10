@@ -12,7 +12,7 @@ import { LoaderThreeDots } from '../../components/loader/loader';
 
 export const MainScreen: React.FunctionComponent = () => {
 
-  const { city, hotels, isDataLoading} = useAppSelector((state) => state);
+  const { city, hotels, isDataLoading } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,39 +40,38 @@ export const MainScreen: React.FunctionComponent = () => {
     'cities__places-container--empty': !hotelsByCity.length
   });
 
-  if ( isDataLoading) {
-    return <LoaderThreeDots/>;
-  }
-
   return (
-    <div className="page page--gray page--main">
-      <Header />
-      <main className={mainClass}>
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <CitiesList />
-        </div>
-        <div className="cities">
-          <div className={placesContainerClass}>
-            <CitiesPlaces
-              onListItemHover={onListItemHover}
-            />
-            <div className="cities__right-section">
-              {hotelsByCity.length > 0 &&
-                <section className="cities__map map">
-                  <Map
-                    selectedHotel={selectedHotel}
-                    hotels={hotelsByCity}
-                    style={{
-                      height: '100%',
-                      width: '512px'
-                    }}
-                  />
-                </section>}
+    <>
+      {isDataLoading && <LoaderThreeDots />}
+      <div className="page page--gray page--main">
+        <Header />
+        <main className={mainClass}>
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <CitiesList />
+          </div>
+          <div className="cities">
+            <div className={placesContainerClass}>
+              <CitiesPlaces
+                onListItemHover={onListItemHover}
+              />
+              <div className="cities__right-section">
+                {hotelsByCity.length > 0 &&
+                  <section className="cities__map map">
+                    <Map
+                      selectedHotel={selectedHotel}
+                      hotels={hotelsByCity}
+                      style={{
+                        height: '100%',
+                        width: '512px'
+                      }}
+                    />
+                  </section>}
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
