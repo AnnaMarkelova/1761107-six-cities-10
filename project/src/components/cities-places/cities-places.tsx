@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { sortType } from '../../consts/sort-type';
+import { SortType } from '../../consts/sort-type';
 import { useAppSelector } from '../../hooks';
 import { getHotelsByCity } from '../../utils/hotel-utils';
 import { PlacesList } from '../places-list/places-list';
@@ -11,13 +11,13 @@ type CitiesPlacesProps = {
 
 export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
 
-  const {city, hotels} = useAppSelector((state) => state);
+  const { city, hotels } = useAppSelector((state) => state);
   const hotelsByCity = getHotelsByCity(hotels, city);
 
-  const [sort, setSort] = React.useState(sortType.POPULAR);
+  const [sort, setSort] = React.useState(SortType.POPULAR);
   const [isVisibleSortList, setVisibleSortList] = React.useState(false);
 
-  const placesList = classNames ({
+  const placesList = classNames({
     'places__options': true,
     'places__options--custom': true,
     'places__options--opened': isVisibleSortList,
@@ -33,7 +33,7 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
           <span
             className="places__sorting-type"
             tabIndex={0}
-            onClick={()=> setVisibleSortList(!isVisibleSortList)}
+            onClick={() => setVisibleSortList(!isVisibleSortList)}
           >
             {sort}
             <svg className="places__sorting-arrow" width="7" height="4">
@@ -41,22 +41,26 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
             </svg>
           </span>
           <ul className={placesList}>
-            {Object.keys(sortType).map((item) => (
-              <li
-                className={`places__option ${sort === sortType[item]
-                  ? 'places__option--active'
-                  : ''
-                }`}
-                tabIndex={0}
-                key={item}
-                onClick={()=> {
-                  if (sort !== sortType[item]) {
-                    (setSort(sortType[item]));
-                  }
-                  setVisibleSortList(!isVisibleSortList);
-                }}
-              > {sortType[item]}
-              </li>)
+            {Object.keys(SortType).map((item) => {
+              const indexOfSortType = Object.keys(SortType).indexOf(item as SortType);
+              const SortTypeValue = Object.values(SortType)[indexOfSortType];
+              return (
+                <li
+                  className={`places__option ${sort === SortTypeValue
+                    ? 'places__option--active'
+                    : ''
+                  }`}
+                  tabIndex={0}
+                  key={item}
+                  onClick={() => {
+                    if (sort !== SortTypeValue) {
+                      (setSort(SortTypeValue));
+                    }
+                    setVisibleSortList(!isVisibleSortList);
+                  }}
+                > {SortTypeValue}
+                </li>);
+            }
             )}
           </ul>
         </form>

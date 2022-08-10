@@ -4,7 +4,7 @@ import { Hotel } from '../../types/hotel';
 import { Link, useNavigate } from 'react-router-dom';
 import { cityCardType } from '../../consts/city-card-type';
 import { AppRoute } from '../../consts/app-route';
-import { hotelType } from '../../consts/hotel-type';
+import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
@@ -37,6 +37,9 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
     'place-card__info': true,
     'favorites__card-info': cardType === cityCardType.FAVORITES_CARD,
   });
+
+  const indexOfHotelType = Object.keys(HotelType).indexOf(hotel.type as HotelType);
+  const hotelTypeValue = Object.values(HotelType)[indexOfHotelType];
 
   return (
     <article
@@ -103,7 +106,7 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
           <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>{hotel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hotelType[hotel.type]}</p>
+        <p className="place-card__type">{hotelTypeValue}</p>
       </div>
     </article>
   );

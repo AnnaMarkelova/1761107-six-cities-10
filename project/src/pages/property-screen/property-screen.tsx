@@ -8,9 +8,8 @@ import { PlaceCard } from '../../components/place-card/place-card';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { cityCardType } from '../../consts/city-card-type';
-import { hotelType } from '../../consts/hotel-type';
+import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCity } from '../../services/store/action';
 import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
@@ -25,31 +24,24 @@ export const PropertyScreen: React.FunctionComponent = () => {
 
   const hotelId = Number(params.id);
 
-  const { currentHotel: hotel, authorizationStatus, isHotelStatusFavoriteLoading, nearbyHotels, city } = useAppSelector((state) => state);
+  const { currentHotel: hotel, authorizationStatus, isHotelStatusFavoriteLoading, nearbyHotels } = useAppSelector((state) => state);
   const [nearHotelUpdated, setNearHotelUpdated] = useState(true);
   const [hotelUpdated, setHotelUpdated] = useState(true);
 
   useEffect(() => {
-    if (city.name === hotel?.city.name || hotel === null) {
-      return;
-    }
-    dispatch(setCity(hotel.city));
-  }, [dispatch, hotel, city]);
-
-  useEffect(() => {
     if (hotelUpdated || !isHotelStatusFavoriteLoading) {
-      dispatch(fetchHotelAction({ hotelId }));
+      dispatch(fetchHotelAction({hotelId}));
       setHotelUpdated(false);
     }
   }, [hotelUpdated, hotelId, dispatch, isHotelStatusFavoriteLoading]);
 
   useEffect(() => {
-    dispatch(fetchCommentsAction({ hotelId }));
+    dispatch(fetchCommentsAction({hotelId}));
   }, [hotelId, dispatch]);
 
   useEffect(() => {
     if (nearHotelUpdated || !isHotelStatusFavoriteLoading) {
-      dispatch(fetchNearbyHotelsAction({ hotelId }));
+      dispatch(fetchNearbyHotelsAction({hotelId}));
       setNearHotelUpdated(false);
     }
   }, [nearHotelUpdated, hotelId, dispatch, isHotelStatusFavoriteLoading]);
@@ -72,6 +64,9 @@ export const PropertyScreen: React.FunctionComponent = () => {
     'property__avatar-wrapper--pro': hotel?.host.isPro
   });
 
+  const indexOfHotelType = Object.keys(HotelType).indexOf(hotel.type as HotelType);
+  const hotelTypeValue = Object.values(HotelType)[indexOfHotelType];
+
   return (
     <div className="page">
       <Header />
@@ -79,9 +74,9 @@ export const PropertyScreen: React.FunctionComponent = () => {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {hotel?.images.slice(0, COUNT_PICTURES).map((item, index) => (
+              {hotel?.images.slice(0, COUNT_PICTURES).map((item) => (
                 <div className="property__image-wrapper" key={item}>
-                  <img className="property__image" src={item} alt={`hotel-img ${index}`} />
+                  <img className="property__image" src={item} alt="Photo studio" />
                 </div>
               ))}
             </div>
@@ -124,7 +119,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {hotelType[hotel ? hotel.type : '']}
+                  {hotelTypeValue}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {hotel?.bedrooms} Bedrooms
