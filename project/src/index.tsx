@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { ErrorMessage } from './components/error-message/error-message';
-import { store } from './store';
-import { checkAuthAction, fetchFavoritesHotelsAction, fetchHotelsAction } from './store/api-actions';
+import { store } from './services/store';
+import { checkAuthAction, fetchFavoritesHotelsAction, fetchHotelsAction } from './services/store/api-actions';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchHotelsAction());

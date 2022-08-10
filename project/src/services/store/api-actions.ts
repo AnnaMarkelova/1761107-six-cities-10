@@ -1,16 +1,16 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../types/state.js';
+import { AppDispatch, State } from '../../types/state.js';
 import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, redirectToRoute, requireAuthorization, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setError, setHotelStatusFavoriteLoading } from './action';
-import { saveToken, dropToken } from '../services/token';
-import { AuthorizationStatus } from '../consts/authorization-status';
-import { APIRoute } from '../consts/api-route';
-import { AuthData } from '../types/auth-data';
-import { User } from '../types/user.js';
-import { Hotel } from '../types/hotel.js';
+import { saveToken, dropToken } from '../token';
+import { AuthorizationStatus } from '../../consts/authorization-status';
+import { APIRoute } from '../../consts/api-route';
+import { AuthData } from '../../types/auth-data';
+import { User } from '../../types/user.js';
+import { Hotel } from '../../types/hotel.js';
 import { store } from './index';
-import { AppRoute } from '../consts/app-route';
-import { Comment } from '../types/comment.js';
+import { AppRoute } from '../../consts/app-route';
+import { Comment } from '../../types/comment.js';
 
 const TIMEOUT_SHOW_ERROR = 5000;
 

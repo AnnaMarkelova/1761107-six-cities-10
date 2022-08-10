@@ -11,7 +11,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
+import browserHistory from '../../services/browser-history';
 
 function ScrollToTop() {
   const { pathname } = useLocation();

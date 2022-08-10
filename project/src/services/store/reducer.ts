@@ -1,10 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../consts/authorization-status';
-import { cities } from '../consts/cities';
-import { City } from '../types/city';
-import { Comment } from '../types/comment';
-import { Hotel } from '../types/hotel';
-import { User } from '../types/user';
+import { AuthorizationStatus } from '../../consts/authorization-status';
+import { cities } from '../../consts/cities';
+import { City } from '../../types/city';
+import { Comment } from '../../types/comment';
+import { Hotel } from '../../types/hotel';
+import { User } from '../../types/user';
 import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, postComment, requireAuthorization, setCity, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setDefaultCity, setError, setHotelStatusFavoriteLoading } from './action';
 
 type initialStateType = {

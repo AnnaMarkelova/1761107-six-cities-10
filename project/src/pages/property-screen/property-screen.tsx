@@ -10,7 +10,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { cityCardType } from '../../consts/city-card-type';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
+import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
 const COUNT_PICTURES = 6;

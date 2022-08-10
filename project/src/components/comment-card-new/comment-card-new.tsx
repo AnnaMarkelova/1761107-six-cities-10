@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchNewCommentAction } from '../../store/api-actions';
+import { fetchNewCommentAction } from '../../services/store/api-actions';
 import { RatingForm } from '../rating-form/rating-form';
 
 const MIN_LENGTH_COMMENT = 50;

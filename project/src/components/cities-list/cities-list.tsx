@@ -1,7 +1,7 @@
 import React from 'react';
 import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCity } from '../../store/action';
+import { setCity } from '../../services/store/action';
 
 
 export const CitiesList: React.FunctionComponent = () => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../services/store/api-actions';
 
 export const Header: React.FunctionComponent = () => {
 

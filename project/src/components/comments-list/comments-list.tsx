@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentsAction } from '../../store/api-actions';
+import { fetchCommentsAction } from '../../services/store/api-actions';
 import { sortDateDown } from '../../utils/utills';
 import { CommentCardNew } from '../comment-card-new/comment-card-new';
 import { CommentCard } from '../comment-card/comment-card';

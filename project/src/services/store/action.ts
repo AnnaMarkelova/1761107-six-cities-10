@@ -1,10 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AppRoute } from '../consts/app-route';
-import { AuthorizationStatus } from '../consts/authorization-status';
-import { City } from '../types/city';
-import { Comment } from '../types/comment';
-import { Hotel } from '../types/hotel';
-import { User } from '../types/user';
+import { AppRoute } from '../../consts/app-route';
+import { AuthorizationStatus } from '../../consts/authorization-status';
+import { City } from '../../types/city';
+import { Comment } from '../../types/comment';
+import { Hotel } from '../../types/hotel';
+import { User } from '../../types/user';
 
 export const setCity = createAction(
   'mainPage/setCity',

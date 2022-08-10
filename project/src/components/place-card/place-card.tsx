@@ -7,7 +7,7 @@ import { AppRoute } from '../../consts/app-route';
 import { hotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
+import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
 
 const COUNT_STARS = 5;
 
