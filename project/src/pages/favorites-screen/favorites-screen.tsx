@@ -17,14 +17,9 @@ export const FavoritesScreen: React.FunctionComponent = () => {
     'page--favorites-empty': !favoritesHotels.length
   });
 
-  if ( isDataLoading) {
-    return (
-      <LoaderThreeDots />
-    );
-  }
-
   return (
     <div className={pageClass}>
+      {isDataLoading && <LoaderThreeDots />}
       <Header />
       {favoritesHotels.length > 0 && (
         <main className="page__main page__main--favorites">
