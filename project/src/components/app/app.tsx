@@ -8,10 +8,11 @@ import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../services/browser-history';
+import { checkAuthAction } from '../../services/store/api-actions';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -24,6 +25,12 @@ function ScrollToTop() {
 }
 
 const App: React.FunctionComponent = () => {
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   const { authorizationStatus } = useAppSelector((state) => state);
 

@@ -4,9 +4,6 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { ErrorMessage } from './components/error-message/error-message';
 import { store } from './services/store';
-import { checkAuthAction } from './services/store/api-actions';
-
-store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
