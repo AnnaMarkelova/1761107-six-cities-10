@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Hotel } from '../../types/hotel';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { Map } from '../../components/map/map';
 import classNames from 'classnames';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
 import { getHotelsByCity } from '../../utils/hotel-utils';
+import { fetchHotelsAction } from '../../services/store/api-actions';
+import { LoaderThreeDots } from '../../components/loader/loader';
 
 export const MainScreen: React.FunctionComponent = () => {
 
-  const { city, hotels} = useAppSelector((state) => state);
+  const { city, hotels, isDataLoading} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  useEffect(() => {
+    dispatch(fetchHotelsAction());
+  }, [dispatch]);
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+
+  const hotelsByCity = getHotelsByCity(hotels, city);
 
   const onListItemHover = (listItemId: number | undefined) => {
     const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
@@ -32,6 +39,10 @@ export const MainScreen: React.FunctionComponent = () => {
     'cities__places-container': true,
     'cities__places-container--empty': !hotelsByCity.length
   });
+
+  if ( isDataLoading) {
+    return <LoaderThreeDots/>;
+  }
 
   return (
     <div className="page page--gray page--main">

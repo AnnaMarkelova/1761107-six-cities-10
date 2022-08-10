@@ -25,7 +25,7 @@ function ScrollToTop() {
 
 const App: React.FunctionComponent = () => {
 
-  const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
+  const { authorizationStatus } = useAppSelector((state) => state);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (
@@ -34,50 +34,47 @@ const App: React.FunctionComponent = () => {
   }
 
   return (
-    <>
-      <LoaderThreeDots isLoading={isDataLoading}/>
-      <HistoryRouter
-        history={browserHistory}
-      >
-        <ScrollToTop />
-        <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={
-              < MainScreen />
-            }
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                < FavoritesScreen />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={`${AppRoute.Room}/:id`}
-            element={
-              < PropertyScreen />
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={
-              < LoginScreen/>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <NotFoundScreen />
-            }
-          />
-        </Routes>
-      </HistoryRouter>
-    </>
+    <HistoryRouter
+      history={browserHistory}
+    >
+      <ScrollToTop />
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={
+            < MainScreen />
+          }
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              < FavoritesScreen />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.Room}/:id`}
+          element={
+            < PropertyScreen />
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={
+            < LoginScreen />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <NotFoundScreen />
+          }
+        />
+      </Routes>
+    </HistoryRouter>
   );
 };
 
