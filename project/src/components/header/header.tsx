@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../services/store/api-actions';
+import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/api-actions';
 
 export const Header: React.FunctionComponent = () => {
 
   const {favoritesHotels} = useAppSelector((state) => state);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoritesHotelsAction());
+  }, [dispatch]);
 
   const { authorizationStatus, user } = useAppSelector((state) => state);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;

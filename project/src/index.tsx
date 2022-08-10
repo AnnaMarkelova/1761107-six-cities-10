@@ -4,11 +4,10 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { ErrorMessage } from './components/error-message/error-message';
 import { store } from './services/store';
-import { checkAuthAction, fetchFavoritesHotelsAction, fetchHotelsAction } from './services/store/api-actions';
+import { checkAuthAction, fetchHotelsAction } from './services/store/api-actions';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchHotelsAction());
-store.dispatch(fetchFavoritesHotelsAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
