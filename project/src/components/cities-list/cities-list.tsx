@@ -15,7 +15,7 @@ export const CitiesList: React.FunctionComponent = () => {
       <ul className="locations__list tabs__list">
         {cities.map((item) => (
           <li className="locations__item" key={item.name}>
-            <a className={`locations__item-link tabs__item ${city === item
+            <a className={`locations__item-link tabs__item ${city.name === item.name
               ? 'tabs__item--active'
               : ''}`}
             href='#/'

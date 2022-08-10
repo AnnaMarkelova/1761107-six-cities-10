@@ -1,11 +1,15 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/city';
+import { useAppSelector } from '.';
+import { Hotel } from '../types/hotel';
 
 export default function useMap( mapRef: MutableRefObject<HTMLElement | null>, city: City): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
+  const [prevCurrentHotel, setPrevCurrentHotel] = useState<Hotel | null>(null);
+  const {currentHotel} = useAppSelector((state) => state);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
@@ -27,7 +31,7 @@ export default function useMap( mapRef: MutableRefObject<HTMLElement | null>, ci
     }
 
     const currentCenter = map.getCenter();
-    if (currentCenter.lat === city.location.latitude && currentCenter.lng === city.location.longitude) {
+    if (currentCenter.lat === city.location.latitude && currentCenter.lng === city.location.longitude && currentHotel === prevCurrentHotel) {
       return;
     }
 
@@ -50,7 +54,8 @@ export default function useMap( mapRef: MutableRefObject<HTMLElement | null>, ci
 
     map.addLayer(layer);
     setMap(map);
-  }, [map, city]);
+    setPrevCurrentHotel(currentHotel);
+  }, [map, city, prevCurrentHotel, currentHotel]);
 
   return map;
 }
