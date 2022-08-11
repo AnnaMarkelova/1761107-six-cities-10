@@ -76,7 +76,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
             <div className="property__gallery">
               {hotel?.images.slice(0, COUNT_PICTURES).map((item) => (
                 <div className="property__image-wrapper" key={item}>
-                  <img className="property__image" src={item} alt="Photo studio" />
+                  <img className="property__image" src={item} alt="gallery img" />
                 </div>
               ))}
             </div>

@@ -63,7 +63,7 @@ const App: React.FunctionComponent = () => {
           }
         />
         <Route
-          path={`${AppRoute.Room}/:id`}
+          path={AppRoute.RoomId}
           element={
             < PropertyScreen />
           }
