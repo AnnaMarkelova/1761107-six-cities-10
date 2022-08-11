@@ -5,7 +5,7 @@ import { City } from '../../types/city';
 import { Comment } from '../../types/comment';
 import { Hotel } from '../../types/hotel';
 import { User } from '../../types/user';
-import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, postComment, requireAuthorization, setCity, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setDefaultCity, setError, setHotelStatusFavoriteLoading } from './action';
+import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, postComment, requireAuthorization, setCity, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setDefaultCity, setHotelStatusFavoriteLoading } from './action';
 
 type initialStateType = {
   city: City,
@@ -17,7 +17,6 @@ type initialStateType = {
   newComment: Comment | null,
   authorizationStatus: AuthorizationStatus,
   user: User | null,
-  error: string | null,
   isDataLoading: boolean,
   isHotelStatusFavoriteLoading: boolean,
   isCommentLoading: boolean,
@@ -33,7 +32,6 @@ const initialState: initialStateType = {
   newComment: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
-  error: null,
   isDataLoading: false,
   isHotelStatusFavoriteLoading: false,
   isCommentLoading: false,
@@ -74,9 +72,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadUser, (state, action) => {
       state.user = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     })
     .addCase(setDataLoadingStatus, (state, action) => {
       state.isDataLoading = action.payload;

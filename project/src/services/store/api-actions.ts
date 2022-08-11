@@ -1,28 +1,15 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../../types/state.js';
-import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, redirectToRoute, requireAuthorization, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setError, setHotelStatusFavoriteLoading } from './action';
+import { loadComments, loadFavoritesHotels, loadHotels, loadNearbyHotels, loadUser, redirectToRoute, requireAuthorization, setCommentLoading, setCurrentHotel, setDataLoadingStatus, setHotelStatusFavoriteLoading } from './action';
 import { saveToken, dropToken } from '../token';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { APIRoute } from '../../consts/api-route';
 import { AuthData } from '../../types/auth-data';
 import { User } from '../../types/user.js';
 import { Hotel } from '../../types/hotel.js';
-import { store } from './index';
 import { AppRoute } from '../../consts/app-route';
 import { Comment } from '../../types/comment.js';
-
-const TIMEOUT_SHOW_ERROR = 5000;
-
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
 
 export const fetchHotelsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -33,10 +20,15 @@ export const fetchHotelsAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchHotels',
   async (_arg, { dispatch, extra }) => {
-    dispatch(setDataLoadingStatus(true));
-    const { data } = await extra.api.get<Hotel[]>(APIRoute.Hotels);
-    dispatch(loadHotels(data));
-    dispatch(setDataLoadingStatus(false));
+
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const { data } = await extra.api.get<Hotel[]>(APIRoute.Hotels);
+      dispatch(loadHotels(data));
+      dispatch(setDataLoadingStatus(false));
+    } catch {
+      dispatch(setDataLoadingStatus(false));
+    }
   },
 );
 
@@ -49,10 +41,14 @@ export const fetchHotelAction = createAsyncThunk<void, { hotelId: number }, {
 }>(
   'data/fetchHotel',
   async ({ hotelId }, { dispatch, extra }) => {
-    dispatch(setDataLoadingStatus(true));
-    const {data} = await extra.api.get<Hotel>(`${APIRoute.Hotels}/${hotelId}`);
-    dispatch(setCurrentHotel(data));
-    dispatch(setDataLoadingStatus(false));
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const { data } = await extra.api.get<Hotel>(`${APIRoute.Hotels}/${hotelId}`);
+      dispatch(setCurrentHotel(data));
+      dispatch(setDataLoadingStatus(false));
+    } catch {
+      dispatch(setDataLoadingStatus(false));
+    }
   },
 );
 
@@ -102,7 +98,7 @@ export const fetchCommentsAction = createAsyncThunk<void, { hotelId: number | un
   },
 );
 
-export const fetchNewCommentAction = createAsyncThunk<void, { comment: string, rating: number, hotelId: number | undefined}, {
+export const fetchNewCommentAction = createAsyncThunk<void, { comment: string, rating: number, hotelId: number | undefined }, {
   dispatch: AppDispatch,
   state: State,
   extra: {
@@ -112,7 +108,7 @@ export const fetchNewCommentAction = createAsyncThunk<void, { comment: string, r
   'data/fetchNewComment',
   async ({ comment, rating, hotelId }, { dispatch, extra }) => {
     dispatch(setCommentLoading(true));
-    await extra.api.post<Comment>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
+    await extra.api.post<Comment>(`${APIRoute.Comments}/${hotelId}`, { comment, rating });
     dispatch(setCommentLoading(false));
   },
 );

@@ -34,8 +34,6 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 
 export const loadUser = createAction<User>('data/loadUser');
 
-export const setError = createAction<string | null>('setError');
-
 export const setDataLoadingStatus = createAction<boolean>('data/setDataLoadingStatus');
 
 export const setHotelStatusFavoriteLoading = createAction<boolean>('data/setHotelStatusFavoriteLoading');
