@@ -5,3 +5,11 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export enum NameSpace {
+  DataHotels = 'DATA_HOTELS',
+  DataFavoritesHotels = 'DATA_FAVORITES_HOTELS',
+  DataComments = 'DATA_COMMENTS',
+  DataCity = 'DATA_CITY',
+  User = 'USER',
+}
