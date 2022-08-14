@@ -2,11 +2,12 @@ import React from 'react';
 import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCity } from '../../services/store/action';
+import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
 
 
 export const CitiesList: React.FunctionComponent = () => {
 
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector(getCity);
 
   const dispatch = useAppDispatch();
 

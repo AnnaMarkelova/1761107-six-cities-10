@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import { SortType } from '../../consts/sort-type';
 import { useAppSelector } from '../../hooks';
+import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
+import { getHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 import { getHotelsByCity } from '../../utils/hotel-utils';
 import { PlacesList } from '../places-list/places-list';
 
@@ -11,7 +13,9 @@ type CitiesPlacesProps = {
 
 export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
 
-  const { city, hotels } = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
+  const hotels = useAppSelector(getHotels);
+
   const hotelsByCity = getHotelsByCity(hotels, city);
 
   const [sort, setSort] = React.useState(SortType.POPULAR);

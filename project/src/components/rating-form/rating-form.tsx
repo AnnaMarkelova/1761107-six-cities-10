@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../hooks';
+import { getIsCommentLoading } from '../../services/store/slices/comments-data/comments-data-selectors';
 
 const COUNT_STARS = 5;
 
@@ -18,7 +19,7 @@ interface RatingFormProps {
 
 export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, onChange }) => {
 
-  const { isCommentLoading } = useAppSelector((state) => state);
+  const isCommentLoading = useAppSelector(getIsCommentLoading);
 
   return (
     <div className="reviews__rating-form form__rating">

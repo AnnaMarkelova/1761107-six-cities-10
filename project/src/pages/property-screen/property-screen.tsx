@@ -11,6 +11,9 @@ import { cityCardType } from '../../consts/city-card-type';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
+import { getIsHotelStatusFavoriteLoading } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
+import { getCurrentHotel, getNearbyHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
 const COUNT_PICTURES = 6;
@@ -24,7 +27,11 @@ export const PropertyScreen: React.FunctionComponent = () => {
 
   const hotelId = Number(params.id);
 
-  const { currentHotel: hotel, authorizationStatus, isHotelStatusFavoriteLoading, nearbyHotels } = useAppSelector((state) => state);
+  const hotel = useAppSelector(getCurrentHotel);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isHotelStatusFavoriteLoading = useAppSelector(getIsHotelStatusFavoriteLoading);
+  const nearbyHotels = useAppSelector(getNearbyHotels);
+
   const [nearHotelUpdated, setNearHotelUpdated] = useState(true);
   const [hotelUpdated, setHotelUpdated] = useState(true);
 

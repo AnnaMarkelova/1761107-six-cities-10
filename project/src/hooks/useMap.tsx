@@ -3,13 +3,14 @@ import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/city';
 import { useAppSelector } from '.';
 import { Hotel } from '../types/hotel';
+import { getCurrentHotel } from '../services/store/slices/hotels-data/hotels-data-selectors';
 
 export default function useMap( mapRef: MutableRefObject<HTMLElement | null>, city: City): Map | null {
 
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
   const [prevCurrentHotel, setPrevCurrentHotel] = useState<Hotel | null>(null);
-  const {currentHotel} = useAppSelector((state) => state);
+  const currentHotel = useAppSelector(getCurrentHotel);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {

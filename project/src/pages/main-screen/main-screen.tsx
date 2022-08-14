@@ -9,10 +9,15 @@ import { CitiesList } from '../../components/cities-list/cities-list';
 import { getHotelsByCity } from '../../utils/hotel-utils';
 import { fetchHotelsAction } from '../../services/store/api-actions';
 import { LoaderThreeDots } from '../../components/loader/loader';
+import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
+import { getHotels, getIsDataLoading } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 
 export const MainScreen: React.FunctionComponent = () => {
 
-  const { city, hotels, isDataLoading } = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
+  const hotels = useAppSelector(getHotels);
+  const isDataLoading = useAppSelector(getIsDataLoading);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

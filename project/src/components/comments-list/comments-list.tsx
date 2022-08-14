@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../services/store/api-actions';
+import { getComments, getIsCommentLoading } from '../../services/store/slices/comments-data/comments-data-selectors';
+import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
 import { sortDateDown } from '../../utils/utills';
 import { CommentCardNew } from '../comment-card-new/comment-card-new';
 import { CommentCard } from '../comment-card/comment-card';
@@ -10,7 +13,11 @@ const MAX_COUNT_COMMENTS = 10;
 
 export const CommentsList: React.FunctionComponent = () => {
 
-  const {comments, authorizationStatus, isCommentLoading, currentHotel} = useAppSelector((state) => state);
+  const comments = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isCommentLoading = useAppSelector(getIsCommentLoading);
+  const currentHotel = useAppSelector(getCurrentHotel);
+
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const dispatch = useAppDispatch();

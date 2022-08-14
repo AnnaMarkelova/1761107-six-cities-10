@@ -4,10 +4,14 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/api-actions';
+import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
+import { getAuthorizationStatus, getUser } from '../../services/store/slices/user-process/user-process-selectors';
 
 export const Header: React.FunctionComponent = () => {
 
-  const {favoritesHotels} = useAppSelector((state) => state);
+  const favoritesHotels = useAppSelector(getFavoritesHotels);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
 
@@ -15,7 +19,6 @@ export const Header: React.FunctionComponent = () => {
     dispatch(fetchFavoritesHotelsAction());
   }, [dispatch]);
 
-  const { authorizationStatus, user } = useAppSelector((state) => state);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   return (

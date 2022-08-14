@@ -13,6 +13,7 @@ import { LoaderThreeDots } from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../services/browser-history';
 import { checkAuthAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -32,7 +33,7 @@ const App: React.FunctionComponent = () => {
     dispatch(checkAuthAction());
   }, [dispatch]);
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (

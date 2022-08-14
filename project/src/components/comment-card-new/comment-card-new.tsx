@@ -1,6 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNewCommentAction } from '../../services/store/api-actions';
+import { getIsDataLoading } from '../../services/store/slices/comments-data/comments-data-selectors';
+import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 import { RatingForm } from '../rating-form/rating-form';
 
 const MIN_LENGTH_COMMENT = 50;
@@ -13,7 +15,8 @@ export const CommentCardNew: React.FunctionComponent = () => {
     comment: '',
   });
 
-  const { currentHotel, isCommentLoading } = useAppSelector((state) => state);
+  const currentHotel = useAppSelector(getCurrentHotel);
+  const isCommentLoading = useAppSelector(getIsDataLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

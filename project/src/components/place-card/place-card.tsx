@@ -8,6 +8,8 @@ import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
+import { getIsHotelStatusFavoriteLoading } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
 
 const COUNT_STARS = 5;
 
@@ -21,7 +23,8 @@ type PlaceCardProps = {
 
 export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover, isNearbyCard = false, setNearHotelUpdated }) => {
 
-  const { authorizationStatus, isHotelStatusFavoriteLoading } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isHotelStatusFavoriteLoading = useAppSelector(getIsHotelStatusFavoriteLoading);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const navigate = useNavigate();
