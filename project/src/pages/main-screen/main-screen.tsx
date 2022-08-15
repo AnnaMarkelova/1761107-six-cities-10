@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Hotel } from '../../types/hotel';
 import { Header } from '../../components/header/header';
 import { CitiesPlaces } from '../../components/cities-places/cities-places';
 import { Map } from '../../components/map/map';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
 import { getHotelsByCity } from '../../utils/hotel-utils';
 import { fetchHotelsAction } from '../../services/store/api-actions';
 import { LoaderThreeDots } from '../../components/loader/loader';
 import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
-import { getHotels, getIsDataLoading } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { RequestStatus } from '../../consts/request-status';
+import { UseDispatchAsyncAction } from '../../hooks/useDispatchAsyncAction';
 
 export const MainScreen: React.FunctionComponent = () => {
 
   const city = useAppSelector(getCity);
   const hotels = useAppSelector(getHotels);
-  const isDataLoading = useAppSelector(getIsDataLoading);
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchHotelsAction());
-  }, [dispatch]);
+  const requestStatus = UseDispatchAsyncAction(fetchHotelsAction());
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
 
@@ -47,7 +44,7 @@ export const MainScreen: React.FunctionComponent = () => {
 
   return (
     <>
-      {isDataLoading && <LoaderThreeDots />}
+      {requestStatus === RequestStatus.Loading && <LoaderThreeDots />}
       <div className="page page--gray page--main">
         <Header />
         <main className={mainClass}>
