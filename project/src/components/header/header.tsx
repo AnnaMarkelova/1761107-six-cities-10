@@ -15,11 +15,14 @@ export const Header: React.FunctionComponent = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchFavoritesHotelsAction());
-  }, [dispatch]);
-
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    if (hasAuthorization) {
+      dispatch(fetchFavoritesHotelsAction());
+    }
+  }, [dispatch, hasAuthorization]);
+
 
   return (
     <header className="header">

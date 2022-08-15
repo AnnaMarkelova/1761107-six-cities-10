@@ -1,7 +1,6 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
-import { APIRoute } from '../consts/api-route';
 import { getToken } from './token';
 
 const StatusCodeMapping: Record<number, boolean> = {
@@ -37,11 +36,6 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
-        //временное решение
-        if (error.config.url === APIRoute.Favorite && error.response.status === StatusCodes.UNAUTHORIZED) {
-          return;
-        }
-        //
         toast.warn(error.response.data.error);
       }
 
