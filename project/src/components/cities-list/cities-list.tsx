@@ -1,7 +1,7 @@
 import React from 'react';
 import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCity } from '../../services/store/action';
+import { setCity } from '../../services/store/slices/city-data/city-data';
 import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
 
 

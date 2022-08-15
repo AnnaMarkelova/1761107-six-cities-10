@@ -103,8 +103,8 @@ export const fetchHotelStatusFavoriteAction = createAsyncThunk<void, { hotelId: 
   'data/fetchHotelStatusFavorite',
   async ({ hotelId, status }, { dispatch, extra }) => {
     await extra.api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
-    // dispatch(fetchHotelsAction());
-    // dispatch(fetchFavoritesHotelsAction());
+    dispatch(fetchHotelsAction());
+    dispatch(fetchFavoritesHotelsAction());
   },
 );
 
