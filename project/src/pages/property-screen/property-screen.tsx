@@ -4,16 +4,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
 import { LoaderThreeDots } from '../../components/loader/loader';
-import { Map } from '../../components/map/map';
-import { PlaceCard } from '../../components/place-card/place-card';
+import { NearbyHotels } from '../../components/nearby-hotels/nearby-hotels';
+import { PropertyMap } from '../../components/property-map/property-map';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { cityCardType } from '../../consts/city-card-type';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
+import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
 import { setCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data';
-import { getCurrentHotel, getNearbyHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
@@ -31,7 +30,6 @@ export const PropertyScreen: React.FunctionComponent = () => {
   const hotel = useAppSelector(getCurrentHotel);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
-  const nearbyHotels = useAppSelector(getNearbyHotels);
 
   useEffect(() => {
     dispatch(fetchHotelAction({ hotelId }));
@@ -43,10 +41,6 @@ export const PropertyScreen: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch(fetchCommentsAction({ hotelId }));
   }, [hotelId, dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchNearbyHotelsAction({ hotelId }));
-  }, [dispatch, hotelId]);
 
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
@@ -167,31 +161,9 @@ export const PropertyScreen: React.FunctionComponent = () => {
                 <CommentsList />
               </div>
             </div>
-            <section className="property__map map">
-              <Map
-                selectedHotel={hotel}
-                hotels={[...nearbyHotels, hotel].filter(Boolean)}
-                style={{
-                  height: '579px',
-                  width: '1146px',
-                  margin: '0 auto',
-                }}
-              />
-            </section>
+            <PropertyMap></PropertyMap>
           </section>
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                {nearbyHotels.map((item) => (
-                  <PlaceCard
-                    key={item.id}
-                    hotel={item}
-                    cardType={cityCardType.CITIES_CARD}
-                  />))}
-              </div>
-            </section>
-          </div>
+          <NearbyHotels></NearbyHotels>
         </main>
       </div >
     </>
