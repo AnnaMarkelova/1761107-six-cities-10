@@ -11,6 +11,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
+import { setCity } from '../../services/store/slices/city-data/city-data';
 import { setCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
@@ -27,7 +28,6 @@ export const PropertyScreen: React.FunctionComponent = () => {
 
   const hotelId = Number(params.id);
 
-  const hotel = useAppSelector(getCurrentHotel);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
 
@@ -37,6 +37,12 @@ export const PropertyScreen: React.FunctionComponent = () => {
       dispatch(setCurrentHotel(null));
     };
   }, [dispatch, hotelId]);
+
+  const hotel = useAppSelector(getCurrentHotel);
+
+  useEffect(() => {
+    dispatch((dispatch(setCity(hotel?.city))));
+  }, [hotel, dispatch]);
 
   useEffect(() => {
     dispatch(fetchCommentsAction({ hotelId }));
