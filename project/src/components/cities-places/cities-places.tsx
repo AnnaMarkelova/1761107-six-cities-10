@@ -2,21 +2,19 @@ import classNames from 'classnames';
 import React from 'react';
 import { SortType } from '../../consts/sort-type';
 import { useAppSelector } from '../../hooks';
+import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
 import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
-import { getHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
-import { getHotelsByCity } from '../../utils/hotel-utils';
-import { PlacesList } from '../places-list/places-list';
+import PlacesList from '../places-list/places-list';
 
 type CitiesPlacesProps = {
   onListItemHover: (id: number | undefined) => void;
 }
 
-export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
+const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHover }) => {
 
   const city = useAppSelector(getCity);
-  const hotels = useAppSelector(getHotels);
 
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  const hotelsByCity = useAppSelector(SelectHotelsByCity);
 
   const [sort, setSort] = React.useState(SortType.POPULAR);
   const [isVisibleSortList, setVisibleSortList] = React.useState(false);
@@ -84,3 +82,5 @@ export const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onLis
     </section>
   );
 };
+
+export default React.memo(CitiesPlaces);

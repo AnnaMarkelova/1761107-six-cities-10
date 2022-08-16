@@ -10,7 +10,7 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchCommentsAction, fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
+import { fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
 import { setCity } from '../../services/store/slices/city-data/city-data';
 import { setCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
@@ -43,10 +43,6 @@ export const PropertyScreen: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch((dispatch(setCity(hotel?.city))));
   }, [hotel, dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchCommentsAction({ hotelId }));
-  }, [hotelId, dispatch]);
 
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
@@ -164,7 +160,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
                     </p>
                   </div>
                 </div>
-                <CommentsList />
+                <CommentsList/>
               </div>
             </div>
             <PropertyMap></PropertyMap>

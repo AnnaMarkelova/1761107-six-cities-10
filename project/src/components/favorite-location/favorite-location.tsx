@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hotel } from '../../types/hotel';
-import { PlaceCard } from '../place-card/place-card';
+import PlaceCard from '../place-card/place-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
 import { cityCardType } from '../../consts/city-card-type';

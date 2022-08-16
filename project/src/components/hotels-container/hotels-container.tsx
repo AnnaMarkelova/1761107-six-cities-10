@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Hotel } from '../../types/hotel';
-import { CitiesPlaces } from '../../components/cities-places/cities-places';
+import CitiesPlaces from '../../components/cities-places/cities-places';
 import { Map } from '../../components/map/map';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
-import { getHotelsByCity } from '../../utils/hotel-utils';
-import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
-import { getHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
 
 export const HotelsContainer: React.FunctionComponent = () => {
 
-  const city = useAppSelector(getCity);
-  const hotels = useAppSelector(getHotels);
-
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
 
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  const hotelsByCity = useAppSelector(SelectHotelsByCity);
 
-  const onListItemHover = (listItemId: number | undefined) => {
-    const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
-    setSelectedHotel(currentHotel ? currentHotel : null);
-  };
+  const onListItemHover = useCallback(
+    (listItemId: number | undefined) => {
+      const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
+      setSelectedHotel(currentHotel ? currentHotel : null);
+    }, [hotelsByCity]
+  );
 
   const placesContainerClass = classNames({
     'container': true,

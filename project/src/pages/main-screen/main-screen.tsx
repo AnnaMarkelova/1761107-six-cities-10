@@ -3,18 +3,13 @@ import { Header } from '../../components/header/header';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
-import { getHotelsByCity } from '../../utils/hotel-utils';
 import { fetchHotelsAction } from '../../services/store/api-actions';
 import { LoaderThreeDots } from '../../components/loader/loader';
-import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
-import { getHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
 import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 import { HotelsContainer } from '../../components/hotels-container/hotels-container';
+import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
 
 export const MainScreen: React.FunctionComponent = () => {
-
-  const city = useAppSelector(getCity);
-  const hotels = useAppSelector(getHotels);
 
   const isDataLoading = useAppSelector(getIsDataLoading);
 
@@ -24,7 +19,7 @@ export const MainScreen: React.FunctionComponent = () => {
     dispatch(fetchHotelsAction());
   }, [dispatch]);
 
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  const hotelsByCity = useAppSelector(SelectHotelsByCity);
 
   const mainClass = classNames({
     'page__main': true,

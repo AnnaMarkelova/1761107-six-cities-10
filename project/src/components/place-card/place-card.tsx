@@ -18,7 +18,7 @@ type PlaceCardProps = {
   onListItemHover?: (id: number | undefined) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
+const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
@@ -107,3 +107,5 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
     </article>
   );
 };
+
+export default React.memo(PlaceCard);

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PlaceCard } from '../../components/place-card/place-card';
+import PlaceCard from '../../components/place-card/place-card';
 import { cityCardType } from '../../consts/city-card-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNearbyHotelsAction } from '../../services/store/api-actions';
