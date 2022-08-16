@@ -7,44 +7,28 @@ const initialState: HotelsData = {
   hotels: [],
   currentHotel: null,
   nearbyHotels: [],
-  isDataLoading: false,
 };
 
 export const hotelsData = createSlice({
   name: NameSpace.DataHotels,
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentHotel: (state, action) => {
+      state.currentHotel = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
-      .addCase(fetchHotelsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
       .addCase(fetchHotelsAction.fulfilled, (state, action) => {
-        state.isDataLoading = false;
         state.hotels = action.payload;
       })
-      .addCase(fetchHotelsAction.rejected, (state) => {
-        state.isDataLoading = false;
-      })
-      .addCase(fetchHotelAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
       .addCase(fetchHotelAction.fulfilled, (state, action) => {
-        state.isDataLoading = false;
         state.currentHotel = action.payload;
       })
-      .addCase(fetchHotelAction.rejected, (state) => {
-        state.isDataLoading = false;
-      })
-      .addCase(fetchNearbyHotelsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
       .addCase(fetchNearbyHotelsAction.fulfilled, (state, action) => {
-        state.isDataLoading = false;
         state.nearbyHotels = action.payload;
-      })
-      .addCase(fetchNearbyHotelsAction.rejected, (state) => {
-        state.isDataLoading = false;
       });
   }
 });
+
+export const { setCurrentHotel } = hotelsData.actions;

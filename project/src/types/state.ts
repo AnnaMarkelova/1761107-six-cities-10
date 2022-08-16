@@ -11,25 +11,22 @@ export type AppDispatch = typeof store.dispatch;
 
 export type UserProcess = {
   user: User | null,
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  isDataLoading: boolean
 };
 
 export type FavoritesHotelsData = {
-  favoritesHotels: Hotel[],
-  isHotelStatusFavoriteLoading: boolean
+  favoritesHotels: Hotel[]
 };
 
 export type CommentsData = {
-  comments: Comment[],
-  isCommentLoading: boolean,
-  isDataLoading: boolean,
+  comments: Comment[]
 };
 
 export type HotelsData = {
   hotels: Hotel[],
   currentHotel: Hotel | null,
-  nearbyHotels: Hotel[],
-  isDataLoading: boolean,
+  nearbyHotels: Hotel[]
 };
 
 export type CityData = {

@@ -7,9 +7,8 @@ import { AppRoute } from '../../consts/app-route';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../services/store/api-actions';
-import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
-import { getIsHotelStatusFavoriteLoading } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
+import { fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 
 const COUNT_STARS = 5;
 
@@ -17,14 +16,12 @@ type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
   onListItemHover?: (id: number | undefined) => void;
-  isNearbyCard?: boolean;
-  setNearHotelUpdated?:(value: boolean) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover, isNearbyCard = false, setNearHotelUpdated }) => {
+export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isHotelStatusFavoriteLoading = useAppSelector(getIsHotelStatusFavoriteLoading);
+  const isDataLoading = useAppSelector(getIsDataLoading);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const navigate = useNavigate();
@@ -84,14 +81,10 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
                 return;
               }
               dispatch(fetchHotelStatusFavoriteAction({hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1}));
-              if (isNearbyCard) {
-                fetchNearbyHotelsAction({hotelId: hotel.id});
-                setNearHotelUpdated && setNearHotelUpdated(true);
-              }
             }}
             className={btnClass}
             type="button"
-            disabled={isHotelStatusFavoriteLoading}
+            disabled={isDataLoading}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

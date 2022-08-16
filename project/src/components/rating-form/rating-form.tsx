@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../hooks';
-import { getIsCommentLoading } from '../../services/store/slices/comments-data/comments-data-selectors';
+import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 
 const COUNT_STARS = 5;
 
@@ -19,7 +19,7 @@ interface RatingFormProps {
 
 export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, onChange }) => {
 
-  const isCommentLoading = useAppSelector(getIsCommentLoading);
+  const isDataLoading = useAppSelector(getIsDataLoading);
 
   return (
     <div className="reviews__rating-form form__rating">
@@ -33,7 +33,7 @@ export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, on
             type="radio"
             checked={item === value}
             onChange={() => onChange && onChange(item)}
-            disabled={isCommentLoading}
+            disabled={isDataLoading}
           />
           <label
             htmlFor={`${item}-stars`}

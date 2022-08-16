@@ -18,13 +18,13 @@ export const fetchHotelsAction = createAsyncThunk<Hotel[], undefined, {
   }
 }>(
   'data/fetchHotels',
-  async (_arg, { dispatch, extra }) => {
+  async (_arg, { extra }) => {
     const { data } = await extra.api.get<Hotel[]>(APIRoute.Hotels);
     return data;
   },
 );
 
-export const fetchHotelAction = createAsyncThunk<Hotel, { hotelId: number }, {
+export const fetchHotelAction = createAsyncThunk<Hotel, { hotelId: number | null }, {
   dispatch: AppDispatch,
   state: State,
   extra: {
@@ -74,8 +74,9 @@ export const fetchNewCommentAction = createAsyncThunk<void, { comment: string, r
   }
 }>(
   'data/fetchNewComment',
-  async ({ comment, rating, hotelId }, { extra }) => {
+  async ({ comment, rating, hotelId }, { dispatch, extra }) => {
     await extra.api.post<Comment>(`${APIRoute.Comments}/${hotelId}`, { comment, rating });
+    dispatch(fetchCommentsAction({hotelId}));
   },
 );
 
@@ -93,7 +94,7 @@ export const fetchFavoritesHotelsAction = createAsyncThunk<Hotel[], undefined, {
   },
 );
 
-export const fetchHotelStatusFavoriteAction = createAsyncThunk<void, { hotelId: number, status: number }, {
+export const fetchHotelStatusFavoriteAction = createAsyncThunk<void, { hotelId: number, status: number}, {
   dispatch: AppDispatch,
   state: State,
   extra: {
@@ -101,10 +102,16 @@ export const fetchHotelStatusFavoriteAction = createAsyncThunk<void, { hotelId: 
   }
 }>(
   'data/fetchHotelStatusFavorite',
-  async ({ hotelId, status }, { dispatch, extra }) => {
+  async ({ hotelId, status }, { dispatch, getState, extra }) => {
     await extra.api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
     dispatch(fetchHotelsAction());
     dispatch(fetchFavoritesHotelsAction());
+    const state = getState();
+    const currentHotel = state.DATA_HOTELS.currentHotel;
+    if (currentHotel) {
+      dispatch(fetchHotelAction({hotelId: currentHotel.id}));
+      dispatch(fetchNearbyHotelsAction({hotelId: currentHotel.id}));
+    }
   },
 );
 

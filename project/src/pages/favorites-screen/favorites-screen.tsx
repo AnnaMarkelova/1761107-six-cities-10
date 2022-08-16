@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../../components/loader/loader';
 import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
-import { getIsDataLoading } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 
 export const FavoritesScreen: React.FunctionComponent = () => {
 

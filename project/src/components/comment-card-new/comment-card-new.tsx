@@ -1,8 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNewCommentAction } from '../../services/store/api-actions';
-import { getIsDataLoading } from '../../services/store/slices/comments-data/comments-data-selectors';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
+import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 import { RatingForm } from '../rating-form/rating-form';
 
 const MIN_LENGTH_COMMENT = 50;
@@ -16,19 +16,19 @@ export const CommentCardNew: React.FunctionComponent = () => {
   });
 
   const currentHotel = useAppSelector(getCurrentHotel);
-  const isCommentLoading = useAppSelector(getIsDataLoading);
+  const isDataLoading = useAppSelector(getIsDataLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isCommentLoading) {
+    if (!isDataLoading) {
       setFormData({
         rating: 0,
         comment: ''
       });
     }
-  }, [isCommentLoading]);
+  }, [isDataLoading]);
 
-  const btnDisable = (formData.rating === 0 || formData.comment.length <= MIN_LENGTH_COMMENT) || isCommentLoading;
+  const btnDisable = (formData.rating === 0 || formData.comment.length <= MIN_LENGTH_COMMENT) || isDataLoading;
 
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -60,7 +60,7 @@ export const CommentCardNew: React.FunctionComponent = () => {
           const { value } = evt.target;
           setFormData({ ...formData, comment: value });
         }}
-        readOnly={isCommentLoading}
+        readOnly={isDataLoading}
       >
       </textarea>
       <div className="reviews__button-wrapper">
