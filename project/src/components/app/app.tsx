@@ -8,10 +8,12 @@ import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
 import { PrivateRoute } from '../private-route/pravate-route';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
+import browserHistory from '../../services/browser-history';
+import { checkAuthAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -25,7 +27,13 @@ function ScrollToTop() {
 
 const App: React.FunctionComponent = () => {
 
-  const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return (
@@ -34,50 +42,47 @@ const App: React.FunctionComponent = () => {
   }
 
   return (
-    <>
-      <LoaderThreeDots isLoading={isDataLoading}/>
-      <HistoryRouter
-        history={browserHistory}
-      >
-        <ScrollToTop />
-        <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={
-              < MainScreen />
-            }
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                < FavoritesScreen />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={`${AppRoute.Room}/:id`}
-            element={
-              < PropertyScreen />
-            }
-          />
-          <Route
-            path={AppRoute.Login}
-            element={
-              < LoginScreen/>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <NotFoundScreen />
-            }
-          />
-        </Routes>
-      </HistoryRouter>
-    </>
+    <HistoryRouter
+      history={browserHistory}
+    >
+      <ScrollToTop />
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={
+            < MainScreen />
+          }
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              < FavoritesScreen />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.RoomId}
+          element={
+            < PropertyScreen />
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element={
+            < LoginScreen />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <NotFoundScreen />
+          }
+        />
+      </Routes>
+    </HistoryRouter>
   );
 };
 

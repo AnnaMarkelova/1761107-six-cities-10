@@ -4,7 +4,8 @@ import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
 import { AuthData } from '../../types/auth-data';
 
 export const LoginScreen: React.FunctionComponent = () => {
@@ -14,7 +15,7 @@ export const LoginScreen: React.FunctionComponent = () => {
 
   const dispatch = useAppDispatch();
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   if (hasAuthorization) {

@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import {ToastContainer} from 'react-toastify';
 import App from './components/app/app';
-import { ErrorMessage } from './components/error-message/error-message';
-import { store } from './store';
-import { checkAuthAction, fetchFavoritesHotelsAction, fetchHotelsAction } from './store/api-actions';
+import { store } from './services/store';
 
-store.dispatch(checkAuthAction());
-store.dispatch(fetchHotelsAction());
-store.dispatch(fetchFavoritesHotelsAction());
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -17,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorMessage />
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,

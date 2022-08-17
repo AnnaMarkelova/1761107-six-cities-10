@@ -1,18 +1,18 @@
 import React from 'react';
 import { cityCardType } from '../../consts/city-card-type';
 import { useAppSelector } from '../../hooks';
-import { getHotelsByCity, sortHotels } from '../../utils/hotel-utils';
-import { PlaceCard } from '../place-card/place-card';
+import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
+import { sortHotels } from '../../utils/hotel-utils';
+import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   onListItemHover: (id: number | undefined) => void;
   sort: string;
 }
 
-export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListItemHover, sort }) => {
+const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListItemHover, sort }) => {
 
-  const {city, hotels} = useAppSelector((state) => state);
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  const hotelsByCity = useAppSelector(SelectHotelsByCity);
 
   const currentHotels = sortHotels.find((item) => item.sortType === sort)?.getSortHotels(hotelsByCity);
 
@@ -28,3 +28,5 @@ export const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListIte
     </div>
   );
 };
+
+export default React.memo(PlacesList);

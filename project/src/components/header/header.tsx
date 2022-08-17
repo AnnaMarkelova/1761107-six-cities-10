@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/api-actions';
+import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
+import { getAuthorizationStatus, getUser } from '../../services/store/slices/user-process/user-process-selectors';
 
 export const Header: React.FunctionComponent = () => {
 
-  const {favoritesHotels} = useAppSelector((state) => state);
+  const favoritesHotels = useAppSelector(getFavoritesHotels);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
 
-  const { authorizationStatus, user } = useAppSelector((state) => state);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    if (hasAuthorization) {
+      dispatch(fetchFavoritesHotelsAction());
+    }
+  }, [dispatch, hasAuthorization]);
+
 
   return (
     <header className="header">
@@ -35,6 +45,7 @@ export const Header: React.FunctionComponent = () => {
                             src={`${user?.avatarUrl}`}
                             width="20"
                             height="20"
+                            alt={user?.name}
                             style={{
                               borderRadius: '50%',
                             }}

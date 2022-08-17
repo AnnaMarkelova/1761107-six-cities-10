@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks';
 import { Icon, Marker } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
+import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
 
 
 type MapProps = {
@@ -29,7 +30,7 @@ const currentCustomIcon = new Icon({
 
 export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, style}) => {
 
-  const { city } = useAppSelector((state) => state);
+  const city = useAppSelector(getCity);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

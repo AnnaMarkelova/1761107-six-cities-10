@@ -5,10 +5,13 @@ import { Footer } from '../../components/footer/footer';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../../components/loader/loader';
+import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
+import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 
 export const FavoritesScreen: React.FunctionComponent = () => {
 
-  const {favoritesHotels, isDataLoading} = useAppSelector((state) => state);
+  const favoritesHotels = useAppSelector(getFavoritesHotels);
+  const isDataLoading = useAppSelector(getIsDataLoading);
 
   const citiesList = new Set(favoritesHotels.map((item) => item.city.name));
 
@@ -17,14 +20,9 @@ export const FavoritesScreen: React.FunctionComponent = () => {
     'page--favorites-empty': !favoritesHotels.length
   });
 
-  if ( isDataLoading) {
-    return (
-      <LoaderThreeDots />
-    );
-  }
-
   return (
     <div className={pageClass}>
+      {isDataLoading && <LoaderThreeDots />}
       <Header />
       {favoritesHotels.length > 0 && (
         <main className="page__main page__main--favorites">

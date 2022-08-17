@@ -1,12 +1,13 @@
 import React from 'react';
 import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCity } from '../../store/action';
+import { setCity } from '../../services/store/slices/city-data/city-data';
+import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
 
 
 export const CitiesList: React.FunctionComponent = () => {
 
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector(getCity);
 
   const dispatch = useAppDispatch();
 
@@ -15,7 +16,7 @@ export const CitiesList: React.FunctionComponent = () => {
       <ul className="locations__list tabs__list">
         {cities.map((item) => (
           <li className="locations__item" key={item.name}>
-            <a className={`locations__item-link tabs__item ${city === item
+            <a className={`locations__item-link tabs__item ${city.name === item.name
               ? 'tabs__item--active'
               : ''}`}
             href='#/'

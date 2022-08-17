@@ -4,10 +4,11 @@ import { Hotel } from '../../types/hotel';
 import { Link, useNavigate } from 'react-router-dom';
 import { cityCardType } from '../../consts/city-card-type';
 import { AppRoute } from '../../consts/app-route';
-import { hotelType } from '../../consts/hotel-type';
+import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction } from '../../store/api-actions';
+import { fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
+import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
 
 const COUNT_STARS = 5;
 
@@ -15,13 +16,12 @@ type PlaceCardProps = {
   hotel: Hotel;
   cardType: string;
   onListItemHover?: (id: number | undefined) => void;
-  isNearbyCard?: boolean;
-  setNearHotelUpdated?:(value: boolean) => void;
 }
 
-export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover, isNearbyCard = false, setNearHotelUpdated }) => {
+const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, onListItemHover }) => {
 
-  const { authorizationStatus, isHotelStatusFavoriteLoading } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoading = useAppSelector(getIsDataLoading);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   const navigate = useNavigate();
@@ -38,6 +38,9 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
     'favorites__card-info': cardType === cityCardType.FAVORITES_CARD,
   });
 
+  const indexOfHotelType = Object.keys(HotelType).indexOf(hotel.type as HotelType);
+  const hotelTypeValue = Object.values(HotelType)[indexOfHotelType];
+
   return (
     <article
       className={`${cardType} place-card`}
@@ -53,7 +56,7 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
         (
           <div className="cities__image-wrapper place-card__image-wrapper">
             <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>
-              <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place image" />
+              <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place main-img" />
             </Link>
           </div>
         )}
@@ -61,7 +64,7 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
         (
           <div className="favorites__image-wrapper place-card__image-wrapper">
             <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>
-              <img className="place-card__image" src={hotel.previewImage} width="150" height="110" alt="Place image" />
+              <img className="place-card__image" src={hotel.previewImage} width="150" height="110" alt="Place main-img" />
             </Link>
           </div>
         )}
@@ -78,14 +81,10 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
                 return;
               }
               dispatch(fetchHotelStatusFavoriteAction({hotelId: hotel.id, status: hotel.isFavorite ? 0 : 1}));
-              if (isNearbyCard) {
-                fetchNearbyHotelsAction({hotelId: hotel.id});
-                setNearHotelUpdated && setNearHotelUpdated(true);
-              }
             }}
             className={btnClass}
             type="button"
-            disabled={isHotelStatusFavoriteLoading}
+            disabled={isDataLoading}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -103,8 +102,10 @@ export const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, card
           <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>{hotel.title}
           </Link>
         </h2>
-        <p className="place-card__type">{hotelType[hotel.type]}</p>
+        <p className="place-card__type">{hotelTypeValue}</p>
       </div>
     </article>
   );
 };
+
+export default React.memo(PlaceCard);

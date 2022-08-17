@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { Hotel } from '../../types/hotel';
+import React, { useEffect } from 'react';
 import { Header } from '../../components/header/header';
-import { CitiesPlaces } from '../../components/cities-places/cities-places';
-import { Map } from '../../components/map/map';
 import classNames from 'classnames';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
-import { getHotelsByCity } from '../../utils/hotel-utils';
+import { fetchHotelsAction } from '../../services/store/api-actions';
+import { LoaderThreeDots } from '../../components/loader/loader';
+import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { HotelsContainer } from '../../components/hotels-container/hotels-container';
+import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
 
 export const MainScreen: React.FunctionComponent = () => {
 
-  const { city, hotels} = useAppSelector((state) => state);
+  const isDataLoading = useAppSelector(getIsDataLoading);
 
-  const hotelsByCity = getHotelsByCity(hotels, city);
+  const dispatch = useAppDispatch();
 
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+  useEffect(() => {
+    dispatch(fetchHotelsAction());
+  }, [dispatch]);
 
-  const onListItemHover = (listItemId: number | undefined) => {
-    const currentHotel = hotelsByCity.find((item) => item.id === listItemId);
-    setSelectedHotel(currentHotel ? currentHotel : null);
-  };
+  const hotelsByCity = useAppSelector(SelectHotelsByCity);
 
   const mainClass = classNames({
     'page__main': true,
@@ -27,41 +27,19 @@ export const MainScreen: React.FunctionComponent = () => {
     'page__main--index-empty': !hotelsByCity.length
   });
 
-  const placesContainerClass = classNames({
-    'container': true,
-    'cities__places-container': true,
-    'cities__places-container--empty': !hotelsByCity.length
-  });
-
   return (
-    <div className="page page--gray page--main">
-      <Header />
-      <main className={mainClass}>
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <CitiesList />
-        </div>
-        <div className="cities">
-          <div className={placesContainerClass}>
-            <CitiesPlaces
-              onListItemHover={onListItemHover}
-            />
-            <div className="cities__right-section">
-              {hotelsByCity.length > 0 &&
-                <section className="cities__map map">
-                  <Map
-                    selectedHotel={selectedHotel}
-                    hotels={hotelsByCity}
-                    style={{
-                      height: '100%',
-                      width: '512px'
-                    }}
-                  />
-                </section>}
-            </div>
+    <>
+      {isDataLoading && <LoaderThreeDots />}
+      <div className="page page--gray page--main">
+        <Header />
+        <main className={mainClass}>
+          <h1 className="visually-hidden">Cities</h1>
+          <div className="tabs">
+            <CitiesList />
           </div>
-        </div>
-      </main>
-    </div>
+          <HotelsContainer></HotelsContainer>
+        </main>
+      </div>
+    </>
   );
 };
