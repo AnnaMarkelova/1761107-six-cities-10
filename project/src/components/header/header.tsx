@@ -5,7 +5,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/api-actions';
 import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
-import { getAuthorizationStatus, getUser } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus, getUser } from '../../services/store/slices/root/root-selectors';
 
 export const Header: React.FunctionComponent = () => {
 

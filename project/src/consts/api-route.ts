@@ -11,5 +11,5 @@ export enum NameSpace {
   DataFavoritesHotels = 'DATA_FAVORITES_HOTELS',
   DataComments = 'DATA_COMMENTS',
   DataCity = 'DATA_CITY',
-  User = 'USER',
+  Root = 'ROOT',
 }

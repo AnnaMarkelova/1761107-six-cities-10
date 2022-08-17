@@ -13,7 +13,7 @@ import { LoaderThreeDots } from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../services/browser-history';
 import { checkAuthAction } from '../../services/store/api-actions';
-import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 
 function ScrollToTop() {
   const { pathname } = useLocation();

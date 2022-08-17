@@ -14,7 +14,7 @@ import { fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services
 import { setCity } from '../../services/store/slices/city-data/city-data';
 import { setCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
-import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
 const COUNT_PICTURES = 6;

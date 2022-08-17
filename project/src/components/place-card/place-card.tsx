@@ -8,7 +8,7 @@ import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
-import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 
 const COUNT_STARS = 5;
 

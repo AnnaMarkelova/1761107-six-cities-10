@@ -8,10 +8,11 @@ const initialState: UserProcess = {
   user: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoading: false,
+  dataSentSuccessfully: false,
 };
 
-export const userProcess = createSlice({
-  name: NameSpace.User,
+export const root = createSlice({
+  name: NameSpace.Root,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -66,9 +67,11 @@ export const userProcess = createSlice({
       })
       .addCase(fetchNewCommentAction.fulfilled, (state) => {
         state.isDataLoading = false;
+        state.dataSentSuccessfully = true;
       })
       .addCase(fetchNewCommentAction.rejected, (state) => {
         state.isDataLoading = false;
+        state.dataSentSuccessfully = false;
       })
       .addCase(fetchHotelStatusFavoriteAction.pending, (state) => {
         state.isDataLoading = true;

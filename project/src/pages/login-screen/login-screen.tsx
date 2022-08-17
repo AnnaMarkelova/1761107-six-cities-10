@@ -5,7 +5,7 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/store/api-actions';
-import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 import { AuthData } from '../../types/auth-data';
 
 export const LoginScreen: React.FunctionComponent = () => {
