@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../hooks';
-import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 
 const COUNT_STARS = 5;
 

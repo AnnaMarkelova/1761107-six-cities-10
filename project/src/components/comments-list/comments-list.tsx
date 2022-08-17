@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchCommentsAction } from '../../services/store/api-actions';
 import { getComments } from '../../services/store/slices/comments-data/comments-data-selectors';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
-import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 import { sortDateDown } from '../../utils/utills';
 import { CommentCardNew } from '../comment-card-new/comment-card-new';
 import { CommentCard } from '../comment-card/comment-card';

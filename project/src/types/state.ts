@@ -12,7 +12,8 @@ export type AppDispatch = typeof store.dispatch;
 export type UserProcess = {
   user: User | null,
   authorizationStatus: AuthorizationStatus,
-  isDataLoading: boolean
+  isDataLoading: boolean,
+  dataSentSuccessfully: boolean
 };
 
 export type FavoritesHotelsData = {
