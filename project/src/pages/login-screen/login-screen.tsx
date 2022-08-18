@@ -1,12 +1,15 @@
 import React, { FormEvent, useRef } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
+import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/store/api-actions';
+import { setCity } from '../../services/store/slices/city-data/city-data';
 import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 import { AuthData } from '../../types/auth-data';
+import { getRandomNumber } from '../../utils/utills';
 
 export const LoginScreen: React.FunctionComponent = () => {
 
@@ -18,13 +21,15 @@ export const LoginScreen: React.FunctionComponent = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (hasAuthorization) {
-    return <Navigate to={AppRoute.Main} ></Navigate>;
-  }
+  const randomCity = cities[getRandomNumber(0, cities.length - 1)];
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
+
+  if (hasAuthorization) {
+    return <Navigate to={AppRoute.Main} ></Navigate>;
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -81,9 +86,15 @@ export const LoginScreen: React.FunctionComponent = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#/">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                onClick={() => (
+                  dispatch(setCity(randomCity))
+                )}
+                to={AppRoute.Main}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>
