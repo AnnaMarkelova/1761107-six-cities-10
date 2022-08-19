@@ -5,6 +5,8 @@ import { getRandomNumber } from './utills';
 import { cities } from '../consts/cities';
 import { Host } from '../types/host';
 import { Location } from '../types/location';
+import { Comment } from '../types/comment';
+import { UserComment } from '../types/user-comment';
 
 
 const makeFakeCity = (): City => cities[getRandomNumber(0, cities.length - 1)];
@@ -41,5 +43,20 @@ const makeFakeLocation = (): Location => ({
   latitude : datatype.number(),
   longitude : datatype.number(),
   zoom : datatype.number(),
+});
+
+export const makeFakeComment = (): Comment => ({
+  comment: name.title(),
+  date: new Date().toString(),
+  id: datatype.number(),
+  rating: datatype.number(5),
+  user: makeFakeUserComment(),
+});
+
+const makeFakeUserComment = (): UserComment => ({
+  avatarUrl: image.imageUrl(),
+  id: datatype.number(),
+  isPro: datatype.boolean(),
+  name: name.lastName(),
 });
 
