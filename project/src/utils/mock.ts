@@ -7,6 +7,7 @@ import { Host } from '../types/host';
 import { Location } from '../types/location';
 import { Comment } from '../types/comment';
 import { UserComment } from '../types/user-comment';
+import { User } from '../types/user';
 
 
 const makeFakeCity = (): City => cities[getRandomNumber(0, cities.length - 1)];
@@ -59,4 +60,14 @@ const makeFakeUserComment = (): UserComment => ({
   isPro: datatype.boolean(),
   name: name.lastName(),
 });
+
+export const makeFakeUser = (): User => ({
+  avatarUrl: image.imageUrl(),
+  email: internet.email(),
+  id: datatype.number(),
+  isPro: datatype.boolean(),
+  name: name.lastName(),
+  token: name.title(),
+});
+
 
