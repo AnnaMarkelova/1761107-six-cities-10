@@ -1,8 +1,8 @@
 import { sortDateDown, humanizeDate, getRandomNumber } from './utills';
 
 describe('Function: sortDateDown', () => {
-  const datePast = 'Fri Aug 19 2022 11:43:04 GMT+0200 (CEST)';
-  const dateFuture = 'Fri Aug 19 2022 11:45:04 GMT+0200 (CEST)';
+  const datePast = new Date().toString();
+  const dateFuture = new Date().toString();
   it('should return negative number', () => {
     expect(sortDateDown(datePast, dateFuture)).toBeLessThanOrEqual(0);
   });
