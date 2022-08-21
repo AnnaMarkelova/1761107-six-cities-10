@@ -10,8 +10,6 @@ import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoaderThreeDots } from '../loader/loader';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../services/browser-history';
 import { checkAuthAction } from '../../services/store/api-actions';
 import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 
@@ -42,9 +40,7 @@ const App: React.FunctionComponent = () => {
   }
 
   return (
-    <HistoryRouter
-      history={browserHistory}
-    >
+    <>
       <ScrollToTop />
       <Routes>
         <Route
@@ -82,7 +78,7 @@ const App: React.FunctionComponent = () => {
           }
         />
       </Routes>
-    </HistoryRouter>
+    </>
   );
 };
 
