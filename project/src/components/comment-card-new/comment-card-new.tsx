@@ -42,6 +42,7 @@ export const CommentCardNew: React.FunctionComponent = () => {
       className="reviews__form form"
       action="#"
       method="post"
+      data-testid={'onClickSubmit'}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <RatingForm
@@ -57,6 +58,7 @@ export const CommentCardNew: React.FunctionComponent = () => {
         placeholder="Tell how was your stay, what you like and what can be improved"
         maxLength={MAX_LENGTH_COMMENT}
         value={formData.comment}
+        data-testid={'comment'}
         onChange={(evt) => {
           const { value } = evt.target;
           setFormData({ ...formData, comment: value });
