@@ -21,6 +21,7 @@ export const CitiesList: React.FunctionComponent = () => {
               : ''}`}
             href='#/'
             onClick={() => (dispatch(setCity(item)))}
+            data-testid={`ClickOnCity${item.name}`}
             >
               <span>{item.name}</span>
             </a>
