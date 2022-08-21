@@ -4,19 +4,14 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { AuthorizationStatus } from '../../consts/authorization-status';
-import { SortType } from '../../consts/sort-type';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
-import { makeFakeHotel, makeFakeUser } from '../../utils/mock';
 import HistoryRouter from '../history-route/history-route';
-import PlacesList from './places-list';
+import { RatingForm } from './rating-form';
 
 const api = createAPI();
 const extra = { api };
 const middlewares = [thunk.withExtraArgument(extra)];
-
-const hotels = [makeFakeHotel(), makeFakeHotel(), makeFakeHotel()];
 
 const mockStore = configureMockStore<
   State,
@@ -26,20 +21,11 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-
-describe('Component: PlacesList', () => {
+describe('Component: RatingForm', () => {
 
   const store = mockStore({
-    DATA_CITY: {
-      city: hotels[0].city,
-    },
-    DATA_HOTELS: {
-      hotels,
-      currentHotel: hotels[0]
-    },
     ROOT: {
-      user: makeFakeUser(),
-      authorizationStatus: AuthorizationStatus.Auth
+      isDataLoading: false,
     }
   });
 
@@ -47,9 +33,9 @@ describe('Component: PlacesList', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <PlacesList
-            onListItemHover={jest.fn()}
-            sort = {SortType.POPULAR}
+          <RatingForm
+            value={5}
+            onChange={jest.fn()}
           />
         </HistoryRouter>
       </Provider>,
@@ -57,6 +43,4 @@ describe('Component: PlacesList', () => {
 
     expect(screen.getByTestId('rootElement')).toBeInTheDocument();
   });
-
-
 });

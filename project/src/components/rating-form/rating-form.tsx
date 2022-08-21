@@ -22,7 +22,7 @@ export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, on
   const isDataLoading = useAppSelector(getIsDataLoading);
 
   return (
-    <div className="reviews__rating-form form__rating">
+    <div className="reviews__rating-form form__rating" data-testid={'rootElement'}>
       {stars().map((item) => (
         <React.Fragment key={item}>
           <input

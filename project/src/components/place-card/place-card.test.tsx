@@ -74,7 +74,7 @@ describe('Component: PlaceCard', () => {
     it('should navigate to "/offer/id"', async () => {
       render(fakeComponent);
       await userEvent.click(screen.getByTestId('onClickCard'));
-      // expect(screen.getByLabelText(/What's inside/i)).toBeInTheDocument();
+      // expect(screen.getText(/What's inside/i)).toBeInTheDocument();
     });
   });
 
