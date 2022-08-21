@@ -55,7 +55,10 @@ const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, o
       {cardType === cityCardType.CITIES_CARD &&
         (
           <div className="cities__image-wrapper place-card__image-wrapper">
-            <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>
+            <Link
+              to={{ pathname: `${AppRoute.Room}/${hotel.id}`}}
+              data-testid={'onClickCard'}
+            >
               <img className="place-card__image" src={hotel.previewImage} width="260" height="200" alt="Place main-img" />
             </Link>
           </div>
@@ -63,7 +66,10 @@ const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, o
       {cardType === cityCardType.FAVORITES_CARD &&
         (
           <div className="favorites__image-wrapper place-card__image-wrapper">
-            <Link to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}>
+            <Link
+              to={{ pathname: `${AppRoute.Room}/${hotel.id}` }}
+              data-testid={'onClickCard'}
+            >
               <img className="place-card__image" src={hotel.previewImage} width="150" height="110" alt="Place main-img" />
             </Link>
           </div>
@@ -85,6 +91,7 @@ const PlaceCard: React.FunctionComponent<PlaceCardProps> = ({ hotel, cardType, o
             className={btnClass}
             type="button"
             disabled={isDataLoading}
+            data-testid={'onClickStatusFavorite'}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
