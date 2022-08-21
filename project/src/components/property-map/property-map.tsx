@@ -14,7 +14,7 @@ export const PropertyMap: React.FunctionComponent = () => {
   }
 
   return (
-    <section className="property__map map" data-testid={'rootElement'}>
+    <section className="property__map map" data-testid={'rootElementPropertyMap'}>
       <Map
         selectedHotel={hotel}
         hotels={hotels}

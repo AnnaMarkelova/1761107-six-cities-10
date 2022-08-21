@@ -55,7 +55,7 @@ describe('Component: PlacesList', () => {
       </Provider>,
     );
 
-    expect(screen.getByTestId('rootElement')).toBeInTheDocument();
+    expect(screen.getByTestId('rootElementPlacesList')).toBeInTheDocument();
   });
 
 

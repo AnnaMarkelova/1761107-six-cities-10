@@ -4,11 +4,12 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { AuthorizationStatus } from '../../consts/authorization-status';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
 import { makeFakeHotel } from '../../utils/mock';
 import HistoryRouter from '../history-route/history-route';
-import { PropertyMap } from './property-map';
+import { HotelsContainer } from './hotels-container';
 
 const api = createAPI();
 const extra = { api };
@@ -22,16 +23,19 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-describe('Component: PropertyMap', () => {
+describe('Component: HotelsContainer', () => {
 
-  const nearbyHotels = [makeFakeHotel()];
+  const hotels = [makeFakeHotel()];
+
   const store = mockStore({
+    ROOT: {
+      authorizationStatus: AuthorizationStatus.Auth,
+    },
     DATA_CITY: {
-      city: nearbyHotels[0].city
+      city: hotels[0].city
     },
     DATA_HOTELS: {
-      nearbyHotels,
-      currentHotel: makeFakeHotel(),
+      hotels,
     }
   });
 
@@ -39,11 +43,11 @@ describe('Component: PropertyMap', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <PropertyMap />
+          <HotelsContainer/>
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByTestId('rootElementPropertyMap')).toBeInTheDocument();
+    expect(screen.getByTestId('rootElementHotelsContainer')).toBeInTheDocument();
   });
 });
