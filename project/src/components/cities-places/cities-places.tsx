@@ -54,6 +54,7 @@ const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHo
                   }`}
                   tabIndex={0}
                   key={item}
+                  data-testid={`onClickSort_${SortTypeValue}`}
                   onClick={() => {
                     if (sort !== SortTypeValue) {
                       (setSort(SortTypeValue));

@@ -30,7 +30,7 @@ const store = mockStore({
 
 const history = createMemoryHistory();
 
-describe('Component: GameOverScreen', () => {
+describe('Component: CitiesList', () => {
   it('should render correctly', () => {
     render(
       <Provider store={store}>
