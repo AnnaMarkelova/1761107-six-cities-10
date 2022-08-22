@@ -30,7 +30,7 @@ export const MainScreen: React.FunctionComponent = () => {
   return (
     <>
       {isDataLoading && <LoaderThreeDots />}
-      <div className="page page--gray page--main">
+      <div className="page page--gray page--main" data-testid="rootMainPage">
         <Header />
         <main className={mainClass}>
           <h1 className="visually-hidden">Cities</h1>
