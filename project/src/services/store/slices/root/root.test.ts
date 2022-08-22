@@ -19,8 +19,6 @@ describe('Reducer: favoritesHotelsData', () => {
     };
   });
 
-
-
   it('without additional parameters should return initial state', () => {
     expect(root.reducer(void 0, { type: 'UNKNOWN_ACTION' }))
       .toEqual(state);
