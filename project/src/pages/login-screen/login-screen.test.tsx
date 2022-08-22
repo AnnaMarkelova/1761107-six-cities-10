@@ -27,7 +27,7 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-describe('Component: LoginScreen', () => {
+describe('Page: LoginScreen', () => {
 
   const store = mockStore({
     ROOT: {

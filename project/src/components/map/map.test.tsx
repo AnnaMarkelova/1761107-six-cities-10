@@ -24,7 +24,7 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-describe('Component: PlacesList', () => {
+describe('Component: Map', () => {
 
   const store = mockStore({
     DATA_CITY: {
@@ -54,6 +54,5 @@ describe('Component: PlacesList', () => {
 
     expect(screen.getByTestId('rootElementMap')).toBeInTheDocument();
   });
-
 
 });

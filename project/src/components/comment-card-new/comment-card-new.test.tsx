@@ -25,7 +25,6 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-
 describe('Component: CommentCardNew', () => {
 
   const store = mockStore({
@@ -52,7 +51,6 @@ describe('Component: CommentCardNew', () => {
 
     expect(screen.getByText(/To submit review please make sure to set/i)).toBeInTheDocument();
   });
-
 
   it('should update Form data when user clicks on Submit', async () => {
     render(fakeComponent);

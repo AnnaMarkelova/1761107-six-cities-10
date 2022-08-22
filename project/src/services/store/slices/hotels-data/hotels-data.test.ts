@@ -3,7 +3,7 @@ import { makeFakeHotel } from '../../../../utils/mock';
 import { fetchHotelAction, fetchHotelsAction, fetchNearbyHotelsAction } from '../../api-actions';
 import { hotelsData } from './hotels-data';
 
-describe('Reducer: favoritesHotelsData', () => {
+describe('Reducer: hotelsData', () => {
 
   let state: HotelsData;
 

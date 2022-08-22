@@ -26,7 +26,6 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-
 describe('Component: PlacesList', () => {
 
   const store = mockStore({
@@ -57,6 +56,5 @@ describe('Component: PlacesList', () => {
 
     expect(screen.getByTestId('rootElementPlacesList')).toBeInTheDocument();
   });
-
 
 });

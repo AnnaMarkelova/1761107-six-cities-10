@@ -6,7 +6,6 @@ import { CommentCard } from './comment-card';
 
 const history = createMemoryHistory();
 
-
 describe('Component: CommentCard', () => {
 
   it('should render correctly', () => {

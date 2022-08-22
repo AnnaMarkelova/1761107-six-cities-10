@@ -43,4 +43,5 @@ describe('Component: RatingForm', () => {
 
     expect(screen.getByTestId('rootElementRatingForm')).toBeInTheDocument();
   });
+
 });

@@ -27,7 +27,6 @@ const mockStore = configureMockStore<
 
 const history = createMemoryHistory();
 
-
 describe('Component: CitiesPlaces', () => {
 
   describe('Component with hotels', () => {
@@ -61,7 +60,6 @@ describe('Component: CitiesPlaces', () => {
 
       expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
     });
-
 
     it('should set active Sort when user clicks on Sort', async () => {
       render(fakeComponent);
@@ -106,5 +104,4 @@ describe('Component: CitiesPlaces', () => {
     });
 
   });
-
 });

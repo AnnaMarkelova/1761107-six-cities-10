@@ -5,7 +5,6 @@ import { LoaderThreeDots } from './loader';
 
 const history = createMemoryHistory();
 
-
 describe('Component: LoaderThreeDots', () => {
 
   it('should render correctly', () => {
