@@ -5,4 +5,3 @@ export const sortDateDown = (taskA: string, taskB: string) => dayjs(taskA).diff(
 export const humanizeDate = (dueDate: string) => dayjs(dueDate).format('MMMM YYYY');
 
 export const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min) + min);
-
