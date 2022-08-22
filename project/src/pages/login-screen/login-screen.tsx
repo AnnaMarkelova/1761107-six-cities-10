@@ -54,6 +54,7 @@ export const LoginScreen: React.FunctionComponent = () => {
               className="login__form form"
               action=""
               method="post"
+              data-testid="onClickSubmit"
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden" data-testid="email" htmlFor="email">E-mail</label>
@@ -65,6 +66,7 @@ export const LoginScreen: React.FunctionComponent = () => {
                   id="email"
                   placeholder="Email"
                   required
+                  data-testid="emailInput"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -77,6 +79,7 @@ export const LoginScreen: React.FunctionComponent = () => {
                   id="password"
                   placeholder="Password"
                   required
+                  data-testid="passwordInput"
                 />
               </div>
               <button
