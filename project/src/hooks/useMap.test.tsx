@@ -43,13 +43,14 @@ describe('Hook: useMap', () => {
 
   it('should return array with 1 elements', () => {
 
-    const { rerender, result } = renderHook(() => {
+    // const { rerender, result } = renderHook(() => {
+    const { rerender } = renderHook(() => {
       useEffect(() => {
         useMap(mapRef, city);
         return () => {
           useMap(mapRef, city);
         };
-      }, [mapRef]);
+      }, []);
     }, { wrapper });
 
     city = cities[1];
