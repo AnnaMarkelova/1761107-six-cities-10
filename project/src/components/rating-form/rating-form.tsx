@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../hooks';
-import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 
 const COUNT_STARS = 5;
 
@@ -22,7 +22,7 @@ export const RatingForm: React.FunctionComponent<RatingFormProps> = ({ value, on
   const isDataLoading = useAppSelector(getIsDataLoading);
 
   return (
-    <div className="reviews__rating-form form__rating">
+    <div className="reviews__rating-form form__rating" data-testid={'rootElementRatingForm'}>
       {stars().map((item) => (
         <React.Fragment key={item}>
           <input

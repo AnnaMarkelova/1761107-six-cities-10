@@ -1,20 +1,19 @@
 import classNames from 'classnames';
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CommentsList } from '../../components/comments-list/comments-list';
 import { Header } from '../../components/header/header';
 import { LoaderThreeDots } from '../../components/loader/loader';
 import { NearbyHotels } from '../../components/nearby-hotels/nearby-hotels';
 import { PropertyMap } from '../../components/property-map/property-map';
-import { AppRoute } from '../../consts/app-route';
-import { AuthorizationStatus } from '../../consts/authorization-status';
+import { PropertyTitleBlock } from '../../components/property-title-block/propperty-title-block';
 import { HotelType } from '../../consts/hotel-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchHotelAction, fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
+import { fetchHotelAction } from '../../services/store/api-actions';
 import { setCity } from '../../services/store/slices/city-data/city-data';
 import { setCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data';
 import { getCurrentHotel } from '../../services/store/slices/hotels-data/hotels-data-selectors';
-import { getAuthorizationStatus, getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 import { NotFoundScreen } from '../not-found-screen/not-found-screen';
 
 const COUNT_PICTURES = 6;
@@ -22,13 +21,11 @@ const COUNT_STARS = 5;
 
 export const PropertyScreen: React.FunctionComponent = () => {
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const params = useParams();
 
   const hotelId = Number(params.id);
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoading = useAppSelector(getIsDataLoading);
 
   useEffect(() => {
@@ -44,17 +41,10 @@ export const PropertyScreen: React.FunctionComponent = () => {
     dispatch((dispatch(setCity(hotel?.city))));
   }, [hotel, dispatch]);
 
-  const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
   if (hotel === null) {
     return <NotFoundScreen></NotFoundScreen>;
   }
-
-  const btnClass = classNames({
-    'button': true,
-    'property__bookmark-button': true,
-    'property__bookmark-button--active': hasAuthorization ? hotel?.isFavorite : false,
-  });
 
   const userAvatarClass = classNames({
     'property__avatar-wrapper': true,
@@ -87,27 +77,7 @@ export const PropertyScreen: React.FunctionComponent = () => {
                   <div className="property__mark">
                     <span>Premium</span>
                   </div>)}
-                <div className="property__name-wrapper">
-                  <h1 className="property__name">
-                    {hotel?.title}
-                  </h1>
-                  <button
-                    onClick={() => {
-                      if (!hasAuthorization) {
-                        navigate(AppRoute.Login);
-                        return;
-                      }
-                      dispatch(fetchHotelStatusFavoriteAction({ hotelId: hotel ? hotel.id : 0, status: hotel?.isFavorite ? 0 : 1 }));
-                    }}
-                    className={btnClass}
-                    type="button"
-                  >
-                    <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark"></use>
-                    </svg>
-                    <span className="visually-hidden">To bookmarks</span>
-                  </button>
-                </div>
+                <PropertyTitleBlock/>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
                     <span style={{ width: `${Math.round(hotel ? hotel?.rating : 0) / COUNT_STARS * 100}%` }}></span>

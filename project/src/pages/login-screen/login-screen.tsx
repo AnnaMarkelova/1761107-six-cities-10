@@ -1,12 +1,15 @@
 import React, { FormEvent, useRef } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
+import { cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/store/api-actions';
-import { getAuthorizationStatus } from '../../services/store/slices/user-process/user-process-selectors';
+import { setCity } from '../../services/store/slices/city-data/city-data';
+import { getAuthorizationStatus } from '../../services/store/slices/root/root-selectors';
 import { AuthData } from '../../types/auth-data';
+import { getRandomNumber } from '../../utils/utills';
 
 export const LoginScreen: React.FunctionComponent = () => {
 
@@ -18,13 +21,15 @@ export const LoginScreen: React.FunctionComponent = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
-  if (hasAuthorization) {
-    return <Navigate to={AppRoute.Main} ></Navigate>;
-  }
+  const randomCity = cities[getRandomNumber(0, cities.length - 1)];
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
+
+  if (hasAuthorization) {
+    return <Navigate to={AppRoute.Main} ></Navigate>;
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -49,27 +54,32 @@ export const LoginScreen: React.FunctionComponent = () => {
               className="login__form form"
               action=""
               method="post"
+              data-testid="onClickSubmit"
             >
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
+                <label className="visually-hidden" data-testid="email" htmlFor="email">E-mail</label>
                 <input
                   ref={loginRef}
                   className="login__input form__input"
                   type="email"
                   name="email"
+                  id="email"
                   placeholder="Email"
                   required
+                  data-testid="emailInput"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" data-testid="password" htmlFor="password">Password</label>
                 <input
                   ref={passwordRef}
                   className="login__input form__input"
                   type="password"
                   name="password"
+                  id="password"
                   placeholder="Password"
                   required
+                  data-testid="passwordInput"
                 />
               </div>
               <button
@@ -81,9 +91,15 @@ export const LoginScreen: React.FunctionComponent = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#/">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                onClick={() => (
+                  dispatch(setCity(randomCity))
+                )}
+                to={AppRoute.Main}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
 import { fetchHotelsAction } from '../../services/store/api-actions';
 import { LoaderThreeDots } from '../../components/loader/loader';
-import { getIsDataLoading } from '../../services/store/slices/user-process/user-process-selectors';
+import { getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 import { HotelsContainer } from '../../components/hotels-container/hotels-container';
 import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
 
@@ -30,7 +30,7 @@ export const MainScreen: React.FunctionComponent = () => {
   return (
     <>
       {isDataLoading && <LoaderThreeDots />}
-      <div className="page page--gray page--main">
+      <div className="page page--gray page--main" data-testid="rootMainPage">
         <Header />
         <main className={mainClass}>
           <h1 className="visually-hidden">Cities</h1>

@@ -58,6 +58,7 @@ export const Map: React.FunctionComponent<MapProps> = ({ selectedHotel, hotels, 
     <div
       style={{ height: style.height, width: style.width, margin: style.margin }}
       ref={mapRef}
+      data-testid={'rootElementMap'}
     >
     </div>
   );

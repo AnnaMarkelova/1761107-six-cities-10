@@ -17,7 +17,7 @@ const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListItemHover,
   const currentHotels = sortHotels.find((item) => item.sortType === sort)?.getSortHotels(hotelsByCity);
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="cities__places-list places__list tabs__content" data-testid={'rootElementPlacesList'}>
       {currentHotels?.map((item) => (
         <PlaceCard
           key={item.id}

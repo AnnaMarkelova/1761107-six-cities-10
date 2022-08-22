@@ -5,7 +5,7 @@ import { AuthorizationStatus } from '../../consts/authorization-status';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/api-actions';
 import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
-import { getAuthorizationStatus, getUser } from '../../services/store/slices/user-process/user-process-selectors';
+import { getAuthorizationStatus, getUser } from '../../services/store/slices/root/root-selectors';
 
 export const Header: React.FunctionComponent = () => {
 
@@ -23,13 +23,12 @@ export const Header: React.FunctionComponent = () => {
     }
   }, [dispatch, hasAuthorization]);
 
-
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link className="header__logo-link header__logo-link--active" to="/">
+            <Link className="header__logo-link header__logo-link--active" to="/" data-testid="linktoMainPage">
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
           </div>
@@ -39,7 +38,7 @@ export const Header: React.FunctionComponent = () => {
                 (
                   <>
                     <li className="header__nav-item user">
-                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites} data-testid="linktoFavotitePage">
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                           <img
                             src={`${user?.avatarUrl}`}
@@ -65,6 +64,7 @@ export const Header: React.FunctionComponent = () => {
                           evt.preventDefault();
                           dispatch(logoutAction());
                         }}
+                        data-testid="linktoMainPageByLogout"
                       >
                         <span className="header__signout">Sign out</span>
                       </Link>
@@ -76,6 +76,7 @@ export const Header: React.FunctionComponent = () => {
                   <Link
                     className="header__nav-link header__nav-link--profile"
                     to={AppRoute.Login}
+                    data-testid="linktoLoginPage"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>

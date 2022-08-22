@@ -26,7 +26,7 @@ export const HotelsContainer: React.FunctionComponent = () => {
   });
 
   return (
-    <div className="cities">
+    <div className="cities" data-testid={'rootElementHotelsContainer'}>
       <div className={placesContainerClass}>
         <CitiesPlaces
           onListItemHover={onListItemHover}
