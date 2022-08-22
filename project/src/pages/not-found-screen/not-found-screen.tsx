@@ -1,8 +1,5 @@
-
-
 import React from 'react';
 import { Header } from '../../components/header/header';
-
 
 export const NotFoundScreen: React.FunctionComponent = () => (
   <div className="page page--gray page--login">
@@ -20,4 +17,3 @@ export const NotFoundScreen: React.FunctionComponent = () => (
 
   </div>
 );
-
