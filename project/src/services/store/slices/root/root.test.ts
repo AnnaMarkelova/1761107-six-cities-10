@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from '../../../../consts/authorization-status';
 import { UserProcess } from '../../../../types/state';
-import { makeFakeUser } from '../../../../utils/mock';
+// import { makeFakeUser } from '../../../../utils/mock';
 import { checkAuthAction, fetchHotelAction, fetchHotelsAction, fetchHotelStatusFavoriteAction, fetchNearbyHotelsAction, fetchNewCommentAction, loginAction, logoutAction } from '../../api-actions';
 import { root } from './root';
 
@@ -8,11 +8,11 @@ describe('Reducer: favoritesHotelsData', () => {
 
   let state: UserProcess;
 
-  const user = makeFakeUser();
+  // const user = makeFakeUser();
 
   beforeEach(() => {
     state = {
-      user: user,
+      user: null,
       authorizationStatus: AuthorizationStatus.Unknown,
       isDataLoading: false,
       dataSentSuccessfully: false,
@@ -30,7 +30,7 @@ describe('Reducer: favoritesHotelsData', () => {
     it('should update authorizationStatus to "AUTH" and user by loaded data if checkAuthAction fulfilled', () => {
       expect(root.reducer(state, { type: checkAuthAction.fulfilled.type }))
         .toEqual({
-          user: user,
+          user: undefined,
           authorizationStatus: AuthorizationStatus.Auth,
           isDataLoading: false,
           dataSentSuccessfully: false,
