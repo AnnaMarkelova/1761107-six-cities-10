@@ -61,7 +61,7 @@ describe('Page: LoginScreen', () => {
     const emailInput = screen.getByTestId('emailInput');
     fireEvent.change(emailInput, { target: { value: login } });
 
-    const password = '12345';
+    const password = '12345a';
     const passwordInput = screen.getByTestId('passwordInput');
     fireEvent.change(passwordInput, { target: { value: password } });
 
@@ -71,10 +71,6 @@ describe('Page: LoginScreen', () => {
     const action = store.getActions().pop();
 
     expect(action?.type).toEqual(loginAction.pending.type);
-    // expect((action as any)?.meta?.arg).toEqual({
-    //   login: login,
-    //   password: password,
-    // });
   });
 
 });

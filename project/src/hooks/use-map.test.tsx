@@ -43,7 +43,6 @@ describe('Hook: useMap', () => {
 
   it('should return array with 1 elements', () => {
 
-    // const { rerender, result } = renderHook(() => {
     const { rerender } = renderHook(() => {
       useEffect(() => {
         useMap(mapRef, city);
@@ -56,7 +55,6 @@ describe('Hook: useMap', () => {
     city = Cities[1];
     rerender(mapRef);
 
-    // console.log(result):
   });
 
 });

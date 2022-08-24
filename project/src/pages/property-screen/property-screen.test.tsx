@@ -59,8 +59,7 @@ describe('Page: PropertyScreen', () => {
   it('should render correctly', () => {
     render(fakeComponent);
 
-    expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-    expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+    expect(screen.getByTestId('ThreeDots')).toBeInTheDocument();
   });
 
 });

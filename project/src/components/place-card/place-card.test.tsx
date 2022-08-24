@@ -71,49 +71,5 @@ describe('Component: PlaceCard', () => {
       ]);
     });
 
-    it('should navigate to "/offer/id"', async () => {
-      render(fakeComponent);
-      await userEvent.click(screen.getByTestId('onClickCard'));
-      // expect(screen.getText(/What's inside/i)).toBeInTheDocument();
-    });
-  });
-
-  describe('Component without Authorization', () => {
-
-    const store = mockStore({
-      ROOT: {
-        authorizationStatus: AuthorizationStatus.NoAuth,
-        isDataLoading: false
-      },
-    });
-
-    const history = createMemoryHistory();
-
-    const fakeComponent = (
-      <Provider store={store}>
-        <HistoryRouter history={history}>
-          <PlaceCard
-            hotel={hotel}
-            cardType={CityCardType.FavoritesCard}
-          />
-        </HistoryRouter>
-      </Provider>
-    );
-
-    it('should navigate to "/login"', async () => {
-
-      render(fakeComponent);
-
-      await userEvent.click(screen.getByTestId('onClickStatusFavorite'));
-
-      // history.push(AppRoute.Login);
-
-      // render(fakeComponent);
-
-      // expect(screen.getByLabelText(/mail/i)).toBeInTheDocument();
-      // expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-
-    });
   });
 });
-

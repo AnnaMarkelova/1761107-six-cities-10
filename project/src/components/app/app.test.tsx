@@ -82,8 +82,7 @@ describe('Application Routing', () => {
       history.push(`${AppRoute.Room}/${hotel.id}`);
 
       render(fakeApp);
-      expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-      expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+      expect(screen.getByTestId('ThreeDots')).toBeInTheDocument();
     });
 
     it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
