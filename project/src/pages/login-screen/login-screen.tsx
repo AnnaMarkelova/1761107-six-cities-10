@@ -1,9 +1,9 @@
-import React, { FormEvent, useRef } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { cities } from '../../consts/cities';
+import { Cities } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/store/api-actions';
 import { setCity } from '../../services/store/slices/city-data/city-data';
@@ -15,13 +15,14 @@ export const LoginScreen: React.FunctionComponent = () => {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [errorText, setErrorText] = useState('');
 
   const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
-  const randomCity = cities[getRandomNumber(0, cities.length - 1)];
+  const randomCity = Cities[getRandomNumber(0, Cities.length - 1)];
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -31,26 +32,37 @@ export const LoginScreen: React.FunctionComponent = () => {
     return <Navigate to={AppRoute.Main} ></Navigate>;
   }
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (passwordRef.current === null
+      || passwordRef.current.value.length < 2
+      || passwordRef.current.value.search(/\d/g) === -1
+      || passwordRef.current.value.search(/[A-Za-z]/g) === -1) {
+      setErrorText('Password must contain at least 1 digit and 1 letter');
+      return;
+    }
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      setErrorText('');
     }
   };
 
   return (
     <div className="page page--gray page--login">
-      <Header />
+      <Header
+        isLoginScreen
+      />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleFormSubmit}
               className="login__form form"
               action=""
               method="post"
@@ -81,6 +93,7 @@ export const LoginScreen: React.FunctionComponent = () => {
                   required
                   data-testid="passwordInput"
                 />
+                {errorText && <p style={{ marginTop: 0 }}>{errorText}</p>}
               </div>
               <button
                 className="login__submit form__submit button"

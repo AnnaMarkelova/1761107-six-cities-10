@@ -2,8 +2,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { renderHook } from '@testing-library/react';
-import { cities } from '../consts/cities';
-import useMap from './useMap';
+import { Cities } from '../consts/cities';
+import useMap from './use-map';
 import { createAPI } from '../services/api';
 import { makeFakeHotel } from '../utils/mock';
 import { State } from '../types/state';
@@ -39,7 +39,7 @@ describe('Hook: useMap', () => {
     </Provider>
   );
 
-  let city = cities[0];
+  let city = Cities[0];
 
   it('should return array with 1 elements', () => {
 
@@ -53,7 +53,7 @@ describe('Hook: useMap', () => {
       }, []);
     }, { wrapper });
 
-    city = cities[1];
+    city = Cities[1];
     rerender(mapRef);
 
     // console.log(result):

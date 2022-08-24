@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { cities } from '../../consts/cities';
+import { Cities } from '../../consts/cities';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
 import { makeFakeHotel } from '../../utils/mock';
@@ -35,7 +35,7 @@ describe('Application Routing', () => {
         authorizationStatus: AuthorizationStatus.Auth,
       },
       DATA_CITY: {
-        city: cities[0],
+        city: Cities[0],
       },
       DATA_HOTELS: {
         hotels: [],
@@ -103,7 +103,7 @@ describe('Application Routing', () => {
         authorizationStatus: AuthorizationStatus.NoAuth,
       },
       DATA_CITY: {
-        city: cities[0],
+        city: Cities[0],
       },
       DATA_HOTELS: {
         hotels: [],

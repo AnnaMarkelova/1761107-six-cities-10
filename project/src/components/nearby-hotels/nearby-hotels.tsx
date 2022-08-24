@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PlaceCard from '../../components/place-card/place-card';
-import { cityCardType } from '../../consts/city-card-type';
+import { CityCardType } from '../../consts/city-card-type';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchNearbyHotelsAction } from '../../services/store/api-actions';
 import { getCurrentHotel, getNearbyHotels } from '../../services/store/slices/hotels-data/hotels-data-selectors';
@@ -28,7 +28,7 @@ export const NearbyHotels: React.FunctionComponent = () => {
             <PlaceCard
               key={item.id}
               hotel={item}
-              cardType={cityCardType.CITIES_CARD}
+              cardType={CityCardType.CitiesCard}
             />))}
         </div>
       </section>

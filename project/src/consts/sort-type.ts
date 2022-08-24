@@ -1,6 +1,6 @@
 export enum SortType {
-  POPULAR = 'Popular',
-  LOW_TO_HIGH = 'Price: low to high',
-  HIGH_TO_LOW = 'Price: high to low',
-  TOP_RATED = 'Top rated first',
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
 }

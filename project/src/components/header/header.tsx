@@ -7,7 +7,11 @@ import { fetchFavoritesHotelsAction, logoutAction } from '../../services/store/a
 import { getFavoritesHotels } from '../../services/store/slices/favorites-hotels-data/favorites-hotels-data-selectors';
 import { getAuthorizationStatus, getUser } from '../../services/store/slices/root/root-selectors';
 
-export const Header: React.FunctionComponent = () => {
+interface HeaderProps {
+  isLoginScreen? : boolean;
+}
+
+export const Header: React.FunctionComponent<HeaderProps> = ({isLoginScreen = false}) => {
 
   const favoritesHotels = useAppSelector(getFavoritesHotels);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -34,7 +38,7 @@ export const Header: React.FunctionComponent = () => {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {hasAuthorization &&
+              {hasAuthorization && !isLoginScreen &&
                 (
                   <>
                     <li className="header__nav-item user">
@@ -71,7 +75,7 @@ export const Header: React.FunctionComponent = () => {
                     </li>
                   </>
                 )}
-              {!hasAuthorization && (
+              {!hasAuthorization && !isLoginScreen && (
                 <li className="header__nav-item user">
                   <Link
                     className="header__nav-link header__nav-link--profile"

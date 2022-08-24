@@ -4,13 +4,13 @@ import CitiesPlaces from '../../components/cities-places/cities-places';
 import { Map } from '../../components/map/map';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
-import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
+import { selectHotelsByCity } from '../../services/selectors/get-hotels';
 
 export const HotelsContainer: React.FunctionComponent = () => {
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
 
-  const hotelsByCity = useAppSelector(SelectHotelsByCity);
+  const hotelsByCity = useAppSelector(selectHotelsByCity);
 
   const onListItemHover = useCallback(
     (listItemId: number | undefined) => {

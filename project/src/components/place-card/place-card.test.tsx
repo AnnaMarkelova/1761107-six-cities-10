@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { cityCardType } from '../../consts/city-card-type';
+import { CityCardType } from '../../consts/city-card-type';
 import { createAPI } from '../../services/api';
 import { fetchHotelStatusFavoriteAction } from '../../services/store/api-actions';
 import { State } from '../../types/state';
@@ -46,7 +46,7 @@ describe('Component: PlaceCard', () => {
         <HistoryRouter history={history}>
           <PlaceCard
             hotel={hotel}
-            cardType={cityCardType.FAVORITES_CARD}
+            cardType={CityCardType.FavoritesCard}
           />
         </HistoryRouter>
       </Provider>
@@ -94,7 +94,7 @@ describe('Component: PlaceCard', () => {
         <HistoryRouter history={history}>
           <PlaceCard
             hotel={hotel}
-            cardType={cityCardType.FAVORITES_CARD}
+            cardType={CityCardType.FavoritesCard}
           />
         </HistoryRouter>
       </Provider>

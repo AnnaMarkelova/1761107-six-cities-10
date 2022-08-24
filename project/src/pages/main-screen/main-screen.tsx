@@ -7,7 +7,7 @@ import { fetchHotelsAction } from '../../services/store/api-actions';
 import { LoaderThreeDots } from '../../components/loader/loader';
 import { getIsDataLoading } from '../../services/store/slices/root/root-selectors';
 import { HotelsContainer } from '../../components/hotels-container/hotels-container';
-import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
+import { selectHotelsByCity } from '../../services/selectors/get-hotels';
 
 export const MainScreen: React.FunctionComponent = () => {
 
@@ -19,7 +19,7 @@ export const MainScreen: React.FunctionComponent = () => {
     dispatch(fetchHotelsAction());
   }, [dispatch]);
 
-  const hotelsByCity = useAppSelector(SelectHotelsByCity);
+  const hotelsByCity = useAppSelector(selectHotelsByCity);
 
   const mainClass = classNames({
     'page__main': true,

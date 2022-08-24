@@ -1,4 +1,4 @@
-import { cities } from '../../../../consts/cities';
+import { Cities } from '../../../../consts/cities';
 import { CityData } from '../../../../types/state';
 import { cityData, setCity } from './city-data';
 
@@ -7,7 +7,7 @@ describe('Reducer: city-data', () => {
   let state: CityData;
 
   beforeEach(() => {
-    state = { city: cities[0] };
+    state = { city: Cities[0] };
   });
 
   it('without additional parameters should return initial state', () => {
@@ -16,7 +16,7 @@ describe('Reducer: city-data', () => {
   });
 
   it('should set current City in setCity', () => {
-    expect(cityData.reducer(state, { type: setCity.type, payload: cities[1] }))
-      .toEqual({ city: cities[1] });
+    expect(cityData.reducer(state, { type: setCity.type, payload:Cities[1] }))
+      .toEqual({ city: Cities[1] });
   });
 });

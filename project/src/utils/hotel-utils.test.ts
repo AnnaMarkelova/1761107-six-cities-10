@@ -19,6 +19,6 @@ describe('Function: getHotelById', () => {
 
 describe('Function: sortHotels', () => {
   it('should return sorts hotels', () => {
-    expect(sortHotels.find((item) => item.sortType === SortType.POPULAR)?.getSortHotels(hotels)).toEqual(hotels);
+    expect(sortHotels.find((item) => item.sortType === SortType.Popular)?.getSortHotels(hotels)).toEqual(hotels);
   });
 });

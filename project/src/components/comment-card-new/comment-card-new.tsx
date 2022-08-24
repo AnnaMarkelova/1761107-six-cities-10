@@ -31,14 +31,14 @@ export const CommentCardNew: React.FunctionComponent = () => {
 
   const btnDisable = (formData.rating === 0 || formData.comment.length <= MIN_LENGTH_COMMENT) || isDataLoading;
 
-  const onSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch((fetchNewCommentAction({ comment: formData.comment, rating: formData.rating, hotelId: currentHotel?.id })));
   };
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
       className="reviews__form form"
       action="#"
       method="post"

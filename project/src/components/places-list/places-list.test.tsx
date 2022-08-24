@@ -48,7 +48,7 @@ describe('Component: PlacesList', () => {
         <HistoryRouter history={history}>
           <PlacesList
             onListItemHover={jest.fn()}
-            sort = {SortType.POPULAR}
+            sort = {SortType.Popular}
           />
         </HistoryRouter>
       </Provider>,
