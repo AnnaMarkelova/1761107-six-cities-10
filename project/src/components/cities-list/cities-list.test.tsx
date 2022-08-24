@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { cities } from '../../consts/cities';
+import { Cities } from '../../consts/cities';
 import { createAPI } from '../../services/api';
 import { setCity } from '../../services/store/slices/city-data/city-data';
 import { State } from '../../types/state';
@@ -24,7 +24,7 @@ const mockStore = configureMockStore<
 
 const store = mockStore({
   DATA_CITY: {
-    city: cities[0],
+    city: Cities[0],
   },
 });
 
@@ -40,9 +40,9 @@ describe('Component: CitiesList', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(cities[0].name)).toBeInTheDocument();
-    expect(screen.getByText(cities[1].name)).toBeInTheDocument();
-    expect(screen.getByText(cities[2].name)).toBeInTheDocument();
+    expect(screen.getByText(Cities[0].name)).toBeInTheDocument();
+    expect(screen.getByText(Cities[1].name)).toBeInTheDocument();
+    expect(screen.getByText(Cities[2].name)).toBeInTheDocument();
   });
 
   it('should setCity when user clicks on City', async () => {
@@ -54,14 +54,14 @@ describe('Component: CitiesList', () => {
       </Provider>,
     );
 
-    await userEvent.click(screen.getByTestId(`ClickOnCity${cities[1].name}`));
+    await userEvent.click(screen.getByTestId(`ClickOnCity${Cities[1].name}`));
 
     const actions = store.getActions().map((item) => (item));
 
     expect(actions).toEqual([
       {
         type: setCity.type,
-        payload: cities[1]
+        payload: Cities[1]
       },
     ]);
   });

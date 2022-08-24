@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { SortType } from '../../consts/sort-type';
 import { useAppSelector } from '../../hooks';
-import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
+import { selectHotelsByCity } from '../../services/selectors/get-hotels';
 import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
 import PlacesList from '../places-list/places-list';
 
@@ -14,9 +14,9 @@ const CitiesPlaces: React.FunctionComponent<CitiesPlacesProps> = ({ onListItemHo
 
   const city = useAppSelector(getCity);
 
-  const hotelsByCity = useAppSelector(SelectHotelsByCity);
+  const hotelsByCity = useAppSelector(selectHotelsByCity);
 
-  const [sort, setSort] = React.useState(SortType.POPULAR);
+  const [sort, setSort] = React.useState(SortType.Popular);
   const [isVisibleSortList, setVisibleSortList] = React.useState(false);
 
   const placesList = classNames({

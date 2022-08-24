@@ -1,7 +1,7 @@
 import React from 'react';
-import { cityCardType } from '../../consts/city-card-type';
+import { CityCardType } from '../../consts/city-card-type';
 import { useAppSelector } from '../../hooks';
-import { SelectHotelsByCity } from '../../services/selectors/get-hotels';
+import { selectHotelsByCity } from '../../services/selectors/get-hotels';
 import { sortHotels } from '../../utils/hotel-utils';
 import PlaceCard from '../place-card/place-card';
 
@@ -12,7 +12,7 @@ type PlacesListProps = {
 
 const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListItemHover, sort }) => {
 
-  const hotelsByCity = useAppSelector(SelectHotelsByCity);
+  const hotelsByCity = useAppSelector( selectHotelsByCity);
 
   const currentHotels = sortHotels.find((item) => item.sortType === sort)?.getSortHotels(hotelsByCity);
 
@@ -22,7 +22,7 @@ const PlacesList: React.FunctionComponent<PlacesListProps> = ({ onListItemHover,
         <PlaceCard
           key={item.id}
           hotel={item}
-          cardType={cityCardType.CITIES_CARD}
+          cardType={CityCardType.CitiesCard}
           onListItemHover={onListItemHover}
         />))}
     </div>

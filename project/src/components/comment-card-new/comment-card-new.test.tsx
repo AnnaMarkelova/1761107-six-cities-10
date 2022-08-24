@@ -62,11 +62,6 @@ describe('Component: CommentCardNew', () => {
 
     const action = store.getActions().pop();
     expect(action?.type).toEqual(fetchNewCommentAction.pending.type);
-    // expect((action as any)?.meta?.arg).toEqual({
-    //   comment: 'comment test',
-    //   hotelId: hotel.id,
-    //   rating: 0,
-    // });
   });
 
 });

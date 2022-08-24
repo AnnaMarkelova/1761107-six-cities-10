@@ -64,10 +64,10 @@ describe('Component: CitiesPlaces', () => {
     it('should set active Sort when user clicks on Sort', async () => {
       render(fakeComponent);
 
-      const topRatedSort = screen.getByTestId(`onClickSort_${SortType.TOP_RATED}`);
+      const topRatedSort = screen.getByTestId(`onClickSort_${SortType.TopRated}`);
       await userEvent.click(topRatedSort);
 
-      expect(screen.getByTestId(`onClickSort_${SortType.TOP_RATED}`).classList.contains('places__option--active')).toBe(true);
+      expect(screen.getByTestId(`onClickSort_${SortType.TopRated}`).classList.contains('places__option--active')).toBe(true);
 
     });
 

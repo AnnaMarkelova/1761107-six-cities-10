@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import HistoryRouter from '../../components/history-route/history-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { cities } from '../../consts/cities';
+import { Cities } from '../../consts/cities';
 import { createAPI } from '../../services/api';
 import { State } from '../../types/state';
 import { makeFakeComment, makeFakeHotel } from '../../utils/mock';
@@ -33,7 +33,7 @@ describe('Page: PropertyScreen', () => {
       authorizationStatus: AuthorizationStatus.Auth
     },
     DATA_CITY: {
-      city: cities[0],
+      city: Cities[0],
     },
     DATA_FAVORITES_HOTELS: {
       favoritesHotels: hotels,
@@ -59,8 +59,7 @@ describe('Page: PropertyScreen', () => {
   it('should render correctly', () => {
     render(fakeComponent);
 
-    expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-    expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+    expect(screen.getByTestId('ThreeDots')).toBeInTheDocument();
   });
 
 });

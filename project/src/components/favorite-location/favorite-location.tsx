@@ -3,7 +3,7 @@ import { Hotel } from '../../types/hotel';
 import PlaceCard from '../place-card/place-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/app-route';
-import { cityCardType } from '../../consts/city-card-type';
+import { CityCardType } from '../../consts/city-card-type';
 
 type FavoritesLocationProps = {
   city: string
@@ -24,7 +24,7 @@ export const FavoriteLocation: React.FunctionComponent<FavoritesLocationProps> =
         <PlaceCard
           key={item.id}
           hotel={item}
-          cardType={cityCardType.FAVORITES_CARD}
+          cardType={CityCardType.FavoritesCard}
         />
       ))}
     </div>

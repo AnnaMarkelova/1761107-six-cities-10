@@ -1,5 +1,5 @@
-export const cityCardType: {[type: string]: string} = {
-  CITIES_CARD: 'cities__card',
-  FAVORITES_CARD: 'favorites__card',
-};
+export const CityCardType: {[type: string]: string} = {
+  CitiesCard: 'cities__card',
+  FavoritesCard: 'favorites__card',
+} as const;
 

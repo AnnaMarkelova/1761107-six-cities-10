@@ -8,19 +8,19 @@ export const getHotelById = (hotels: Hotel[], id: number) => hotels.find((item: 
 
 export const sortHotels = [
   {
-    sortType: SortType.POPULAR,
+    sortType: SortType.Popular,
     getSortHotels: (hotels: Hotel[]) => hotels
   },
   {
-    sortType: SortType.LOW_TO_HIGH,
+    sortType: SortType.LowToHigh,
     getSortHotels: (hotels: Hotel[]) => hotels.slice().sort((hotelA, hotelB) => hotelA.price - hotelB.price)
   },
   {
-    sortType: SortType.HIGH_TO_LOW,
+    sortType: SortType.HighToLow,
     getSortHotels: (hotels: Hotel[]) => hotels.slice().sort((hotelA, hotelB) => hotelB.price - hotelA.price)
   },
   {
-    sortType: SortType.TOP_RATED,
+    sortType: SortType.TopRated,
     getSortHotels: (hotels: Hotel[]) => hotels.slice().sort((hotelA, hotelB) => hotelB.rating - hotelA.rating)
   },
 ];
