@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cities } from '../../consts/cities';
+import { CITIES } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCity } from '../../services/store/slices/city-data/city-data';
 import { getCity } from '../../services/store/slices/city-data/city-data-selectors';
@@ -14,7 +14,7 @@ export const CitiesList: React.FunctionComponent = () => {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
-        {Cities.map((item) => (
+        {CITIES.map((item) => (
           <li className="locations__item" key={item.name}>
             <a className={`locations__item-link tabs__item ${city.name === item.name
               ? 'tabs__item--active'

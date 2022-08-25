@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { Header } from '../../components/header/header';
 import { AppRoute } from '../../consts/app-route';
 import { AuthorizationStatus } from '../../consts/authorization-status';
-import { Cities } from '../../consts/cities';
+import { CITIES } from '../../consts/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../services/store/api-actions';
 import { setCity } from '../../services/store/slices/city-data/city-data';
@@ -22,7 +22,7 @@ export const LoginScreen: React.FunctionComponent = () => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const hasAuthorization = authorizationStatus === AuthorizationStatus.Auth;
 
-  const randomCity = Cities[getRandomNumber(0, Cities.length - 1)];
+  const randomCity = CITIES[getRandomNumber(0, CITIES.length - 1)];
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
