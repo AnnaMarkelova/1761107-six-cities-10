@@ -2,14 +2,14 @@ import { Hotel } from '../types/hotel';
 import { system, image, internet, name, datatype } from 'faker';
 import { City } from '../types/city';
 import { getRandomNumber } from './utills';
-import { Cities } from '../consts/cities';
+import { CITIES } from '../consts/cities';
 import { Host } from '../types/host';
 import { Location } from '../types/location';
 import { Comment } from '../types/comment';
 import { UserComment } from '../types/user-comment';
 import { User } from '../types/user';
 
-const makeFakeCity = (): City => Cities[getRandomNumber(0, Cities.length - 1)];
+const makeFakeCity = (): City => CITIES[getRandomNumber(0, CITIES.length - 1)];
 const fakeCity = makeFakeCity();
 
 export const makeFakeHotel = (): Hotel => ({

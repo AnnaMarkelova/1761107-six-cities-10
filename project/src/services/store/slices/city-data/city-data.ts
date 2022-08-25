@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../../../consts/api-route';
-import { Cities } from '../../../../consts/cities';
+import { CITIES } from '../../../../consts/cities';
 import { CityData } from '../../../../types/state';
 
 const initialState: CityData = {
-  city: Cities[0],
+  city: CITIES[0],
 };
 
 export const cityData = createSlice({
